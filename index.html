@@ -1,0 +1,76 @@
+
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Betriebsanweisung Generator – Start</title>
+<style>
+/* Yazdırma ile iki sayfa A4 düzeni */
+@page { size: A4; margin: 16mm; }
+@media print {
+  .page-break { page-break-after: always; }
+  body { font-family: Arial, sans-serif; font-size: 11pt; }
+}
+body { font-family: Arial, sans-serif; }
+.container { max-width: 960px; margin: 0 auto; padding: 24px; }
+h1 { font-size: 20px; margin: 0 0 12px; }
+.section { margin: 12px 0; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+button { padding: 10px 16px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Betriebsanweisung – Entwurf</h1>
+
+  <div class="section">
+    <label>Talimat Türü:
+      <select id="type">
+        <option>Gefahrstoff</option>
+        <option>Biologischer Stoff</option>
+        <option>Maschine</option>
+        <option>Persönliche Schutzausrüstung</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="columns">
+    <div>
+      <h2>Gefährdungen und Auswirkungen</h2>
+      <ul id="risks">
+        <li>Beispieltext – burada kendi maddelerinizi ekleyin.</li>
+      </ul>
+
+      <h2>Schutzmaßnahmen und Verhaltensregeln</h2>
+      <ul id="measures">
+        <li>Beispieltext – burada kendi maddelerinizi ekleyin.</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Piktogramme (später)</h2>
+      <p>GHS/CLP ve ISO 7010 piktogramlarını daha sonra ekleyeceğiz.</p>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="columns">
+    <div>
+      <h2>Verhalten im Gefahrfall</h2>
+      <ul><li>Beispieltext – burada kendi maddelerinizi ekleyin.</li></ul>
+
+      <h2>Erste Hilfe</h2>
+      <ul><li>Beispieltext – burada kendi maddelerinizi ekleyin.</li></ul>
+    </div>
+    <div>
+      <h2>Sachgerechte Entsorgung</h2>
+      <ul><li>Beispieltext – burada kendi maddelerinizi ekleyin.</li></ul>
+
+      <button onclick="window.print()">PDF olarak yazdır</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+``
