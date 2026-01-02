@@ -7,7 +7,7 @@ export const onRequestGet = async ({ request, env }) => {
   const asset   = u.searchParams.get('asset')   || '';
   const pics    = (u.searchParams.get('pics')||'').split(',').filter(Boolean);
 
-  // Kurallı uzun cümleler (her satır tek cümle)
+  // Kurallı uzun cümleler
   const base: string[] = [];
   if (section==='hazard' && type==='Maschine') {
     base.push(
@@ -53,11 +53,13 @@ export const onRequestGet = async ({ request, env }) => {
     );
   }
 
-  // LLM (opsiyonel) – varsa ekle
+  // LLM (opsiyonel) – varsa ek öneriler
   let llm: string[] = [];
   if (env.AI_API_URL && env.AI_API_KEY) {
     try {
-      const prompt = `Erzeuge 6 einzelne, lange Stichpunkte (jeweils ein Satz) für Abschnitt "${section}" in einer Betriebsanweisung (Typ=${type}, Asset=${asset}, Piktos=${pics.join(',')}).`;
+      const prompt =
+        `Erzeuge 6 einzelne, lange Stichpunkte (jeweils ein Satz) für Abschnitt "${section}" in einer Betriebsanweisung ` +
+        `(Typ=${type}, Asset=${asset}, Piktos=${pics.join(',')}).`;
       const resp = await fetch(env.AI_API_URL, {
         method:'POST',
         headers:{ 'content-type':'application/json', 'authorization':`Bearer ${env.AI_API_KEY}` },
