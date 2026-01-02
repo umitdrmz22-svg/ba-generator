@@ -3,79 +3,79 @@
   "iso": {
     "W001": {
       "name": "Allgemeines Warnzeichen",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_W001.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_W001.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_W001.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_W001.svg"
     },
     "M001": {
       "name": "Allgemeines Gebotszeichen",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_M001.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_M001.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_M001.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_M001.svg"
     },
     "E003": {
       "name": "Erste Hilfe",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_E003_-_First_aid_sign.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_E003_-_First_aid_sign.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_E003_-_First_aid_sign.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_E003_-_First_aid_sign.svg"
     },
     "F001": {
       "name": "Feuerlöscher",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_F001.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_F001.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_F001.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_F001.svg"
     },
     "authoritative_pages": {
       "BGHM Sicherheitszeichen": "https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen",
-      "BAuA ISO 7010 Info": "https://www.baua.de/DE/Themen/Chemikalien-Biostoffe/Gefahrstoffe/Einstufung-und-Kennzeichnung/Kennzeichnungselemente/Gefahrenpiktogramme-und-Signalwoerter"
+      "BAuA CLP/ISO Info": "https://www.baua.de/DE/Themen/Chemikalien-Biostoffe/Gefahrstoffe/Einstufung-und-Kennzeichnung/Kennzeichnungselemente/Gefahrenpiktogramme-und-Signalwoerter"
     }
   },
   "ghs": {
     "GHS01": {
       "name": "Explosiv",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-explos.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-explos.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-explos.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-explos.svg"
     },
     "GHS02": {
       "name": "Entzündlich",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-flamme.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-flamme.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-flamme.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-flamme.svg"
     },
     "GHS03": {
       "name": "Oxidierend",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-rondflam.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-rondflam.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-rondflam.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-rondflam.svg"
     },
     "GHS04": {
-      "name": "Gase unter Druck",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-bottle.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-bottle.svg"
+      "name": "Gas unter Druck",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-bottle.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-bottle.svg"
     },
     "GHS05": {
-      "name": "Ätzwirkung",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-acid.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-acid.svg"
+      "name": "Ätzend",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-acid.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-acid.svg"
     },
     "GHS06": {
-      "name": "Giftig/Sehr giftig",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-skull.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-skull.svg"
+      "name": "Akut toxisch",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-skull.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-skull.svg"
     },
     "GHS07": {
       "name": "Ausrufezeichen",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-exclam.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-exclam.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-exclam.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-exclam.svg"
     },
     "GHS08": {
       "name": "Gesundheitsgefahr",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-silhouette.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-silhouette.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-silhouette.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-silhouette.svg"
     },
     "GHS09": {
       "name": "Umweltgefährlich",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-pollu.svg",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-pollu.svg"
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-pollu.svg",
+      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-pollu.svg"
     },
     "authoritative_pages": {
       "UNECE GHS": "https://unece.org/transport/dangerous-goods/ghs-pictograms",
-      "BAuA CLP": "https://www.baua.de/DE/Themen/Chemikalien-Biostoffe/Gefahrstoffe/Einstufung-und-Kennzeichnung/Kennzeichnungselemente/Gefahrenpiktogramme-und-Signalwoerter",
-      "BG RCI Symbib": "https://symbib-light.bgrci.de/ghs_gefahrenpiktogramme"
+      "ECHA": "https://echa.europa.eu/regulations/clp/clp-pictograms",
+      "OSHA": "https://www.osha.gov/hazcom/pictograms"
     }
   }
 }
