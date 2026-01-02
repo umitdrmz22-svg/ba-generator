@@ -3,81 +3,115 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <title>Betriebsanweisung – Auswahl</title>
+  <title>Betriebsanweisung – Vorlage</title>
 
-  <!-- Ortak stil (A4 + grid + kutu düzeni) -->
-  /assets/style.css
+  <!-- Stil doğru bağlanmalı -->
+  <link rel="stylesheet" href="/assets/style.css">
 
-  <!-- Tür bazlı tema şeridi ön izlemesi -->
+  <!-- Tema ve bölüm stil (türe göre renk) -->
   <style>
-    :root {
-      --theme-color: #005aa3; /* varsayılan */
-    }
-    .theme-preview {
-      height: 8px; border-radius: 4px; background: var(--theme-color); margin-bottom: 12px;
-    }
-    /* Tür → renk eşlemesi (kurumsal paletinize göre düzenleyin) */
-    .t-Gefahrstoff { --theme-color: #E53935; } /* kırmızı: kimyasal tehlike */
-    .t-Biostoff    { --theme-color: #2E7D32; } /* yeşil: biyo süreçler */
-    .t-Maschine    { --theme-color: #005AA3; } /* mavi: makine/tekniğe uyumlu */
-    .t-PSA         { --theme-color: #6A1B9A; } /* mor: KKD teması */
+    :root { --theme-color: #005aa3; } /* varsayılan */
+    body.theme-Gefahrstoff { --theme-color: #E53935; }
+    body.theme-Biostoff    { --theme-color: #2E7D32; }
+    body.theme-Maschine    { --theme-color: #005AA3; }
+    body.theme-PSA         { --theme-color: #6A1B9A; }
+
+    .hero { background: linear-gradient(120deg, var(--theme-color), #111); color:#fff;
+            border-radius:10px; padding:14px 16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
+    .hero h1 { margin:0; font-size:20px; }
+    .columns { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+    h2 { font-size: 15px; margin: 14px 0 6px; border-bottom: 3px solid var(--theme-color); padding-bottom: 4px; }
+    .page-break { page-break-after: always; }
+    .pictos { display:flex; gap:8px; flex-wrap:wrap; }
+    .pic { min-height: 40px; border:1px solid #ccc; padding:6px 8px; background:#fff; cursor:pointer; border-radius:6px; }
+    .pic.selected { outline: 3px solid var(--theme-color); }
+    .list { border:1px solid #ddd; border-radius: 4px; padding: 10px; background:#fafafa; min-height: 80px; }
+    .small { font-size: 12px; color:#555; }
+    #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
+    .btn-primary { background: var(--theme-color); color:#fff; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; }
   </style>
 </head>
-<body class="page">
-<div class="wrapper" id="indexRoot">
+<body class="page" id="baBody">
+  <div class="wrapper" id="baRoot" style="font-size:14px">
 
-  <div class="theme-preview"></div>
+    <div class="hero"><h1>Betriebsanweisung – Vorlage</h1></div>
 
-  <h1>Betriebsanweisung – Auswahl</h1>
+    <div id="head"></div>
 
-  <section class="box">
-    <label>Typ wählen:</label>
-    <div class="row" id="typeRow">
-      <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
-      <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-      <label><input type="radio" name="type" value="Maschine"> Maschine</label>
-      <label><input type="radio" name="type" value="PSA"> PSA</label>
-    </div>
-  </section>
+    <h2>ANWENDUNGSBEREICH</h2>
+    <textarea id="scope" rows="4" placeholder="Bu Betriebsanweisung hangi makine/iş/kimyasal/biostoff için geçerlidir?"></textarea>
 
-  <section class="box">
-    <div class="grid2">
+    <h2>Gefährdungen für Mensch und Umwelt</h2>
+    <div class="pictos" id="picChooser"></div>
+    <div class="small">Seçilen piktogramlara göre öneriler:</div>
+    <div id="hazardPool" class="list"></div>
+    <div class="small">Seçtikleriniz:</div>
+    <div id="hazardList" class="list"></div>
+    <input id="hazardCustom" type="text" placeholder="Kendi maddeni ekle…">
+    <button id="hazardAdd">Ekle</button>
+
+    <h2>Schutzmaßnahmen und Verhaltensregeln</h2>
+    <div class="columns">
       <div>
-        <label>Unternehmen</label><input id="firm" type="text" placeholder="Firmenname">
-        <label>Abteilung</label><input id="dept" type="text" placeholder="Abteilung">
-        <label>Ersteller</label><input id="author" type="text" placeholder="Name">
-        <label>Datum</label><input id="date" type="date">
+        <h3>Technische Maßnahmen (S)</h3>
+        <div id="techPool" class="list"></div>
+        <div class="small">Seçtikleriniz:</div>
+        <div id="techList" class="list"></div>
+        <input id="techCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="techAdd">Ekle</button>
       </div>
       <div>
-        <label>Logo hochladen</label>
-        <input id="logoFile" type="file" accept="image/*">
-        <small>PNG/JPG önerilir. Logo Supabase Storage → <b>logos</b> bucket’ına yüklenir.</small>
-        <div id="logoPreview" class="logo-preview"></div>
+        <h3>Organisatorische Maßnahmen (O)</h3>
+        <div id="orgPool" class="list"></div>
+        <div class="small">Seçtikleriniz:</div>
+        <div id="orgList" class="list"></div>
+        <input id="orgCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="orgAdd">Ekle</button>
+
+        <h3>Persönliche Schutzausrüstung (P)</h3>
+        <div id="ppePool" class="list"></div>
+        <div class="small">Seçtikleriniz:</div>
+        <div id="ppeList" class="list"></div>
+        <input id="ppeCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="ppeAdd">Ekle</button>
       </div>
     </div>
-  </section>
 
-  <div class="actions">
-    <button id="continue">Weiter zur Vorlage</button>
+    <div class="page-break"></div>
+
+    <h2>Verhalten im Gefahrfall</h2>
+    <div id="emPool" class="list"></div>
+    <div class="small">Seçtikleriniz:</div>
+    <div id="emList" class="list"></div>
+    <input id="emCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="emAdd">Ekle</button>
+
+    <h2>Erste Hilfe</h2>
+    <div id="ehPool" class="list"></div>
+    <div class="small">Seçtikleriniz:</div>
+    <div id="ehList" class="list"></div>
+    <input id="ehCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="ehAdd">Ekle</button>
+
+    <h2>Sachgerechte Entsorgung / Inaktivierung</h2>
+    <div id="disPool" class="list"></div>
+    <div class="small">Seçtikleriniz:</div>
+    <div id="disList" class="list"></div>
+    <input id="disCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="disAdd">Ekle</button>
+
+    <div id="fontHint">Uyarı: içerik iki sayfayı aşıyor → yazı boyutu küçültüldü. (Min 10pt)</div>
+
+    <div class="actions" style="margin-top:10px">
+      <button id="save" class="btn-primary">Kaydet</button>
+      <button class="btn-primary" onclick="window.print()">PDF (max 2 sayfa)</button>
+    </div>
   </div>
 
-</div>
+  <!-- Script doğru bağlanmalı -->
+  <script type="module" src="/assets/app.js"></script>
 
-<!-- Uygulama mantığı (index + editor birlikte) -->
-/assets/app.js</script>
-
-<script>
-  // Tür seçimi → tema ön izlemesi
-  const indexRoot = document.getElementById('indexRoot');
-  const typeRow = document.getElementById('typeRow');
-  const preview = document.querySelector('.theme-preview');
-  typeRow?.addEventListener('change', (e) => {
-    const val = e.target?.value;
-    if (!val) return;
-    indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
-    indexRoot.classList.add('t-' + val);
-    // CSS değişkeni otomatik güncellenir; şerit rengi anında değişir
-  });
-</script>
+  <!-- Tür → tema sınıfı -->
+  <script>
+    try {
+      const HEAD = JSON.parse(localStorage.getItem('BA_HEAD') || '{}');
+      const b = document.getElementById('baBody');
+      if (HEAD?.type && b) b.classList.add('theme-' + HEAD.type);
+    } catch {}
+  </script>
 </body>
 </html>
