@@ -1,22 +1,10 @@
 
 {
   "iso": {
-    "W001": {
-      "name": "Allgemeines Warnzeichen",
-      "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_W001.svg"
-    },
-    "M001": {
-      "name": "Allgemeines Gebotszeichen",
-      "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_M001.svg"
-    },
-    "E003": {
-      "name": "Erste Hilfe",
-      "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_E003_-_First_aid_sign.svg"
-    },
-    "F001": {
-      "name": "Feuerlöscher",
-      "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_F001.svg"
-    }
+    "W001": { "name": "Allgemeines Warnzeichen", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_W001.svg" },
+    "M001": { "name": "Allgemeines Gebotszeichen", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_M001.svg" },
+    "E003": { "name": "Erste Hilfe", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_E003_-_First_aid_sign.svg" },
+    "F001": { "name": "Feuerlöscher", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_F001.svg" }
   },
   "ghs": {
     "GHS01": { "name": "Explosiv",          "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-explos.gif" },
