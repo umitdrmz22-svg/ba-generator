@@ -63,21 +63,53 @@ function renderPictoChooser(containerId, groupKeys) {
     div.onclick = () => togglePicSelection(div);
     cont.appendChild(div);
   });
+  
+<script type="module">
+// ... (dosyanızda zaten createClient, HEAD, SUG vs. var)
+// Aşağıdaki parçayı ekleyin:
+
+// 1) Piktogram dizinini JSON'dan alın
+const PICTO = await fetch('/assets/pictos_index.json').then(r => r.json());
+
+// 2) Seçili piktogramları tutan küme (dosyanızda varsa tekrar tanımlamayın)
+const selectedPics = (typeof selectedPics !== 'undefined') ? selectedPics : new Set();
+
+// 3) Piktogram seçiciyi oluşturma
+function renderPictoChooser(containerId, groupKeys) {
+  const cont = document.getElementById(containerId);
+  cont.innerHTML = '';
+  groupKeys.forEach(k => {
+    const meta = PICTO[k.group][k.code];
+    if (!meta || !meta.url) return;
+    const div = document.createElement('div');
+    div.className = 'pic';
+    div.dataset.code = k.code;
+
+    // Basit: link olarak göster (tıklanınca seçer; link ayrı sekmede açılır)
+    const a = document.createElement('a');
+    a.href = meta.url; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = meta.name + ' (' + k.code + ')';
+
+    div.appendChild(a);
+    div.onclick = () => togglePicSelection(div);
+    cont.appendChild(div);
+  });
 }
 
+// 4) Seçili durumu yönetme
 function togglePicSelection(el) {
   const code = el.dataset.code;
   if (selectedPics.has(code)) { selectedPics.delete(code); el.classList.remove('selected'); }
   else { selectedPics.add(code); el.classList.add('selected'); }
-  refreshPools();  // piktogramlara göre öneri havuzunu güncelle
+  // Öneri havuzlarını piktogramlara göre güncelle
+  if (typeof refreshPools === 'function') refreshPools();
 }
 
-// Örnek kullanım:
+// 5) İlk render: ISO + GHS karması
 renderPictoChooser('picChooser', [
   { group: 'iso', code: 'W001' }, { group: 'iso', code: 'M001' },
   { group: 'iso', code: 'E003' }, { group: 'iso', code: 'F001' },
   { group: 'ghs', code: 'GHS02' }, { group: 'ghs', code: 'GHS05' },
   { group: 'ghs', code: 'GHS07' }, { group: 'ghs', code: 'GHS08' }
 ]);
-
-});
+</script>
