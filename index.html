@@ -5,30 +5,32 @@
   <meta charset="utf-8">
   <title>Betriebsanweisung – Auswahl</title>
 
-  <!-- Ortak stil (A4 + grid + kutu düzeni) -->
-  /assets/style.css
+  <!-- DOĞRU: stil dosyasını <link> ile bağla -->
+  <link rel="stylesheet" href="/assets/style.css">
 
   <!-- Tür bazlı tema şeridi ön izlemesi -->
   <style>
-    :root {
-      --theme-color: #005aa3; /* varsayılan */
+    :root { --theme-color: #005aa3; } /* varsayılan */
+    .t-Gefahrstoff { --theme-color: #E53935; } /* kırmızı: kimyasal */
+    .t-Biostoff    { --theme-color: #2E7D32; } /* yeşil: bio */
+    .t-Maschine    { --theme-color: #005AA3; } /* mavi: makine */
+    .t-PSA         { --theme-color: #6A1B9A; } /* mor: KKD */
+
+    .hero {
+      background: linear-gradient(120deg, var(--theme-color), #111);
+      color: #fff; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
     }
-    .theme-preview {
-      height: 8px; border-radius: 4px; background: var(--theme-color); margin-bottom: 12px;
-    }
-    /* Tür → renk eşlemesi (kurumsal paletinize göre düzenleyin) */
-    .t-Gefahrstoff { --theme-color: #E53935; } /* kırmızı: kimyasal tehlike */
-    .t-Biostoff    { --theme-color: #2E7D32; } /* yeşil: biyo süreçler */
-    .t-Maschine    { --theme-color: #005AA3; } /* mavi: makine/tekniğe uyumlu */
-    .t-PSA         { --theme-color: #6A1B9A; } /* mor: KKD teması */
+    .hero h1 { margin: 0; font-size: 20px; letter-spacing: .2px; }
   </style>
 </head>
 <body class="page">
 <div class="wrapper" id="indexRoot">
 
-  <div class="theme-preview"></div>
-
-  <h1>Betriebsanweisung – Auswahl</h1>
+  <!-- Tema şeridi + başlık -->
+  <div class="hero">
+    <h1>Betriebsanweisung – Auswahl</h1>
+  </div>
 
   <section class="box">
     <label>Typ wählen:</label>
@@ -58,25 +60,24 @@
   </section>
 
   <div class="actions">
-    <button id="continue">Weiter zur Vorlage</button>
+    <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
   </div>
 
 </div>
 
-<!-- Uygulama mantığı (index + editor birlikte) -->
-/assets/app.js</script>
+<!-- DOĞRU: scripti <script type="module" src="..."> ile bağla -->
+<script type="module" src="/assets/app.js"></script>
 
+<!-- Tür seçimi → tema ön izlemesi -->
 <script>
-  // Tür seçimi → tema ön izlemesi
   const indexRoot = document.getElementById('indexRoot');
   const typeRow = document.getElementById('typeRow');
-  const preview = document.querySelector('.theme-preview');
+
   typeRow?.addEventListener('change', (e) => {
     const val = e.target?.value;
     if (!val) return;
     indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
     indexRoot.classList.add('t-' + val);
-    // CSS değişkeni otomatik güncellenir; şerit rengi anında değişir
   });
 </script>
 </body>
