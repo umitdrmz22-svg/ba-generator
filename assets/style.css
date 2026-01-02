@@ -3,10 +3,9 @@
 @page { size: A4; margin: 16mm; }
 
 .page { font-family: Arial, sans-serif; color:#111; background:#f6f8fb; }
-.wrapper { max-width: 960px; margin: 0 auto; padding: 18px; }
+.wrapper { max-width: 1080px; margin: 0 auto; padding: 18px; }
 
-h1 { font-size: 20px; letter-spacing: .2px; }
-
+h1 { font-size: 22px; letter-spacing: .6px; }
 .box {
   border: 1px solid #e1e6ef; border-radius: 12px; padding: 12px; margin: 10px 0;
   background:#fff; box-shadow: 0 8px 24px rgba(0,0,0,.06);
@@ -31,27 +30,22 @@ button { padding:10px 14px; font-size: 14px; border-radius:8px; cursor:pointer; 
 .btn-primary { background:#005aa3; color:#fff; border:none; }
 .btn-primary:hover { filter: brightness(1.05); }
 
-/* Tema renkleri (Tip'e göre) */
-:root { --theme-color:#005aa3; }
-.t-Gefahrstoff { --theme-color:#E53935; }
-.t-Biostoff    { --theme-color:#2E7D32; }
-.t-Maschine    { --theme-color:#005AA3; }
-.t-PSA         { --theme-color:#6A1B9A; }
+/* Piktogram paneli */
+.piclist { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
+.piccard { border:1px solid #d0d7de; border-radius:10px; background:#fff; padding:8px; text-align:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+.piccard img { width:64px; height:64px; object-fit:contain; margin:0 auto 6px; display:block; }
+.piccard .code { font-size:12px; color:#555; font-weight:700; }
+.piccard.selected { outline:3px solid var(--theme-color); }
 
-/* Editor görsellik */
-.hero {
-  background: linear-gradient(120deg, var(--theme-color), #111);
-  color:#fff; border-radius:10px; padding:16px 18px; margin-bottom:14px;
-  box-shadow:0 8px 24px rgba(0,0,0,.12);
-}
-.hero h1 { margin:0; font-size:20px; }
+.assignbar { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+.assignbar .target { border:1px dashed #cbd5e1; border-radius:8px; padding:8px 12px; cursor:pointer; background:#f7fafc; font-weight:700; }
+.assignbar .target:hover { background:#eef2ff; }
+.assignbar .auto { margin-left:auto; display:flex; gap:8px; align-items:center; }
 
-.pictos { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; }
-.pic { border:1px solid #ccc; padding:6px; background:#fff; cursor:pointer; border-radius:6px; width:88px; text-align:center; }
-.pic img { width:72px; height:72px; object-fit:contain; display:block; margin:0 auto 4px; }
-.pic .code { font-size:11px; color:#555; }
-.pic.selected { outline: 3px solid var(--theme-color); }
+.ba-band { background: var(--theme-color); color:#fff; padding:10px 12px; font-weight:800; border-radius:8px; margin:12px 0; letter-spacing:.4px; text-transform:uppercase; }
+.section-icons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+.section-icons img { width:48px; height:48px; object-fit:contain; }
 
+.list { border:1px solid #ddd; border-radius:6px; padding:10px; background:#f9fafb; min-height:80px; }
 .small { font-size:12px; color:#555; }
-.list  { border:1px solid #ddd; border-radius:4px; padding:10px; background:#fafafa; min-height:80px; }
 #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
