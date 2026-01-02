@@ -4,109 +4,103 @@
 <head>
   <meta charset="utf-8">
   <title>Betriebsanweisung – Vorlage</title>
-  <link rel="stylesheet" href="/assets/style.css">
-  <style>
-    :root { --theme-color:#005aa3; }
-    body.theme-Gefahrstoff { --theme-color:#E53935; }
-    body.theme-Biostoff    { --theme-color:#2E7D32; }
-    body.theme-Maschine    { --theme-color:#005AA3; }
-    body.theme-PSA         { --theme-color:#6A1B9A; }
-    .hero { background:linear-gradient(120deg,var(--theme-color),#111); color:#fff; border-radius:10px; padding:14px 16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
-    .hero h1 { margin:0; font-size:20px; }
-    .columns { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
-    h2 { font-size:15px; margin:14px 0 6px; border-bottom:3px solid var(--theme-color); padding-bottom:4px; }
-    .meta-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
-  </style>
+  <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body class="page" id="baBody">
   <div class="wrapper" id="baRoot" style="font-size:14px">
     <div class="hero"><h1>Betriebsanweisung – Vorlage</h1></div>
 
-    <div id="head"></div>
+    <!-- Başlık bloğu -->
+    <div id="head" class="box"></div>
 
+    <!-- Piktogram paneli: Liste görünüm + hızlı atama -->
     <div class="box">
-      <div class="meta-grid">
-        <div><label>Nr. (optional)</label><input id="metaNr" type="text"></div>
-        <div><label>Datum (optional)</label><input id="metaDate" type="date"></div>
-        <div><label>Firma (optional)</label><input id="metaFirma" type="text"></div>
-        <div><label>Tätigkeit (optional)</label><input id="metaTaet" type="text"></div>
-        <div><label>Arbeitsbereich/-platz (optional)</label><input id="metaArb" type="text"></div>
-        <div><label>Hersteller (optional)</label><input id="metaHer" type="text"></div>
-        <div><label>Typ (optional)</label><input id="metaTyp" type="text"></div>
-        <div><label>Verantwortlich (optional)</label><input id="metaVer" type="text"></div>
-        <div><label>Stand (optional)</label><input id="metaStand" type="text"></div>
+      <div class="ba-band">Piktogramm-Liste</div>
+      <div class="piclist" id="picList"></div>
+
+      <div class="assignbar">
+        <span class="small">Ausgewähltes Piktogramm zu Abschnitt hinzufügen:</span>
+        <div class="target" data-target="hazard">Gefährdungen</div>
+        <div class="target" data-target="tech">Technisch (S)</div>
+        <div class="target" data-target="org">Organisatorisch (O)</div>
+        <div class="target" data-target="ppe">PSA (P)</div>
+        <div class="target" data-target="em">Gefahrfall</div>
+        <div class="target" data-target="eh">Erste Hilfe</div>
+        <div class="target" data-target="dis">Entsorgung</div>
       </div>
+
+      <div class="small">Tipp: Ein Piktogramm anklicken → anschließend z. B. „Gefährdungen“ kutusuna tıklayın. AI liefert Vorschläge passend zum Piktogramm & Abschnitt.</div>
     </div>
 
-    <h2>ANWENDUNGSBEREICH</h2>
-    <textarea id="scope" rows="4" placeholder="Für welches Arbeitsmittel/Verfahren gilt diese Betriebsanweisung?"></textarea>
+    <!-- ANWENDUNGSBEREICH -->
+    <div class="ba-band">Anwendungsbereich</div>
+    <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
 
-    <h2>Gefährdungen für Mensch und Umwelt</h2>
-    <div class="pictos" id="picChooser"></div>
-    <div class="small">Vorschläge basierend auf gewählten Piktogrammen:</div>
+    <!-- Bölümler: ikonlar + maddeler -->
+    <div class="ba-band">Gefährdungen für Mensch und Umwelt</div>
+    <div class="section-icons" id="icons-hazard"></div>
+    <div class="small">Vorschläge:</div>
     <div id="hazardPool" class="list"></div>
     <div class="small">Ihre Auswahl:</div>
     <div id="hazardList" class="list"></div>
-    <input id="hazardCustom" type="text" placeholder="Eigenen Punkt hinzufügen…">
-    <button id="hazardAdd">Hinzufügen</button>
+    <input id="hazardCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="hazardAdd">Hinzufügen</button>
 
-    <h2>Schutzmaßnahmen und Verhaltensregeln</h2>
-    <div class="columns">
-      <div>
-        <h3>Technische Maßnahmen (S)</h3>
-        <div id="techPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="techList" class="list"></div>
-        <input id="techCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="techAdd">Hinzufügen</button>
-      </div>
-      <div>
-        <h3>Organisatorische Maßnahmen (O)</h3>
-        <div id="orgPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="orgList" class="list"></div>
-        <input id="orgCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="orgAdd">Hinzufügen</button>
-        <h3>Persönliche Schutzausrüstung (P)</h3>
-        <div id="ppePool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="ppeList" class="list"></div>
-        <input id="ppeCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="ppeAdd">Hinzufügen</button>
-      </div>
-    </div>
+    <div class="ba-band">Schutzmaßnahmen und Verhaltensregeln – Technisch (S)</div>
+    <div class="section-icons" id="icons-tech"></div>
+    <div class="small">Vorschläge:</div>
+    <div id="techPool" class="list"></div>
+    <div class="small">Ihre Auswahl:</div>
+    <div id="techList" class="list"></div>
+    <input id="techCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="techAdd">Hinzufügen</button>
 
-    <h2>Verhalten im Gefahrfall</h2>
+    <div class="ba-band">Schutzmaßnahmen und Verhaltensregeln – Organisatorisch (O)</div>
+    <div class="section-icons" id="icons-org"></div>
+    <div class="small">Vorschläge:</div>
+    <div id="orgPool" class="list"></div>
+    <div class="small">Ihre Auswahl:</div>
+    <div id="orgList" class="list"></div>
+    <input id="orgCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="orgAdd">Hinzufügen</button>
+
+    <div class="ba-band">Persönliche Schutzausrüstung (P)</div>
+    <div class="section-icons" id="icons-ppe"></div>
+    <div class="small">Vorschläge:</div>
+    <div id="ppePool" class="list"></div>
+    <div class="small">Ihre Auswahl:</div>
+    <div id="ppeList" class="list"></div>
+    <input id="ppeCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="ppeAdd">Hinzufügen</button>
+
+    <div class="ba-band">Verhalten im Gefahrfall</div>
+    <div class="section-icons" id="icons-em"></div>
+    <div class="small">Vorschläge:</div>
     <div id="emPool" class="list"></div>
     <div class="small">Ihre Auswahl:</div>
     <div id="emList" class="list"></div>
     <input id="emCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="emAdd">Hinzufügen</button>
 
-    <h2>Erste Hilfe</h2>
+    <div class="ba-band">Erste Hilfe</div>
+    <div class="section-icons" id="icons-eh"></div>
+    <div class="small">Vorschläge:</div>
     <div id="ehPool" class="list"></div>
     <div class="small">Ihre Auswahl:</div>
     <div id="ehList" class="list"></div>
     <input id="ehCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="ehAdd">Hinzufügen</button>
 
-    <h2>Sachgerechte Entsorgung / Inaktivierung</h2>
+    <div class="ba-band">Sachgerechte Entsorgung / Inaktivierung</div>
+    <div class="section-icons" id="icons-dis"></div>
+    <div class="small">Vorschläge:</div>
     <div id="disPool" class="list"></div>
     <div class="small">Ihre Auswahl:</div>
     <div id="disList" class="list"></div>
     <input id="disCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="disAdd">Hinzufügen</button>
 
-    <div id="fontHint">Hinweis: Inhalt überschreitet zwei Seiten → Schriftgröße wurde verkleinert (min. 10 pt).</div>
+    <div id="fontHint" class="small" style="color:#b40000;font-weight:bold;display:none;">Hinweis: Inhalt überschreitet zwei Seiten → Schriftgröße wurde verkleinert (min. 10 pt).</div>
 
     <div class="actions" style="margin-top:10px">
       <button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button>
-      <button id="saveCloud" class="btn-primary">In Cloud speichern (optional)</button>
       <button class="btn-primary" onclick="window.print()">PDF (max. 2 Seiten)</button>
     </div>
   </div>
 
   <script type="module" src="/assets/app.js"></script>
-  <script>
-    try {
-      const HEAD = JSON.parse(localStorage.getItem('BA_HEAD') || '{}');
-      const b = document.getElementById('baBody');
-      if (HEAD?.type && b) b.classList.add('theme-' + HEAD.type);
-    } catch {}
-  </script>
 </body>
 </html>
