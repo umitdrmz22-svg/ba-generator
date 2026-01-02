@@ -9,7 +9,7 @@ try { isEditor = !!qs('#baRoot');  } catch {}
 function getHEAD(){ try{ return JSON.parse(localStorage.getItem('BA_HEAD')||'{}'); }catch{return{}} }
 let HEAD = getHEAD();
 
-// ---------- INDEX ----------
+// ---------------- INDEX ----------------
 try {
   if (isIndex) {
     const btn = qs('#continue');
@@ -50,7 +50,7 @@ try {
   }
 } catch(e){ console.error('INDEX', e); }
 
-// ---------- EDITOR ----------
+// ---------------- EDITOR ----------------
 let PICTO=null, SUG={};
 try { PICTO = await fetch('/assets/pictos_index.json',{cache:'no-store'}).then(r=>r.json()); } catch {}
 try { SUG   = await fetch('/assets/suggestions.json',{cache:'no-store'}).then(r=>r.json()); } catch { SUG={}; }
@@ -175,25 +175,23 @@ function enforceTwoPages(){
   else { fontHint.style.display='none'; }
 }
 
-// ---- Word export: resimler yüklemeden (proxy’den) PNG olarak gömme ----
+// ---- Word export: resim yüklemeden (proxy’li kaynaklardan) PNG olarak gömme ----
 async function imageToPngBytes(url){
-  // Proxy'den gelen SVG/GIF/PNG -> canvas PNG
   const res = await fetch(url, {cache:'no-store'});
   if (!res.ok) throw new Error('img fetch failed');
   const ct = res.headers.get('content-type') || '';
   const blob = await res.blob();
 
-  // PNG/JPEG ise direkt:
+  // PNG/JPEG ise direkt bayt
   if (/png|jpeg|jpg/i.test(ct)) { const ab = await blob.arrayBuffer(); return new Uint8Array(ab); }
 
-  // SVG/GIF -> canvas
+  // SVG/GIF -> canvas rasterize
   const dataUrl = await (async ()=>{
     if (/svg/i.test(ct)) {
       const svgText = await blob.text();
       return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
     }
-    // GIF veya bilinmeyen: objectURL üzerinden img
-    return URL.createObjectURL(blob);
+    return URL.createObjectURL(blob); // GIF veya diğer
   })();
 
   const img = new Image();
@@ -203,7 +201,6 @@ async function imageToPngBytes(url){
   await new Promise((ok,err)=>{ img.onload=ok; img.onerror=err; img.src=dataUrl; });
   ctx.clearRect(0,0,96,96); ctx.drawImage(img,0,0,96,96);
   const pngDataUrl = canvas.toDataURL('image/png');
-  // dataURL -> bytes
   const b64 = pngDataUrl.split(',')[1]; const bin = atob(b64);
   const bytes = new Uint8Array(bin.length);
   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
@@ -225,7 +222,10 @@ async function exportDocx(mode){
     width:{ size:100, type:WidthType.PERCENTAGE },
     rows:[ new TableRow({ children:[ new TableCell({
       shading:{ type:ShadingType.SOLID, color:barColor, fill:barColor },
-      children:[ new Paragraph({ alignment:AlignmentType.CENTER, children:[ new TextRun({ text:t.toUpperCase(), bold:true, color:'FFFFFF' }) ] }) ]
+      children:[ new Paragraph({
+        alignment:AlignmentType.CENTER,
+        children:[ new TextRun({ text:t.toUpperCase(), bold:true, color:'FFFFFF' }) ]
+      }) ]
     }) ] }) ]
   });
 
