@@ -1,0 +1,78 @@
+
+{
+  "Gefahrstoff": {
+    "hazards": {
+      "GHS02": [
+        "Entzündbare Flüssigkeit: Brand-/Explosionsgefahr bei Funken/Flamme",
+        "Dämpfe können mit Luft explosionsfähige Gemische bilden"
+      ],
+      "GHS05": [
+        "Ätzgefahr: schwere Haut- und Augenschäden",
+        "Korrosiv gegenüber Metallen"
+      ],
+      "GHS07": [
+        "Reizung der Haut/Augen; Übelkeit/Schwindel möglich"
+      ],
+      "GHS08": [
+        "Langzeitgesundheitsgefahr (z. B. Karzinogenität, Mutagenität)"
+      ]
+    },
+    "tech": {
+      "GHS02": ["Zündquellen entfernen; EX-geschützte Geräte verwenden", "Lokale Absaugung/Lüftung"],
+      "GHS05": ["Augendusche/Notdusche bereitstellen", "Beständige Auffangwannen"],
+      "GHS07": ["Dicht verschließen; Mengen begrenzen"],
+      "GHS08": ["Geschlossene Systeme; Expositionszeit minimieren"]
+    },
+    "org": {
+      "GHS02": ["Freigabeverfahren; Mengenbegrenzung", "Nur geschulte Personen"],
+      "GHS05": ["Sicherheitsdatenblatt prüfen; Lager-/Transportregeln"],
+      "GHS07": ["CLP-Kennzeichnung; Zutrittsregelung"],
+      "GHS08": ["Arbeitsmedizinische Beratung; jährliche Unterweisung"]
+    },
+    "ppe": {
+      "GHS02": ["Schutzbrille, chem. Schutzhandschuhe"],
+      "GHS05": ["Gesichtsschutz/Brille, Schutzhandschuhe, Schürze"],
+      "GHS07": ["Atemschutz nach Gefährdungsbeurteilung"],
+      "GHS08": ["Atemschutz ve kapalı koruyucu giysi (gerektiğinde)"]
+    },
+    "em": {
+      "GHS02": ["Bölgeyi boşalt; yangın bildir; uygun söndürücü kullan"],
+      "GHS05": ["Sızıntıyı sınırlayın; kontaminasyon alanını ayırın"]
+    },
+    "eh": {
+      "GHS05": ["Göz 15 dk yıka; derhal tıbbi yardım"],
+      "GHS07": ["Taze hava; semptomları gözlemle"]
+    },
+    "dis": {
+      "GHS02": ["Tehlikeli atık kapları; etiketli ve kapalı"],
+      "GHS05": ["İnaktivasyon/neutralizasyon prosedürü"]
+    }
+  },
+  "Biostoff": {
+    "hazards": { "W001": ["Infektionsgefahr (Aerosol/Kontakt)"] },
+    "tech":   { "W001": ["Gerekirse Biyogüvenlik kabini; fiziksel ayrım"] },
+    "org":    { "W001": ["Hijyen kuralları; kesici-delici güvenliği"] },
+    "ppe":    { "W001": ["Eldiven, koruyucu gözlük/visör; gerekirse solunum"] },
+    "em":     { "W001": ["Maruziyeti bildir; alanı dekontamine et"] },
+    "eh":     { "W001": ["Derhal yıkama/dekontaminasyon; tıbbi değerlendirme"] },
+    "dis":    { "W001": ["Biyolojik atık; uygun inaktivasyon ve bertaraf"] }
+  },
+  "Maschine": {
+    "hazards": { "W001": ["Quetsch-/Einzugsstellen; elektrik riski"] },
+    "tech":    { "W001": ["Koruyucu muhafaza; Not-Halt; kilitleme"] },
+    "org":     { "W001": ["Yalnızca eğitimli personel; periyodik bakım"] },
+    "ppe":     { "M001": ["Gözlük, işitme koruması (gerektiğinde), eldiven"] },
+    "em":      { "W001": ["Acil durdur; alanı güvene al; yetkiliye bildir"] },
+    "eh":      { "W001": ["Uygun ilk yardım; göz/deri temas prosedürü"] },
+    "dis":     { "W001": ["Bakım atıkları; yağ/kimyasal sızıntı toplama"] }
+  },
+  "PSA": {
+    "hazards": { "M001": ["KKD kullanılmadığında risk artışı"] },
+    "tech":    { "M001": ["PSA temizlik/depolama istasyonları"] },
+    "org":     { "M001": ["Uyum testi; eğitim; kullanım kayıtları"] },
+    "ppe":     { "M001": ["Kask, göz/ yüz, solunum, el/kol, ayak, düşmeye karşı koruma"] },
+    "em":      { "M001": ["KKD arızasında işi durdur; ikame temin"] },
+    "eh":      { "M001": ["İlk yardım; maruziyet değerlendirmesi"] },
+    "dis":     { "M001": ["Tek kullanımlık KKD’yi kontaminasyona göre bertaraf"] }
+  }
+}
