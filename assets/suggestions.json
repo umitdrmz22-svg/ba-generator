@@ -8,71 +8,71 @@
       ],
       "GHS05": [
         "Ätzgefahr: schwere Haut- und Augenschäden",
-        "Korrosion an Metallen möglich"
+        "Korrosiv gegenüber Metallen"
       ],
       "GHS07": [
         "Reizung der Haut/Augen; Übelkeit/Schwindel möglich"
       ],
       "GHS08": [
-        "Langfristige Gesundheitsgefahr (z. B. Karzinogenität, Mutagenität)"
+        "Langzeitgesundheitsgefahr (z. B. Karzinogenität, Mutagenität)"
       ]
     },
     "tech": {
-      "GHS02": ["Zündquellen entfernen; EX-geschützte Geräte verwenden", "Lokale Absaugung/Lüftung sicherstellen"],
-      "GHS05": ["Augendusche/Notdusche bereitstellen", "Beständige Auffangwannen nutzen"],
-      "GHS07": ["Behälter dicht verschließen; Mengen begrenzen"],
-      "GHS08": ["Geschlossene Systeme einsetzen; Expositionszeit minimieren"]
+      "GHS02": ["Zündquellen entfernen; EX-geschützte Geräte verwenden", "Lokale Absaugung/Lüftung"],
+      "GHS05": ["Augendusche/Notdusche bereitstellen", "Beständige Auffangwannen"],
+      "GHS07": ["Dicht verschließen; Mengen begrenzen"],
+      "GHS08": ["Geschlossene Systeme; Expositionszeit minimieren"]
     },
     "org": {
-      "GHS02": ["Freigabeverfahren anwenden; Mengenbegrenzung", "Nur geschulte Personen zulassen"],
-      "GHS05": ["Sicherheitsdatenblatt prüfen; Lager-/Transportregeln beachten"],
+      "GHS02": ["Freigabeverfahren; Mengenbegrenzung", "Nur geschulte Personen"],
+      "GHS05": ["Sicherheitsdatenblatt prüfen; Lager-/Transportregeln"],
       "GHS07": ["CLP-Kennzeichnung; Zutrittsregelung"],
       "GHS08": ["Arbeitsmedizinische Beratung; jährliche Unterweisung"]
     },
     "ppe": {
-      "GHS02": ["Schutzbrille, chemische Schutzhandschuhe"],
-      "GHS05": ["Gesichtsschutz/Brille, Schutzhandschuhe, Schürze"],
-      "GHS07": ["Atemschutz gemäß Gefährdungsbeurteilung"],
-      "GHS08": ["Geeigneter Atemschutz und Schutzkleidung (falls erforderlich)"]
+      "GHS02": ["Schutzbrille und chemische Schutzhandschuhe"],
+      "GHS05": ["Gesichtsschutz/Brille, Schutzhandschuhe, Schutzschürze"],
+      "GHS07": ["Atemschutz nach Gefährdungsbeurteilung"],
+      "GHS08": ["Atemschutz und geschlossene Schutzkleidung (falls erforderlich)"]
     },
     "em": {
-      "GHS02": ["Bereich räumen; Brand melden; geeignetes Löschmittel verwenden"],
-      "GHS05": ["Leckage begrenzen; Kontaminationsbereich absperren"]
+      "GHS02": ["Bereich räumen; Brand melden; geeignetes Löschmittel einsetzen"],
+      "GHS05": ["Leckage eindämmen; Kontaminationsbereich abgrenzen"]
     },
     "eh": {
-      "GHS05": ["Augen 15 min spülen; sofort ärztliche Hilfe"],
-      "GHS07": ["Frischluft zuführen; Symptome beobachten"]
+      "GHS05": ["Augen 15 Min. spülen; sofort ärztliche Hilfe"],
+      "GHS07": ["Frischluft; Symptome beobachten"]
     },
     "dis": {
-      "GHS02": ["Gefahrstoffabfall in gekennzeichneten, geschlossenen Behältern sammeln"],
-      "GHS05": ["Inaktivierungs-/Neutralisationsverfahren beachten"]
+      "GHS02": ["Gefahrstoffsichere Behälter; etikettiert und verschlossen"],
+      "GHS05": ["Inaktivierungs/Neutralisationsverfahren anwenden"]
     }
   },
   "Biostoff": {
     "hazards": { "W001": ["Infektionsgefahr (Aerosol/Kontakt)"] },
-    "tech":   { "W001": ["Biologische Sicherheitswerkbank (falls erforderlich); räumliche Trennung"] },
-    "org":    { "W001": ["Hygieneregeln; Sichere Handhabung von scharfen/spitzen Gegenständen"] },
-    "ppe":    { "W001": ["Einweghandschuhe, Schutzbrille/Visier; ggf. Atemschutz"] },
+    "tech":   { "W001": ["Bei Bedarf Sicherheitswerkbank; räumliche Trennung"] },
+    "org":    { "W001": ["Hygieneregeln; Stich-/Schnittschutz"] },
+    "ppe":    { "W001": ["Handschuhe, Schutzbrille/Visier; ggf. Atemschutz"] },
     "em":     { "W001": ["Exposition melden; Bereich dekontaminieren"] },
-    "eh":     { "W001": ["Sofort waschen/dekontaminieren; medizinische Bewertung"] },
-    "dis":    { "W001": ["Biologischer Abfall: Inaktivierung und fachgerechte Entsorgung"] }
+    "eh":     { "W001": ["Sofortiges Waschen/Dekontamination; ärztliche Beurteilung"] },
+    "dis":    { "W001": ["Biologischer Abfall; sachgerechte Inaktivierung und Entsorgung"] }
   },
   "Maschine": {
-    "hazards": { "W001": ["Quetsch-/Einzugstellen; elektrisches Risiko"] },
-    "tech":    { "W001": ["Schutzverkleidungen; Not-Halt; Lockout/Tagout"] },
+    "hazards": { "W001": ["Quetsch-/Einzugsstellen; elektrisches Risiko"] },
+    "tech":    { "W001": ["Schutzverkleidungen; Not-Halt; Verriegelung (LOTO)"] },
     "org":     { "W001": ["Nur geschultes Personal; regelmäßige Wartung"] },
-    "ppe":     { "M001": ["Schutzbrille, Gehörschutz (falls erforderlich), Handschuhe"] },
-    "em":      { "W001": ["Ausschalten; Bereich sichern; Vorgesetzte informieren"] },
-    "eh":      { "W001": ["Erste Hilfe gemäß Verletzung; Augen-/Hautkontakt-Notfallplan"] },
-    "dis":     { "W001": ["Wartungsabfälle; Öl/Chemikalien fachgerecht aufnehmen/entsorgen"] }
+    "ppe":     { "M001": ["Schutzbrille; ggf. Gehörschutz; geeignete Handschuhe"] },
+    "em":      { "W001": ["Not-Halt betätigen; Bereich sichern; Verantwortliche informieren"] },
+    "eh":      { "W001": ["Erste Hilfe entsprechend Verletzung; Augenschutz/Handschutzmaßnahmen"] },
+    "dis":     { "W001": ["Wartungsabfälle; Öl/Chemikalien fachgerecht aufnehmen und entsorgen"] }
   },
   "PSA": {
-    "hazards": { "M001": ["Erhöhtes Risiko bei fehlender PSA"] },
+    "hazards": { "M001": ["Erhöhtes Risiko bei Nichtbenutzung der PSA"] },
     "tech":    { "M001": ["Reinigungs-/Lagerstationen für PSA bereitstellen"] },
-    "org":     { "M001": ["Passformprüfung; Unterweisung; Nutzungsdokumentation"] },
-    "ppe":     { "M001": ["Kopf-, Augen-/Gesichts-, Atem-, Hand-/Arm-, Fuß-, und Absturzschutz je nach Tätigkeit"] },
-    "em":      { "M001": ["Bei PSA-Defekt Arbeit unterbrechen; Ersatz bereitstellen"] },
+    "org":     { "M001": ["Anpassungstest; Unterweisung; Nutzungsnachweise"] },
+    "ppe":     { "M001": ["Kopf-, Augen-/Gesicht-, Atem-, Hand-/Arm-, Fuß-, Absturzschutz je nach Tätigkeit"] },
+    "em":      { "M001": ["Bei PSA-Ausfall Arbeit stoppen; Ersatz beschaffen"] },
     "eh":      { "M001": ["Erste Hilfe; Expositionsbewertung"] },
-    "dis":     { "M001": ["Einweg-PSA je nach Kontamination entsorgen"] }
+    "dis":     { "M001": ["Einweg-PSA nach Kontaminationsgrad entsorgen"] }
   }
 }
