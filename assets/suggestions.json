@@ -1,78 +1,75 @@
 
 {
-  "Gefahrstoff": {
-    "hazards": {
+  "Maschine": {
+    "hazard": {
+      "W001": [
+        "Elektrische Gefährdungen: Vor Arbeitsbeginn alle Zuleitungen und Gehäuse sichtbar prüfen und beschädigte Leitungen sofort außer Betrieb nehmen.",
+        "Eingriffe nur durch Elektrofachkräfte oder unter deren Aufsicht durchführen und die fünf Sicherheitsregeln konsequent anwenden.",
+        "Nach dem Freischalten die Spannungsfreiheit mit geeignetem Messgerät feststellen und gegen Wiedereinschalten sichern.",
+        "Feuchtigkeit, leitfähiger Staub und enge metallische Räume erhöhen das Risiko, daher zusätzliche Schutzmaßnahmen einhalten.",
+        "Ereignisse dokumentieren und der verantwortlichen Führungskraft melden, um Wiederholungen zu vermeiden."
+      ],
       "GHS02": [
-        "Entzündbare Flüssigkeit: Brand-/Explosionsgefahr durch Funken/Flammen",
-        "Dämpfe können mit Luft explosionsfähige Gemische bilden"
-      ],
-      "GHS05": [
-        "Ätzgefahr: schwere Haut- und Augenschäden",
-        "Korrosiv gegenüber Metallen"
-      ],
-      "GHS07": [
-        "Reizung der Haut/Augen; Übelkeit/Schwindel möglich"
-      ],
-      "GHS08": [
-        "Langzeitgesundheitsgefahr (z. B. Karzinogenität oder Mutagenität)"
+        "Zündquellen wie Funken, offene Flamme und heiße Oberflächen konsequent fernhalten und entzündliche Medien dicht lagern.",
+        "Lokale Absaugung und ausreichende Lüftung sicherstellen, elektrostatische Aufladung minimieren und erden.",
+        "Beim Umfüllen Behälter und Anlagen erden und leitfähige Schläuche einsetzen, damit keine Ladung aufgebaut wird.",
+        "Geeignete Löschmittel (z. B. CO₂, Schaum) bereithalten und Beschäftigte in deren Verwendung unterweisen.",
+        "Nach Brandereignissen den Bereich räumen, Ursache analysieren und Abstellmaßnahmen dokumentieren."
       ]
     },
     "tech": {
-      "GHS02": ["Zündquellen entfernen; EX-geschützte Geräte einsetzen", "Lokale Absaugung/Lüftung sicherstellen"],
-      "GHS05": ["Augendusche/Notdusche bereitstellen", "Beständige Auffangwannen verwenden"],
-      "GHS07": ["Dicht verschließen; Mengen begrenzen"],
-      "GHS08": ["Geschlossene Systeme; Expositionszeit minimieren"]
+      "W001": [
+        "Lockout/Tagout (LOTO) anwenden, Anlage vollständig freischalten und mit persönlichem Schloss sichern.",
+        "Gespeicherte Energien (Druck, Feder) abbauen und Nachlaufzeiten beachten, mechanische Verriegelungen einsetzen.",
+        "Nach Instandhaltung eine dokumentierte Funktionsprüfung durchführen, Schutzsysteme auf Wirksamkeit testen.",
+        "Nur zugelassene Arbeitsmittel einsetzen und Wartungsintervalle gemäß Prüfliste einhalten.",
+        "Steuerungsänderungen nur durch Autorisierte durchführen und Änderungen dokumentieren."
+      ]
     },
     "org": {
-      "GHS02": ["Freigabeverfahren; Mengenbegrenzung", "Nur geschulte Personen"],
-      "GHS05": ["Sicherheitsdatenblatt prüfen; Lager-/Transportregeln einhalten"],
-      "GHS07": ["CLP-Kennzeichnung; Zutrittsregelung"],
-      "GHS08": ["Arbeitsmedizinische Beratung; jährliche Unterweisung"]
+      "W001": [
+        "Arbeiten nur mit schriftlicher Freigabe (Erlaubnisschein) durchführen und Abschnittsgrenzen klar kennzeichnen.",
+        "Unbefugten Zutritt verhindern und Gefährdungsbereiche abgrenzen, Warnhinweise gemäß ISO 7010 anbringen.",
+        "Betriebsanweisungen aktuell halten und Unterweisungen jährlich mit Praxisbezug durchführen.",
+        "Beinahe‑Ereignisse melden, Ursachen analysieren und Abstellmaßnahmen nachverfolgen.",
+        "Ersatzteile und Änderungen nur mit Herstellerfreigabe, CE‑Konformität sicherstellen."
+      ]
     },
     "ppe": {
-      "GHS02": ["Schutzbrille; chemikalienbeständige Handschuhe"],
-      "GHS05": ["Gesichtsschutz/Brille; Schutzhandschuhe; Schürze"],
-      "GHS07": ["Atemschutz gemäß Gefährdungsbeurteilung"],
-      "GHS08": ["Atemschutz und geschlossene Schutzkleidung (falls erforderlich)"]
+      "M001": [
+        "Schutzbrille mit Seitenschutz und ggf. Gesichtsschutz gegen Spanflug verwenden.",
+        "Gehörschutz bei Lärmexposition über Grenzwert tragen und Wirksamkeit prüfen.",
+        "Schnittfeste Handschuhe nur dort einsetzen, wo keine Einzugsgefahr besteht; enganliegende Kleidung wählen.",
+        "Sicherheitsschuhe mit Zehenschutz tragen, rutschhemmende Sohlen bei glatten Böden verwenden.",
+        "Hautschutzplan bei Kühlschmierstoffen beachten und kontaminierte Kleidung zeitnah wechseln."
+      ]
     },
     "em": {
-      "GHS02": ["Bereich räumen; Brand melden; geeignetes Löschmittel einsetzen"],
-      "GHS05": ["Leck eindämmen; Kontaminationsbereich sichern"]
+      "W001": [
+        "Bei Gefahr sofort Not‑Halt betätigen, Bereich sichern und alle Personen warnen.",
+        "Verletzte nur ohne Selbstgefährdung retten und Stromquellen freischalten; bewegte Teile stoppen.",
+        "Vorgesetzte informieren und Ereignis dokumentieren (Ursache, Maßnahmen, Beteiligte).",
+        "Ersthelfer und Brandschutzhelfer koordinieren, Sammelpunkt nutzen und Lüftung maximieren.",
+        "Ursachenanalyse durchführen und Abstellmaßnahmen prüfen."
+      ]
     },
     "eh": {
-      "GHS05": ["Augen 15 Min. spülen; umgehend ärztliche Hilfe"],
-      "GHS07": ["Frischluft; Symptome beobachten"]
+      "E003": [
+        "Schnitt-/Quetschverletzungen blutungsstillend versorgen und verunreinigte Wunden spülen.",
+        "Bei Augenkontakt mindestens 15 Minuten spülen und ärztliche Abklärung veranlassen.",
+        "Bei Stromunfall erst nach Freischalten berühren, Vitalfunktionen prüfen und ggf. reanimieren.",
+        "Notruf absetzen und alle Erste‑Hilfe‑Leistungen dokumentieren.",
+        "Ursachen und Folgemaßnahmen bewerten, um Wiederholungen zu vermeiden."
+      ]
     },
     "dis": {
-      "GHS02": ["Behälter für gefährliche Abfälle; etikettiert und geschlossen"],
-      "GHS05": ["Inaktivations-/Neutralisationsverfahren anwenden"]
+      "W001": [
+        "Wartungsabfälle getrennt sammeln und öl-/chemikalienhaltige Abfälle gekennzeichneten Behältern zuführen.",
+        "Leckagen mit Bindemittel aufnehmen und kontaminierte Materialien als gefährliche Abfälle entsorgen.",
+        "Kühlschmierstoffe gemäß Herstellerangaben wechseln/entsorgen und Nachweise führen.",
+        "Bereich reinigen und Rutschgefahr beseitigen; Auffangwannen/Abscheider regelmäßig prüfen.",
+        "Sicherheitsdatenblatt/Betriebsanleitung beachten und Anpassungen dokumentieren."
+      ]
     }
-  },
-  "Biostoff": {
-    "hazards": { "W001": ["Infektionsgefahr (Aerosol/Kontakt)"] },
-    "tech":   { "W001": ["Sicherheitswerkbank; räumliche Trennung"] },
-    "org":    { "W001": ["Hygieneregeln; Schutz vor Stich-/Schnittverletzungen"] },
-    "ppe":    { "W001": ["Einweghandschuhe; Schutzbrille/Visier; ggf. Atemschutz"] },
-    "em":     { "W001": ["Exposition melden; Bereich dekontaminieren"] },
-    "eh":     { "W001": ["Sofortiges Waschen/Dekontamination; ärztliche Beurteilung"] },
-    "dis":    { "W001": ["Biologischer Abfall; Inaktivierung und sachgerechte Entsorgung"] }
-  },
-  "Maschine": {
-    "hazards": { "W001": ["Quetsch-/Einzugsstellen; elektrisches Risiko"] },
-    "tech":    { "W001": ["Schutzhauben; Not-Halt; Verriegelung (Lockout/Tagout)"] },
-    "org":     { "W001": ["Nur geschultes Personal; regelmäßige Wartung"] },
-    "ppe":     { "M001": ["Schutzbrille; ggf. Gehörschutz; Schutzhandschuhe"] },
-    "em":      { "W001": ["Not-Halt betätigen; Bereich sichern; Vorgesetzte informieren"] },
-    "eh":      { "W001": ["Erste Hilfe gemäß Gefährdung; Augen-/Hautkontakt-Prozedur"] },
-    "dis":     { "W001": ["Wartungsabfälle; Öl/Chemikalien-Leckagen aufnehmen"] }
-  },
-  "PSA": {
-    "hazards": { "M001": ["Erhöhtes Risiko bei Nichtverwendung von PSA"] },
-    "tech":    { "M001": ["Reinigungs-/Lagerstationen für PSA"] },
-    "org":     { "M001": ["Passformtest; Schulung; Nutzungsnachweise"] },
-    "ppe":     { "M001": ["Kopf-, Augen-/Gesichts-, Atem-, Hand-/Arm-, Fußschutz; Höhensicherung"] },
-    "em":      { "M001": ["Bei PSA-Ausfall Arbeit stoppen; Ersatz bereitstellen"] },
-    "eh":      { "M001": ["Erste Hilfe; Expositionsbeurteilung"] },
-    "dis":     { "M001": ["Einweg-PSA nach Kontaminationsgrad entsorgen"] }
   }
 }
