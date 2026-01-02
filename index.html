@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <title>Betriebsanweisung – Auswahl</title>
 
-  <!-- DOĞRU: CSS dosyasını link ile bağla -->
-  <link rel="stylesheet" href="/assets/style.css">
+  <!-- CSS'i DOĞRU şekilde bağla -->
+  <link rel="stylesheet" href="/assets/style.css" />
 
   <!-- Tür bazlı tema -->
   <style>
@@ -21,7 +21,8 @@
   </style>
 </head>
 <body class="page">
-<div class="wrapper" id="indexRoot">
+<div class="wrapper t-Gefahrstoff" id="indexRoot">
+
   <div class="hero"><h1>Betriebsanweisung – Auswahl</h1></div>
 
   <section class="box">
@@ -56,19 +57,47 @@
   </div>
 </div>
 
-<!-- DOĞRU: JS dosyasını script ile (ESM) bağla -->
+<!-- JS'i DOĞRU şekilde (ESM) bağla -->
 <script type="module" src="/assets/app.js"></script>
 
-<!-- Tür seçimi → tema ön izlemesi -->
+<!-- Yedek: app.js çalışmasa bile buton çalışsın (fallback) -->
 <script>
-  const indexRoot = document.getElementById('indexRoot');
-  const typeRow = document.getElementById('typeRow');
-  typeRow?.addEventListener('change', (e) => {
-    const val = e.target?.value;
-    if (!val) return;
-    indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
-    indexRoot.classList.add('t-' + val);
-  });
+  (function () {
+    const btn = document.getElementById('continue');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      // app.js zaten handle ediyorsa bubble etsin; fallback tetiklenirse çalışır
+      if (btn.dataset.bound === '1') return;
+
+      e.preventDefault();
+      const type = [...document.querySelectorAll('input[name="type"]')].find(r => r.checked)?.value;
+      const firm = document.getElementById('firm')?.value?.trim();
+      const dept = document.getElementById('dept')?.value?.trim();
+      const author = document.getElementById('author')?.value?.trim();
+      const date = document.getElementById('date')?.value;
+
+      if (!type || !firm || !author || !date) {
+        alert('Bitte Typ, Unternehmen, Ersteller und Datum ausfüllen.');
+        return;
+      }
+      const head = { type, firm, dept: dept || '', author, date, logoUrl: window.__uploadedLogoUrl || '' };
+      try { localStorage.setItem('BA_HEAD', JSON.stringify(head)); } catch {}
+      // relatif yol, kökte de çalışır
+      location.href = 'editor.html';
+    });
+  })();
+
+  // Tür seçimi → tema sınıfı
+  (function () {
+    const indexRoot = document.getElementById('indexRoot');
+    const typeRow = document.getElementById('typeRow');
+    typeRow?.addEventListener('change', (e) => {
+      const val = e.target?.value;
+      if (!val) return;
+      indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
+      indexRoot.classList.add('t-' + val);
+    });
+  })();
 </script>
 </body>
 </html>
