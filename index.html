@@ -11,16 +11,19 @@
     .t-Biostoff    { --theme-color:#2E7D32; }
     .t-Maschine    { --theme-color:#005AA3; }
     .t-PSA         { --theme-color:#6A1B9A; }
-    .hero { background:linear-gradient(90deg,var(--theme-color),#111); color:#fff; border-radius:12px; padding:16px 18px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); text-transform:uppercase; }
-    .hero h1 { margin:0; font-size:22px; letter-spacing:.8px; }
-    .muted { font-size:12px; color:#666; }
-    .optbox{ border:1px solid #ddd; border-radius:8px; padding:10px; margin-top:8px; }
-    .font-sel { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+    .hero {
+      background: linear-gradient(90deg, var(--theme-color), #111);
+      color:#fff; border-radius:12px; padding:18px 20px; margin-bottom:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.12); text-transform:uppercase;
+    }
+    .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
+    .muted   { font-size:12px; color:#666; }
   </style>
 </head>
 <body class="page">
-  <div class="wrapper t-Gefahrstoff" id="indexRoot">
-    <div class="hero"><h1>Betriebsanweisung – Auswahl</h1></div>
+  <div class="wrapper t-Maschine" id="indexRoot">
+    <div class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></div>
 
     <section class="box">
       <label>Typ wählen (optional):</label>
@@ -52,13 +55,15 @@
 
     <section class="box">
       <h3>Überschrift & Typografie (optional)</h3>
-      <div class="optbox">
-        <label>Name des Arbeitsmittels/Verfahrens</label>
-        <input id="assetName" type="text" placeholder="z. B. Flexmaschine" />
-        <label>Untertitel</label>
-        <input id="subtitleText" type="text" value="Betriebsanweisung" />
-        <div class="font-sel">
-          <label><input type="checkbox" id="subtitleBold"> Fett</label>
+      <div class="row">
+        <div style="flex:1">
+          <label>Name des Arbeitsmittels/Verfahrens</label>
+          <input id="assetName" type="text" placeholder="z. B. Flexmaschine" />
+          <label>Untertitel (z. B. Betriebsanweisung)</label>
+          <input id="subtitleText" type="text" value="Betriebsanweisung" />
+        </div>
+        <div style="flex:1">
+          <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
           <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
           <label>Schriftart:
             <select id="fontFamily">
@@ -66,16 +71,18 @@
             </select>
           </label>
           <label>Schriftgröße:
-            <input type="number" id="fontSize" min="12" max="22" value="16" />
+            <input type="number" id="fontSize" min="14" max="26" value="18" />
           </label>
         </div>
       </div>
       <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
+    <div class="actions">
+      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
+    </div>
   </div>
 
-  <script type="module" src="/assets/app.js"></script>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
