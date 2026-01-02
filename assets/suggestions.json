@@ -6,14 +6,14 @@
         "Elektrische Gefährdungen: Vor Arbeitsbeginn alle Zuleitungen und Gehäuse sichtbar prüfen und beschädigte Leitungen sofort außer Betrieb nehmen.",
         "Eingriffe nur durch Elektrofachkräfte oder unter deren Aufsicht durchführen und die fünf Sicherheitsregeln konsequent anwenden.",
         "Nach dem Freischalten die Spannungsfreiheit mit geeignetem Messgerät feststellen und gegen Wiedereinschalten sichern.",
-        "Feuchtigkeit, leitfähiger Staub und enge metallische Räume erhöhen das Risiko, daher zusätzliche Schutzmaßnahmen einhalten.",
+        "Feuchtigkeit, leitfähiger Staub und enge metallische Räume erhöhen das Risiko; zusätzliche Schutzmaßnahmen einhalten.",
         "Ereignisse dokumentieren und der verantwortlichen Führungskraft melden, um Wiederholungen zu vermeiden."
       ],
       "GHS02": [
         "Zündquellen wie Funken, offene Flamme und heiße Oberflächen konsequent fernhalten und entzündliche Medien dicht lagern.",
         "Lokale Absaugung und ausreichende Lüftung sicherstellen, elektrostatische Aufladung minimieren und erden.",
-        "Beim Umfüllen Behälter und Anlagen erden und leitfähige Schläuche einsetzen, damit keine Ladung aufgebaut wird.",
-        "Geeignete Löschmittel (z. B. CO₂, Schaum) bereithalten und Beschäftigte in deren Verwendung unterweisen.",
+        "Beim Umfüllen Behälter und Anlagen erden und leitfähige Schläuche einsetzen.",
+        "Geeignete Löschmittel (z. B. CO₂, Schaum) bereithalten und Beschäftigte unterweisen.",
         "Nach Brandereignissen den Bereich räumen, Ursache analysieren und Abstellmaßnahmen dokumentieren."
       ]
     },
@@ -21,7 +21,7 @@
       "W001": [
         "Lockout/Tagout (LOTO) anwenden, Anlage vollständig freischalten und mit persönlichem Schloss sichern.",
         "Gespeicherte Energien (Druck, Feder) abbauen und Nachlaufzeiten beachten, mechanische Verriegelungen einsetzen.",
-        "Nach Instandhaltung eine dokumentierte Funktionsprüfung durchführen, Schutzsysteme auf Wirksamkeit testen.",
+        "Nach Instandhaltung eine dokumentierte Funktionsprüfung durchführen, Schutzsysteme testen.",
         "Nur zugelassene Arbeitsmittel einsetzen und Wartungsintervalle gemäß Prüfliste einhalten.",
         "Steuerungsänderungen nur durch Autorisierte durchführen und Änderungen dokumentieren."
       ]
@@ -29,10 +29,10 @@
     "org": {
       "W001": [
         "Arbeiten nur mit schriftlicher Freigabe (Erlaubnisschein) durchführen und Abschnittsgrenzen klar kennzeichnen.",
-        "Unbefugten Zutritt verhindern und Gefährdungsbereiche abgrenzen, Warnhinweise gemäß ISO 7010 anbringen.",
+        "Unbefugten Zutritt verhindern und Gefährdungsbereiche abgrenzen; Warnhinweise gemäß ISO 7010 anbringen.",
         "Betriebsanweisungen aktuell halten und Unterweisungen jährlich mit Praxisbezug durchführen.",
         "Beinahe‑Ereignisse melden, Ursachen analysieren und Abstellmaßnahmen nachverfolgen.",
-        "Ersatzteile und Änderungen nur mit Herstellerfreigabe, CE‑Konformität sicherstellen."
+        "Ersatzteile/Änderungen nur mit Herstellerfreigabe; CE‑Konformität sicherstellen."
       ]
     },
     "ppe": {
@@ -40,8 +40,8 @@
         "Schutzbrille mit Seitenschutz und ggf. Gesichtsschutz gegen Spanflug verwenden.",
         "Gehörschutz bei Lärmexposition über Grenzwert tragen und Wirksamkeit prüfen.",
         "Schnittfeste Handschuhe nur dort einsetzen, wo keine Einzugsgefahr besteht; enganliegende Kleidung wählen.",
-        "Sicherheitsschuhe mit Zehenschutz tragen, rutschhemmende Sohlen bei glatten Böden verwenden.",
-        "Hautschutzplan bei Kühlschmierstoffen beachten und kontaminierte Kleidung zeitnah wechseln."
+        "Sicherheitsschuhe mit Zehenschutz tragen; rutschhemmende Sohlen bei glatten Böden bevorzugen.",
+        "Hautschutzplan bei Kühlschmierstoffen beachten; kontaminierte Kleidung zeitnah wechseln."
       ]
     },
     "em": {
@@ -49,7 +49,7 @@
         "Bei Gefahr sofort Not‑Halt betätigen, Bereich sichern und alle Personen warnen.",
         "Verletzte nur ohne Selbstgefährdung retten und Stromquellen freischalten; bewegte Teile stoppen.",
         "Vorgesetzte informieren und Ereignis dokumentieren (Ursache, Maßnahmen, Beteiligte).",
-        "Ersthelfer und Brandschutzhelfer koordinieren, Sammelpunkt nutzen und Lüftung maximieren.",
+        "Ersthelfer und Brandschutzhelfer koordinieren; Sammelpunkt nutzen; Lüftung maximieren.",
         "Ursachenanalyse durchführen und Abstellmaßnahmen prüfen."
       ]
     },
@@ -57,18 +57,18 @@
       "E003": [
         "Schnitt-/Quetschverletzungen blutungsstillend versorgen und verunreinigte Wunden spülen.",
         "Bei Augenkontakt mindestens 15 Minuten spülen und ärztliche Abklärung veranlassen.",
-        "Bei Stromunfall erst nach Freischalten berühren, Vitalfunktionen prüfen und ggf. reanimieren.",
+        "Bei Stromunfall erst nach Freischalten berühren; Vitalfunktionen prüfen; ggf. reanimieren.",
         "Notruf absetzen und alle Erste‑Hilfe‑Leistungen dokumentieren.",
         "Ursachen und Folgemaßnahmen bewerten, um Wiederholungen zu vermeiden."
       ]
     },
     "dis": {
       "W001": [
-        "Wartungsabfälle getrennt sammeln und öl-/chemikalienhaltige Abfälle gekennzeichneten Behältern zuführen.",
-        "Leckagen mit Bindemittel aufnehmen und kontaminierte Materialien als gefährliche Abfälle entsorgen.",
-        "Kühlschmierstoffe gemäß Herstellerangaben wechseln/entsorgen und Nachweise führen.",
-        "Bereich reinigen und Rutschgefahr beseitigen; Auffangwannen/Abscheider regelmäßig prüfen.",
-        "Sicherheitsdatenblatt/Betriebsanleitung beachten und Anpassungen dokumentieren."
+        "Wartungsabfälle getrennt sammeln; öl-/chemikalienhaltige Abfälle gekennzeichneten Behältern zuführen.",
+        "Leckagen mit Bindemittel aufnehmen; kontaminierte Materialien als gefährliche Abfälle entsorgen.",
+        "Kühlschmierstoffe gemäß Herstellerangaben wechseln/entsorgen; Nachweise führen.",
+        "Bereich reinigen; Rutschgefahr beseitigen; Auffangwannen/Abscheider regelmäßig prüfen.",
+        "SDB/Betriebsanleitung beachten; Anpassungen dokumentieren."
       ]
     }
   }
