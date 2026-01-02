@@ -9,14 +9,14 @@ try { isEditor = !!qs('#baRoot');  } catch {}
 function getHEAD(){ try{ return JSON.parse(localStorage.getItem('BA_HEAD')||'{}'); }catch{return{}} }
 let HEAD = getHEAD();
 
-// ---------------- INDEX ----------------
+// ---------- INDEX ----------
 try {
   if (isIndex) {
     const btn = qs('#continue');
     const logoInp = qs('#logoFile'), logoPrev = qs('#logoPreview');
     window.__uploadedLogoUrl = '';
 
-    logoInp?.addEventListener('change', ()=>{ logoPrev.textContent='(Upload übersprungen: keine Cloud‑Umgebung)'; });
+    logoInp?.addEventListener('change', ()=>{ logoPrev.textContent='(Upload übersprungen: keine Cloud-Umgebung)'; });
 
     btn?.addEventListener('click',(e)=>{
       e.preventDefault();
@@ -34,111 +34,99 @@ try {
           bold        : !!qs('#subtitleBold')?.checked,
           center      : !!qs('#subtitleCenter')?.checked,
           fontFamily  : qs('#fontFamily')?.value || 'Arial',
-          fontSize    : parseInt(qs('#fontSize')?.value||'16',10)
+          fontSize    : parseInt(qs('#fontSize')?.value||'18',10)
         }
       };
       localStorage.setItem('BA_HEAD', JSON.stringify(head));
       location.href='editor.html';
     });
 
-    const indexRoot=qs('#indexRoot');
+    const root = qs('#indexRoot');
     qs('#typeRow')?.addEventListener('change',(e)=>{
-      const val=e.target?.value;
-      if(!val) return;
-      indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
-      indexRoot.classList.add('t-'+val);
+      const val=e.target?.value; if(!val) return;
+      root.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
+      root.classList.add('t-'+val);
     });
   }
-} catch(e){ console.error('Index error:', e); }
+} catch(e){ console.error('INDEX', e); }
 
-// ---------------- EDITOR ----------------
+// ---------- EDITOR ----------
 let PICTO=null, SUG={};
 try { PICTO = await fetch('/assets/pictos_index.json',{cache:'no-store'}).then(r=>r.json()); } catch {}
 try { SUG   = await fetch('/assets/suggestions.json',{cache:'no-store'}).then(r=>r.json()); } catch { SUG={}; }
 
 const sections = ['hazard','tech','org','ppe','em','eh','dis'];
 const iconsBySection = { hazard:[], tech:[], org:[], ppe:[], em:[], eh:[], dis:[] };
-let autoExport=false;
-
-function allPicKeys(){
-  const isoKeys = Object.keys(PICTO?.iso||{}), ghsKeys = Object.keys(PICTO?.ghs||{});
-  return [...isoKeys.map(k=>({group:'iso', code:k})), ...ghsKeys.map(k=>({group:'ghs', code:k}))];
-}
-function renderPicList(){
-  const list=qs('#picList'); list.innerHTML='';
-  allPicKeys().forEach(k=>{
-    const entry = PICTO?.[k.group]?.[k.code]; if(!entry) return;
-    const card = document.createElement('div'); card.className='piccard'; card.dataset.code=k.code; card.dataset.group=k.group;
-    const img  = document.createElement('img'); img.src=entry.img; img.alt=entry.name||k.code;
-    const code = document.createElement('div'); code.className='code'; code.textContent=k.code;
-    card.appendChild(img); card.appendChild(code);
-    card.addEventListener('click', ()=>selectPic(card));
-    list.appendChild(card);
-  });
-}
-let selectedPic=null;
-function selectPic(el){
-  qsa('.piccard.selected').forEach(x=>x.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedPic = { code: el.dataset.code, group: el.dataset.group };
-}
+let selectedPic=null, autoExport=false;
 
 function renderHead(){
   HEAD = getHEAD();
   const headDiv=qs('#head');
-  const subtitleStyle = `
+  const subStyle = `
     font-family:${HEAD.title?.fontFamily||'Arial'};
-    font-size:${(HEAD.title?.fontSize||16)}px;
-    ${HEAD.title?.bold?'font-weight:800;':''}
+    font-size:${(HEAD.title?.fontSize||18)}px;
+    ${HEAD.title?.bold?'font-weight:900;':''}
     ${HEAD.title?.center?'text-align:center;':''}
-    text-transform:uppercase;
-    letter-spacing:.6px;
+    text-transform:uppercase; letter-spacing:.6px;
   `;
   headDiv.innerHTML = `
     <div style="display:flex;gap:12px;align-items:center">
       ${HEAD.logoUrl ? `${HEAD.logoUrl}` : ''}
       <div style="flex:1">
-        <div style="font-size:18px;font-weight:800;letter-spacing:.4px;text-transform:uppercase">${HEAD.title?.assetName || ''}</div>
-        <div style="${subtitleStyle}">${HEAD.title?.subtitleText || 'Betriebsanweisung'}</div>
-        <div class="small">Typ: ${HEAD.type||'-'} • Unternehmen: ${HEAD.firm||'-'} • Abteilung: ${HEAD.dept||'-'} • Ersteller: ${HEAD.author||'-'} • Datum: ${HEAD.date||'-'}</div>
+        <div style="font-size:20px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;text-align:center">${HEAD.title?.assetName || ''}</div>
+        <div style="${subStyle}">${HEAD.title?.subtitleText || 'Betriebsanweisung'}</div>
+        <div class="small" style="text-align:center">Typ: ${HEAD.type||'-'} • Unternehmen: ${HEAD.firm||'-'} • Abteilung: ${HEAD.dept||'-'} • Ersteller: ${HEAD.author||'-'} • Datum: ${HEAD.date||'-'}</div>
       </div>
     </div>
   `;
 }
 
-function renderSectionIcons(sec){
-  const wrap=qs('#icons-'+sec); wrap.innerHTML='';
-  iconsBySection[sec].forEach(code=>{
-    const entry = PICTO?.iso?.[code] || PICTO?.ghs?.[code];
-    if(!entry) return;
-    const img=document.createElement('img'); img.src=entry.img; img.alt=entry.name||code;
-    wrap.appendChild(img);
+function allPicKeys(){
+  const isoKeys = Object.keys(PICTO?.iso||{}), ghsKeys = Object.keys(PICTO?.ghs||{});
+  return [...isoKeys.map(k=>({group:'iso',code:k})), ...ghsKeys.map(k=>({group:'ghs',code:k}))];
+}
+
+function renderPicList(){
+  const list=qs('#picList'); list.innerHTML='';
+  allPicKeys().forEach(k=>{
+    const entry = PICTO?.[k.group]?.[k.code]; if(!entry) return;
+    const row = document.createElement('div'); row.className='picrow'; row.dataset.code=k.code; row.dataset.group=k.group;
+    const img = document.createElement('img'); img.src = entry.img; img.alt = entry.name || k.code;
+    const code= document.createElement('div'); code.className='code'; code.textContent = k.code + (entry.name?` – ${entry.name}`:'');
+    row.appendChild(img); row.appendChild(code);
+    row.addEventListener('click', ()=>selectPic(row));
+    list.appendChild(row);
   });
+}
+
+function selectPic(el){
+  qsa('.picrow').forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPic = { code: el.dataset.code, group: el.dataset.group };
 }
 
 qsa('.assignbar .target').forEach(t=>{
   t.addEventListener('click', async ()=>{
-    if(!selectedPic){ alert('Önce piktogram seçin.'); return; }
+    if(!selectedPic){ alert('Bitte zuerst ein Piktogramm auswählen.'); return; }
     const sec = t.dataset.target;
     if(!iconsBySection[sec].includes(selectedPic.code)) iconsBySection[sec].push(selectedPic.code);
     renderSectionIcons(sec);
-    await refreshPools(sec, true); // AI ile en az 5’e tamamla
-    if (autoExport) { await exportDocx('silent'); } // otomatik Word’e gönder
+    await refreshPools(sec, true); // uzun cümleler + AI min. 5
+    if (autoExport) { await exportDocx('silent'); }
   });
 });
-
 qs('#autoExport')?.addEventListener('change',(e)=>{ autoExport = !!e.target.checked; });
 
-// AI çağrısı
-async function aiSuggest(section, pics, head){
-  try{
-    const url = `/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`;
-    const r = await fetch(url,{cache:'no-store'}); if(!r.ok) return [];
-    const data = await r.json(); return Array.isArray(data)?data:[];
-  }catch{ return []; }
+function renderSectionIcons(sec){
+  const wrap = qs('#icons-'+sec); wrap.innerHTML='';
+  iconsBySection[sec].forEach(code=>{
+    const entry = PICTO?.iso?.[code] || PICTO?.ghs?.[code];
+    if(!entry) return;
+    const img = document.createElement('img'); img.src = entry.img; img.alt = entry.name||code;
+    wrap.appendChild(img);
+  });
 }
 
-// Havuzlar: her cümle tek tek seçilir
 function fillPool(divId, items){
   const div=qs('#'+divId); if(!div) return; div.innerHTML='';
   (items||[]).forEach(t=>{
@@ -152,15 +140,21 @@ function fillPool(divId, items){
   });
 }
 
-function fromList(id){ return qsa('#'+id+' div').map(x=>x.textContent.replace(/^[•\u2022]\s*/,'')); }
+async function aiSuggest(section, pics, head){
+  try{
+    const url = `/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`;
+    const r = await fetch(url, {cache:'no-store'}); if(!r.ok) return [];
+    const data = await r.json(); return Array.isArray(data)?data:[];
+  }catch{ return []; }
+}
 
 async function refreshPools(sectionChanged, withAI=false){
   const type = HEAD.type || 'Maschine';
   async function build(sec){
     const pics = iconsBySection[sec];
-    const localSet = new Set();
-    pics.forEach(p=> (SUG?.[type]?.[sec]?.[p] || []).forEach(x=>localSet.add(x)));
-    let out=[...localSet];
+    const set = new Set();
+    pics.forEach(p=> (SUG?.[type]?.[sec]?.[p] || []).forEach(x=>set.add(x)));
+    let out = [...set];
     if(withAI){
       const ai = await aiSuggest(sec, pics, HEAD);
       while(out.length<5 && ai.length) out.push(ai.shift());
@@ -181,12 +175,47 @@ function enforceTwoPages(){
   else { fontHint.style.display='none'; }
 }
 
-// DOCX export (Muster görünümü)
+// ---- Word export: resimler yüklemeden (proxy’den) PNG olarak gömme ----
+async function imageToPngBytes(url){
+  // Proxy'den gelen SVG/GIF/PNG -> canvas PNG
+  const res = await fetch(url, {cache:'no-store'});
+  if (!res.ok) throw new Error('img fetch failed');
+  const ct = res.headers.get('content-type') || '';
+  const blob = await res.blob();
+
+  // PNG/JPEG ise direkt:
+  if (/png|jpeg|jpg/i.test(ct)) { const ab = await blob.arrayBuffer(); return new Uint8Array(ab); }
+
+  // SVG/GIF -> canvas
+  const dataUrl = await (async ()=>{
+    if (/svg/i.test(ct)) {
+      const svgText = await blob.text();
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+    }
+    // GIF veya bilinmeyen: objectURL üzerinden img
+    return URL.createObjectURL(blob);
+  })();
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  const canvas = document.createElement('canvas'); canvas.width=96; canvas.height=96;
+  const ctx = canvas.getContext('2d');
+  await new Promise((ok,err)=>{ img.onload=ok; img.onerror=err; img.src=dataUrl; });
+  ctx.clearRect(0,0,96,96); ctx.drawImage(img,0,0,96,96);
+  const pngDataUrl = canvas.toDataURL('image/png');
+  // dataURL -> bytes
+  const b64 = pngDataUrl.split(',')[1]; const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return bytes;
+}
+
+function fromList(id){ return qsa('#'+id+' div').map(x=>x.textContent.replace(/^[•\u2022]\s*/,'')); }
 async function iconBytes(code){
   const entry = PICTO?.iso?.[code] || PICTO?.ghs?.[code];
-  const r = await fetch(entry.img, {cache:'no-store'}); const ab = await r.arrayBuffer();
-  return new Uint8Array(ab); // PNG/JPG
+  return await imageToPngBytes(entry.img);
 }
+
 async function exportDocx(mode){
   const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, ShadingType, ImageRun } =
     await import('https://cdn.jsdelivr.net/npm/docx@9.1.1/+esm');
@@ -201,16 +230,18 @@ async function exportDocx(mode){
   });
 
   const title=[];
-  if(HEAD.title?.assetName){ title.push(new Paragraph({ children:[ new TextRun({ text:HEAD.title.assetName.toUpperCase(), bold:true, size:30 }) ] })); }
+  if(HEAD.title?.assetName){
+    title.push(new Paragraph({ alignment:AlignmentType.CENTER, children:[ new TextRun({ text:HEAD.title.assetName.toUpperCase(), bold:true, size:32 }) ] }));
+  }
   title.push(new Paragraph({
-    alignment:(HEAD.title?.center ? AlignmentType.CENTER : AlignmentType.LEFT),
-    children:[ new TextRun({ text:(HEAD.title?.subtitleText || 'Betriebsanweisung').toUpperCase(), bold:!!HEAD.title?.bold, size:(HEAD.title?.fontSize ? HEAD.title.fontSize*2 : 30), font:(HEAD.title?.fontFamily || 'Arial') }) ]
+    alignment:(HEAD.title?.center?AlignmentType.CENTER:AlignmentType.LEFT),
+    children:[ new TextRun({ text:(HEAD.title?.subtitleText||'Betriebsanweisung').toUpperCase(), bold:!!HEAD.title?.bold, size:(HEAD.title?.fontSize?HEAD.title.fontSize*2:32), font:(HEAD.title?.fontFamily||'Arial') }) ]
   }));
 
   async function sectionBlock(titleText, secKey, listId){
     const icons = iconsBySection[secKey];
     const iconRuns=[];
-    for(const c of icons.slice(0,10)){ // daha çok ikon (10'a kadar)
+    for(const c of icons.slice(0,10)){
       try{ const bytes=await iconBytes(c);
         iconRuns.push(new Paragraph({ children:[ new ImageRun({ data:bytes, transformation:{ width:60, height:60 } }) ] }));
       }catch{}
@@ -222,7 +253,7 @@ async function exportDocx(mode){
         width:{ size:100, type:WidthType.PERCENTAGE },
         rows:[ new TableRow({ children:[
           new TableCell({ width:{ size:32, type:WidthType.PERCENTAGE }, children:(iconRuns.length?iconRuns:[new Paragraph('')]) }),
-          new TableCell({ width:{ size:68, type:WidthType.PERCENTAGE }, children:(bullets.length?bullets:[new Paragraph('')]) })
+          new TableCell({ width:{ size:68, type:WidthType.PERCENTAGE }, children:(bullets.length?bullets:[ new Paragraph('') ]) })
         ]}) ]
       })
     ];
@@ -245,17 +276,17 @@ async function exportDocx(mode){
   }]});
 
   const blob = await Packer.toBlob(doc);
-  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download = (HEAD.title?.assetName ? HEAD.title.assetName+'_BA' : 'Betriebsanweisung') + '.docx';
-  if (mode!=='silent') a.click(); else { // auto-export modunda yeni docu sessizce hazırlıyoruz
-    // kullanıcıyı rahatsız etmeyelim; isterse Settings'e ekleriz → “Bufer’e kaydet” gibi.
-    // Şimdilik görünmez link tıklatmıyoruz.
-  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = (HEAD.title?.assetName?HEAD.title.assetName+'_BA':'Betriebsanweisung')+'.docx';
+  if (mode!=='silent') a.click();
   URL.revokeObjectURL(a.href);
 }
 qs('#saveDocx')?.addEventListener('click', ()=>exportDocx('manual'));
 
-// İlk render
-renderHead();
-renderPicList();
-refreshPools(null, true); // AI ile başlat
+// İlk yükleme
+if (isEditor) {
+  document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
+  renderHead();
+  renderPicList();
+  refreshPools(null, true); // AI devreye girer (min. 5)
+}
