@@ -1,20 +1,20 @@
 
 {
   "iso": {
-    "W001": { "name": "Allgemeines Warnzeichen", "img": "/assets/icons/W001.png" },
-    "M001": { "name": "Allgemeines Gebotszeichen", "img": "/assets/icons/M001.png" },
-    "E003": { "name": "Erste Hilfe", "img": "/assets/icons/E003.png" },
-    "F001": { "name": "Feuerlöscher", "img": "/assets/icons/F001.png" }
+    "W001": { "name": "Allgemeines Warnzeichen",      "img": "/assets/icons/W001.png" },
+    "M001": { "name": "Allgemeines Gebotszeichen",    "img": "/assets/icons/M001.png" },
+    "E003": { "name": "Erste Hilfe",                   "img": "/assets/icons/E003.png" },
+    "F001": { "name": "Feuerlöscher",                  "img": "/assets/icons/F001.png" }
   },
   "ghs": {
-    "GHS01": { "name": "Explosiv",          "img": "/assets/icons/GHS01.png" },
-    "GHS02": { "name": "Entzündlich",       "img": "/assets/icons/GHS02.png" },
-    "GHS03": { "name": "Oxidierend",        "img": "/assets/icons/GHS03.png" },
-    "GHS04": { "name": "Gas unter Druck",   "img": "/assets/icons/GHS04.png" },
-    "GHS05": { "name": "Ätzend",            "img": "/assets/icons/GHS05.png" },
-    "GHS06": { "name": "Akut toxisch",      "img": "/assets/icons/GHS06.png" },
-    "GHS07": { "name": "Ausrufezeichen",    "img": "/assets/icons/GHS07.png" },
-    "GHS08": { "name": "Gesundheitsgefahr", "img": "/assets/icons/GHS08.png" },
-    "GHS09": { "name": "Umweltgefährlich",  "img": "/assets/icons/GHS09.png" }
+    "GHS01": { "name": "Explosiv",           "img": "/assets/icons/GHS01.png" },
+    "GHS02": { "name": "Entzündlich",        "img": "/assets/icons/GHS02.png" },
+    "GHS03": { "name": "Oxidierend",         "img": "/assets/icons/GHS03.png" },
+    "GHS04": { "name": "Gas unter Druck",    "img": "/assets/icons/GHS04.png" },
+    "GHS05": { "name": "Ätzend",             "img": "/assets/icons/GHS05.png" },
+    "GHS06": { "name": "Akut toxisch",       "img": "/assets/icons/GHS06.png" },
+    "GHS07": { "name": "Ausrufezeichen",     "img": "/assets/icons/GHS07.png" },
+    "GHS08": { "name": "Gesundheitsgefahr",  "img": "/assets/icons/GHS08.png" },
+    "GHS09": { "name": "Umweltgefährlich",   "img": "/assets/icons/GHS09.png" }
   }
 }
