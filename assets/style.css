@@ -4,6 +4,7 @@
 
 .page { font-family: Arial, sans-serif; color:#111; background:#f6f8fb; }
 .wrapper { max-width: 960px; margin: 0 auto; padding: 18px; }
+
 h1 { font-size: 20px; letter-spacing: .2px; }
 
 .box {
@@ -37,6 +38,7 @@ button { padding:10px 14px; font-size: 14px; border-radius:8px; cursor:pointer; 
 .t-Maschine    { --theme-color:#005AA3; }
 .t-PSA         { --theme-color:#6A1B9A; }
 
+/* Editor görsellik */
 .hero {
   background: linear-gradient(120deg, var(--theme-color), #111);
   color:#fff; border-radius:10px; padding:16px 18px; margin-bottom:14px;
@@ -44,9 +46,8 @@ button { padding:10px 14px; font-size: 14px; border-radius:8px; cursor:pointer; 
 }
 .hero h1 { margin:0; font-size:20px; }
 
-/* Editor görsellik arttırımı */
 .pictos { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; }
-.pic { border:1px solid #ccc; padding:6px; background:#fff; cursor:pointer; border-radius:6px; width:84px; text-align:center; }
+.pic { border:1px solid #ccc; padding:6px; background:#fff; cursor:pointer; border-radius:6px; width:88px; text-align:center; }
 .pic img { width:72px; height:72px; object-fit:contain; display:block; margin:0 auto 4px; }
 .pic .code { font-size:11px; color:#555; }
 .pic.selected { outline: 3px solid var(--theme-color); }
@@ -54,9 +55,3 @@ button { padding:10px 14px; font-size: 14px; border-radius:8px; cursor:pointer; 
 .small { font-size:12px; color:#555; }
 .list  { border:1px solid #ddd; border-radius:4px; padding:10px; background:#fafafa; min-height:80px; }
 #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
-
-/* Başlık bantları (Word ve PDF görünümü için referans): sadece ekran */
-.ba-section-title {
-  background: var(--theme-color); color:#fff; padding:8px 10px; border-radius:6px; margin:8px 0;
-  font-weight:700; letter-spacing:.2px;
-}
