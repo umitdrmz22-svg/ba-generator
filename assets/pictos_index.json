@@ -1,0 +1,72 @@
+
+{
+  "iso": {
+    "W001": {
+      "name": "Allgemeines Warnzeichen",
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_W001.svg"
+    },
+    "M001": {
+      "name": "Allgemeines Gebotszeichen",
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_M001.svg"
+    },
+    "E001": {
+      "name": "Notausgang (links)",
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_E001.svg"
+    },
+    "E003": {
+      "name": "Erste Hilfe",
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_E003_-_First_aid_sign.svg"
+    },
+    "F001": {
+      "name": "Feuerlöscher",
+      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_F001.svg"
+    },
+    "bg_source": {
+      "name": "BGHM Sicherheitszeichen (Sammlung)",
+      "url": "https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen"
+    }
+  },
+  "ghs": {
+    "GHS01": {
+      "name": "Explosive",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-explos.svg"
+    },
+    "GHS02": {
+      "name": "Flammable",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-flamme.svg"
+    },
+    "GHS03": {
+      "name": "Oxidizing",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-rondflam.svg"
+    },
+    "GHS04": {
+      "name": "Gas Cylinder",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-bottle.svg"
+    },
+    "GHS05": {
+      "name": "Corrosive",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-acid.svg"
+    },
+    "GHS06": {
+      "name": "Skull and Crossbones",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-skull.svg"
+    },
+    "GHS07": {
+      "name": "Exclamation Mark",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-exclam.svg"
+    },
+    "GHS08": {
+      "name": "Health Hazard",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-silhouette.svg"
+    },
+    "GHS09": {
+      "name": "Environment",
+      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-pollu.svg"
+    },
+    "authoritative_pages": {
+      "ECHA": "https://echa.europa.eu/regulations/clp/clp-pictograms",
+      "UNECE": "https://unece.org/transport/dangerous-goods/ghs-pictograms",
+      "OSHA": "https://www.osha.gov/hazcom/pictograms"
+    }
+  }
+}
