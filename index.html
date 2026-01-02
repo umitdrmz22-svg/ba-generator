@@ -13,14 +13,9 @@
     .t-PSA         { --theme-color:#6A1B9A; }
     .hero { background:linear-gradient(120deg,var(--theme-color),#111); color:#fff; border-radius:10px; padding:16px 18px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
     .hero h1 { margin:0; font-size:20px; }
-    .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
-    .muted { font-size:12px; color:#666; }
     .optbox{ border:1px solid #ddd; border-radius:8px; padding:10px; margin-top:8px; }
-    .row  { display:flex; gap:12px; flex-wrap:wrap; }
-    label { display:block; margin:6px 0 4px; }
-    .actions { margin-top:12px; }
-    .btn-primary { background: var(--theme-color); color:#fff; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; }
     .font-sel { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .muted { font-size:12px; color:#666; }
   </style>
 </head>
 <body class="page">
@@ -77,8 +72,8 @@
             <input type="number" id="fontSize" min="10" max="20" value="14">
           </label>
         </div>
+        <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
       </div>
-      <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
     <div class="actions">
@@ -86,15 +81,14 @@
     </div>
   </div>
 
-  <!-- ESM -->
   <script type="module" src="/assets/app.js"></script>
 
-  <!-- Fallback (devre dışı kalırsa) -->
+  <!-- Fallback -->
   <script>
     (function(){
       const btn = document.getElementById('continue');
       if(!btn) return;
-      btn.addEventListener('click', (e)=>{
+      btn.addEventListener('click',(e)=>{
         if(btn.dataset.bound==='1') return;
         e.preventDefault();
         const type = [...document.querySelectorAll('input[name="type"]')].find(r=>r.checked)?.value || 'Maschine';
@@ -106,12 +100,12 @@
           date: document.getElementById('date')?.value || '',
           logoUrl: window.__uploadedLogoUrl || '',
           title: {
-            assetName: document.getElementById('assetName')?.value?.trim() || '',
+            assetName   : document.getElementById('assetName')?.value?.trim() || '',
             subtitleText: document.getElementById('subtitleText')?.value?.trim() || 'Betriebsanweisung',
-            bold: !!document.getElementById('subtitleBold')?.checked,
-            center: !!document.getElementById('subtitleCenter')?.checked,
-            fontFamily: document.getElementById('fontFamily')?.value || 'Arial',
-            fontSize: parseInt(document.getElementById('fontSize')?.value||'14',10)
+            bold        : !!document.getElementById('subtitleBold')?.checked,
+            center      : !!document.getElementById('subtitleCenter')?.checked,
+            fontFamily  : document.getElementById('fontFamily')?.value || 'Arial',
+            fontSize    : parseInt(document.getElementById('fontSize')?.value||'14',10)
           }
         };
         try { localStorage.setItem('BA_HEAD', JSON.stringify(head)); } catch {}
