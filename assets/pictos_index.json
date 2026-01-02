@@ -28,39 +28,39 @@
   },
   "ghs": {
     "GHS01": {
-      "name": "Explosive",
+      "name": "Explosiv",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-explos.svg"
     },
     "GHS02": {
-      "name": "Flammable",
+      "name": "Entzündlich",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-flamme.svg"
     },
     "GHS03": {
-      "name": "Oxidizing",
+      "name": "Oxidierend",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-rondflam.svg"
     },
     "GHS04": {
-      "name": "Gas Cylinder",
+      "name": "Gas unter Druck",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-bottle.svg"
     },
     "GHS05": {
-      "name": "Corrosive",
+      "name": "Ätzend",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-acid.svg"
     },
     "GHS06": {
-      "name": "Skull and Crossbones",
+      "name": "Giftig",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-skull.svg"
     },
     "GHS07": {
-      "name": "Exclamation Mark",
+      "name": "Ausrufezeichen",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-exclam.svg"
     },
     "GHS08": {
-      "name": "Health Hazard",
+      "name": "Gesundheitsgefahr",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-silhouette.svg"
     },
     "GHS09": {
-      "name": "Environment",
+      "name": "Umweltgefährlich",
       "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-pollu.svg"
     },
     "authoritative_pages": {
