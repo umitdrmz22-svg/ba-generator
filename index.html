@@ -3,74 +3,107 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Betriebsanweisung Generator – Start</title>
+<title>Betriebsanweisung Generator</title>
 <style>
-/* Yazdırma ile iki sayfa A4 düzeni */
 @page { size: A4; margin: 16mm; }
-@media print {
-  .page-break { page-break-after: always; }
-  body { font-family: Arial, sans-serif; font-size: 11pt; }
-}
-body { font-family: Arial, sans-serif; }
-.container { max-width: 960px; margin: 0 auto; padding: 24px; }
-h1 { font-size: 20px; margin: 0 0 12px; }
-.section { margin: 12px 0; }
-.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-button { padding: 10px 16px; font-size: 14px; }
+@media print { .page-break { page-break-after: always; } }
+body { font-family: Arial, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; }
+.columns { display:grid; grid-template-columns:1fr 1fr; gap:12pt; }
+h1 { margin-bottom: 8pt; }
+input, textarea, select, button { padding: 8px; margin: 6px 0; font-size: 14px; width: 100%; }
+small { color: #555; }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Betriebsanweisung – Entwurf</h1>
+<h1>Betriebsanweisung – Entwurf</h1>
 
-  <div class="section">
-    <label>Talimat Türü:
-      <select id="type">
-        <option>Gefahrstoff</option>
-        <option>Biologischer Stoff</option>
-        <option>Maschine</option>
-        <option>Persönliche Schutzausrüstung</option>
-      </select>
-    </label>
-  </div>
+<section id="auth">
+  <h2>Anmeldung</h2>
+  <p>E-Mail ile giriş (Magic Link) gönderir:</p>
+  <input id="email" type="email" placeholder="E-Mail-Adresse">
+  <button id="sendLink">Magic Link Gönder</button>
+  <small id="authMsg"></small>
+</section>
 
-  <div class="columns">
-    <div>
-      <h2>Gefährdungen und Auswirkungen</h2>
-      <ul id="risks">
-        <li>Beispieltext – Fügen Sie hier Ihre eigenen Punkte hinzu.</li>
-      </ul>
-
-      <h2>Schutzmaßnahmen und Verhaltensregeln</h2>
-      <ul id="measures">
-        <li>Beispieltext – Fügen Sie hier Ihre eigenen Punkte hinzu.</li>
-      </ul>
-    </div>
-
-    <div>
-      <h2>Piktogramme (später)</h2>
-      <p>Wir werden die GHS/CLP- und ISO 7010-Piktogramme später hinzufügen.</p>
-    </div>
-  </div>
-
-  <div class="page-break"></div>
+<section id="form">
+  <h2>Talimat Türü</h2>
+  <select id="type">
+    <option>Gefahrstoff</option>
+    <option>Biologischer Stoff</option>
+    <option>Maschine</option>
+    <option>Persönliche Schutzausrüstung</option>
+  </select>
 
   <div class="columns">
     <div>
-      <h2>Verhalten im Gefahrfall</h2>
-      <ul><li>Beispieltext – Fügen Sie hier Ihre eigenen Punkte hinzu.</li></ul>
+      <h3>Gefährdungen und Auswirkungen</h3>
+      <textarea id="risks" rows="6" placeholder="Maddeler halinde yazın..."></textarea>
 
-      <h2>Erste Hilfe</h2>
-      <ul><li>Beispieltext – Fügen Sie hier Ihre eigenen Punkte hinzu.</li></ul>
+      <h3>Schutzmaßnahmen und Verhaltensregeln</h3>
+      <textarea id="measures" rows="6" placeholder="STOP sırasına göre yazın..."></textarea>
     </div>
     <div>
-      <h2>Sachgerechte Entsorgung</h2>
-      <ul><li>Beispieltext – Fügen Sie hier Ihre eigenen Punkte hinzu.</li></ul>
+      <h3>Verhalten im Gefahrfall</h3>
+      <textarea id="emergency" rows="6"></textarea>
 
-      <button onclick="window.print()">PDF olarak yazdır</button>
+      <h3>Erste Hilfe</h3>
+      <textarea id="firstaid" rows="6"></textarea>
+
+      <h3>Sachgerechte Entsorgung</h3>
+      <textarea id="disposal" rows="6"></textarea>
     </div>
   </div>
-</div>
+
+  <button id="save">Kaydet</button>
+  <button onclick="window.print()">PDF olarak yazdır (2 sayfa)</button>
+  <small id="saveMsg"></small>
+</section>
+
+<script type="module">
+  // 1) Supabase istemcisini hazırlama: URL ve anahtarı env.json'dan alıyoruz
+  const cfg = await fetch('/env.json').then(r => r.json());
+  if (!cfg?.url || !cfg?.hasAnonKey) {
+    document.getElementById('authMsg').textContent =
+      'Supabase yapılandırması eksik. Lütfen ortam değişkenlerini kontrol edin.';
+  }
+
+  // 2) Supabase JS'i CDN'den yükleyelim
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+
+  // Dikkat: Anon/publishable key istemci tarafında kullanılabilir; ancak güvenlik için RLS şarttır. [5](https://stackoverflow.com/questions/77162677/deploying-cloudflare-page-function-with-external-dependency-fails-could-not-re)
+  // Basitlik için anahtarı ayrı bir endpointte döndürmüyoruz; üretimde build aşamasında gömmeniz tercih edilebilir.
+  // Şimdilik Supabase dashboard'da "API → Publishable/Anon key" değerini buraya el ile yapıştırabilirsiniz:
+  const SUPABASE_KEY = 'BURAYA-ANON-VEYA-PUBLISHABLE-KEY-YAZIN';
+
+  const supabase = createClient(cfg.url, SUPABASE_KEY); // createClient kullanımı. [3](https://supabase.com/docs/reference/javascript/initializing)
+
+  // 3) Magic Link ile giriş (passwordless) [6](https://supabase.com/docs/reference/javascript/auth-signinwithotp)[7](https://supabase.com/docs/guides/auth/auth-email-passwordless)
+  document.getElementById('sendLink').onclick = async () => {
+    const email = document.getElementById('email').value;
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: location.origin } // Site URL yapılandırmasına uygun olmalı. [7](https://supabase.com/docs/guides/auth/auth-email-passwordless)
+    });
+    document.getElementById('authMsg').textContent =
+      error ? ('Hata: ' + error.message) : 'E-Mail gönderildi. Gelen bağlantıya tıklayın.';
+  };
+
+  // 4) Taslağı kaydet (örnek tablo: ba_documents)
+  document.getElementById('save').onclick = async () => {
+    const payload = {
+      type: document.getElementById('type').value,
+      risks: document.getElementById('risks').value,
+      measures: document.getElementById('measures').value,
+      emergency: document.getElementById('emergency').value,
+      firstaid: document.getElementById('firstaid').value,
+      disposal: document.getElementById('disposal').value,
+      created_at: new Date().toISOString()
+    };
+
+    const { data, error } = await supabase.from('ba_documents').insert(payload);
+    document.getElementById('saveMsg').textContent =
+      error ? ('Hata: ' + error.message) : 'Kaydedildi (taslak).';
+  };
+</script>
 </body>
 </html>
-``
