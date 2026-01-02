@@ -3,107 +3,158 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Betriebsanweisung Generator</title>
+<title>Betriebsanweisung – {{Gefährdungsart / Tätigkeit}}</title>
 <style>
-@page { size: A4; margin: 16mm; }
-@media print { .page-break { page-break-after: always; } }
-body { font-family: Arial, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px; }
-.columns { display:grid; grid-template-columns:1fr 1fr; gap:12pt; }
-h1 { margin-bottom: 8pt; }
-input, textarea, select, button { padding: 8px; margin: 6px 0; font-size: 14px; width: 100%; }
-small { color: #555; }
+  /* Yazdırma / sayfa düzeni */
+  @page { size: A4; margin: 16mm; }
+  @media print { .page-break { page-break-after: always; } }
+  body { font-family: Arial, sans-serif; line-height: 1.35; color:#111; }
+  .wrapper { max-width: 960px; margin: 0 auto; padding: 18px; }
+
+  /* Kurumsal başlık */
+  .header { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; }
+  .head-left h1 { font-size: 18px; margin: 0 0 6px; }
+  .meta { font-size: 12px; color:#333; }
+  .logo { text-align:right; }
+  .logo img { max-height: 48px; }
+
+  /* Bölüm başlıkları */
+  h2 { font-size: 15px; margin: 14px 0 6px; border-bottom: 2px solid #005aa3; padding-bottom: 4px; }
+  h3 { font-size: 13px; margin: 10px 0 6px; }
+
+  /* Grid düzen: iki sütun */
+  .columns { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Listeler ve kutular */
+  ul { margin: 6px 0 10px; padding-left: 18px; }
+  .box { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background:#fafafa; }
+  .note { font-size: 11px; color:#555; }
+
+  /* Piktogram şeridi */
+  .pictos { display:flex; gap:8px; flex-wrap: wrap; align-items:center; }
+  .pic { width:42px; height:42px; border:1px solid #ccc; background:#fff; display:flex; align-items:center; justify-content:center; }
+  .pic img { max-width: 38px; max-height:38px; }
+
+  /* İmza ve tarih */
+  .sign-row { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .sign { border-top: 1px solid #000; padding-top: 6px; font-size: 12px; }
+
+  /* Alt dipnot (standart referansları) */
+  footer { margin-top: 12px; font-size: 10px; color:#444; }
 </style>
 </head>
 <body>
-<h1>Betriebsanweisung – Entwurf</h1>
+<div class="wrapper">
 
-<section id="auth">
-  <h2>Anmeldung</h2>
-  <p>E-Mail ile giriş (Magic Link) gönderir:</p>
-  <input id="email" type="email" placeholder="E-Mail-Adresse">
-  <button id="sendLink">Magic Link Gönder</button>
-  <small id="authMsg"></small>
-</section>
-
-<section id="form">
-  <h2>Talimat Türü</h2>
-  <select id="type">
-    <option>Gefahrstoff</option>
-    <option>Biologischer Stoff</option>
-    <option>Maschine</option>
-    <option>Persönliche Schutzausrüstung</option>
-  </select>
-
-  <div class="columns">
-    <div>
-      <h3>Gefährdungen und Auswirkungen</h3>
-      <textarea id="risks" rows="6" placeholder="Maddeler halinde yazın..."></textarea>
-
-      <h3>Schutzmaßnahmen und Verhaltensregeln</h3>
-      <textarea id="measures" rows="6" placeholder="STOP sırasına göre yazın..."></textarea>
+  <!-- Üst başlık -->
+  <div class="header">
+    <div class="head-left">
+      <h1>Betriebsanweisung</h1>
+      <div class="meta">
+        Unternehmen: {{Firmenname}}<br>
+        Arbeitsbereich / Tätigkeit: {{Bereich / Prozess / Tätigkeit}}<br>
+        Standort: {{Standort}} &nbsp;|&nbsp; Datum: {{TT.MM.JJJJ}} &nbsp;|&nbsp; Gültig bis: {{TT.MM.JJJJ}}<br>
+        Dokument-Nr.: {{BA-Nummer}} &nbsp;|&nbsp; Version: {{v}}
+      </div>
     </div>
-    <div>
-      <h3>Verhalten im Gefahrfall</h3>
-      <textarea id="emergency" rows="6"></textarea>
-
-      <h3>Erste Hilfe</h3>
-      <textarea id="firstaid" rows="6"></textarea>
-
-      <h3>Sachgerechte Entsorgung</h3>
-      <textarea id="disposal" rows="6"></textarea>
+    <div class="logo">
+      <!-- Şirket logosu (isteğe bağlı) -->
+      <img src="/public/logo.png" alt="Logo">
     </div>
   </div>
 
-  <button id="save">Kaydet</button>
-  <button onclick="window.print()">PDF olarak yazdır (2 sayfa)</button>
-  <small id="saveMsg"></small>
-</section>
+  <!-- Piktogramlar: ISO 7010 + GHS (gerekiyorsa) -->
+  <h2>Verwendete Sicherheitszeichen und Gefahrenpiktogramme</h2>
+  <div class="pictos">
+    <!-- ISO 7010 uyarı / yasak / gebot / rettung / brand -->
+    <div class="pic"><img src="/public/pictos/iso/w001_warning.png" alt="Warnzeichen"></div>
+    <div class="pic"><img src="/public/pictos/iso/m001_must_wear.png" alt="Gebotszeichen"></div>
+    <div class="pic"><img src="/public/pictos/iso/e001_first_aid.png" alt="Erste Hilfe"></div>
+    <div class="pic"><img src="/public/pictos/iso/f001_fire_extinguisher.png" alt="Brandschutz"></div>
+    <!-- GHS/CLP örnek: Yanıcı (GHS02), Aşındırıcı (GHS05) -->
+    <div class="pic"><img src="/public/pictos/ghs/ghs02_flame.png" alt="GHS02"></div>
+    <div class="pic"><img src="/public/pictos/ghs/ghs05_corrosion.png" alt="GHS05"></div>
+  </div>
+  <p class="note">Hinweis: Chemische Gefahrenpiktogramme gemäß CLP/GHS (weißes Feld, roter Rahmen, schwarzes Symbol); Sicherheitszeichen gemäß ASR A1.3 / ISO 7010 (Form & Farbe). [3](https://developers.cloudflare.com/pages/configuration/debugging-pages/)[2](https://app.studyraid.com/en/read/15310/531018/linking-github-account-to-cloudflare-pages)</p>
 
-<script type="module">
-  // 1) Supabase istemcisini hazırlama: URL ve anahtarı env.json'dan alıyoruz
-  const cfg = await fetch('/env.json').then(r => r.json());
-  if (!cfg?.url || !cfg?.hasAnonKey) {
-    document.getElementById('authMsg').textContent =
-      'Supabase yapılandırması eksik. Lütfen ortam değişkenlerini kontrol edin.';
-  }
+  <!-- Sayfa 1: Riskler ve Önlemler -->
+  <h2>Gefährdungen und gesundheitliche/stoffliche Auswirkungen</h2>
+  <div class="box">
+    <ul>
+      <li>{{Gefährdung 1: z.B. mechanisches Quetschen / Einziehen}}</li>
+      <li>{{Gefährdung 2: z.B. brennbare Flüssigkeit – Brand/Explosion}}</li>
+      <li>{{Gefährdung 3: z.B. biologische Exposition}}</li>
+      <li>{{Gefährdung 4: z.B. elektrische Gefährdungen}}</li>
+    </ul>
+  </div>
 
-  // 2) Supabase JS'i CDN'den yükleyelim
-  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+  <h2>Schutzmaßnahmen und Verhaltensregeln</h2>
+  <div class="columns">
+    <div class="box">
+      <h3>Technische Maßnahmen (S)</h3>
+      <ul>
+        <li>{{z.B. Schutzhaube, Absaugung, Verriegelung}}</li>
+        <li>{{z.B. explosionsgeschützte Ausstattung}}</li>
+      </ul>
+      <h3>Organisatorische Maßnahmen (O)</h3>
+      <ul>
+        <li>{{z.B. Freigabeverfahren, Mengenbegrenzung, Zugangsregelung}}</li>
+        <li>{{z.B. Unterweisung, Betriebsanweisung gut sichtbar aushängen}}</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Persönliche Schutzausrüstung (P)</h3>
+      <ul>
+        <li>{{z.B. Chemikalienschutzhandschuhe, Augenschutz, Atemschutz}}</li>
+        <li>{{z.B. Warnkleidung / Gehörschutz}}</li>
+      </ul>
+      <h3>Unterweisung</ul>
+      <p class="note">Die Unterweisung anhand der Betriebsanweisung ist Pflicht (TRGS 555). [4](https://supabase.com/docs/reference/javascript/introduction)</p>
+    </div>
+  </div>
 
-  // Dikkat: Anon/publishable key istemci tarafında kullanılabilir; ancak güvenlik için RLS şarttır. [5](https://stackoverflow.com/questions/77162677/deploying-cloudflare-page-function-with-external-dependency-fails-could-not-re)
-  // Basitlik için anahtarı ayrı bir endpointte döndürmüyoruz; üretimde build aşamasında gömmeniz tercih edilebilir.
-  // Şimdilik Supabase dashboard'da "API → Publishable/Anon key" değerini buraya el ile yapıştırabilirsiniz:
-  const SUPABASE_KEY = 'BURAYA-ANON-VEYA-PUBLISHABLE-KEY-YAZIN';
+  <!-- Sayfa kırımı -->
+  <div class="page-break"></div>
 
-  const supabase = createClient(cfg.url, SUPABASE_KEY); // createClient kullanımı. [3](https://supabase.com/docs/reference/javascript/initializing)
+  <!-- Sayfa 2: Gefahrfall, Erste Hilfe, Entsorgung -->
+  <h2>Verhalten im Gefahrfall</h2>
+  <div class="box">
+    <ul>
+      <li>{{z.B. Not-Halt betätigen, Bereich räumen, Brand melden}}</li>
+      <li>{{z.B. geeignete Löschmittel verwenden; Explosions-/Austrittsrisiko beachten}}</li>
+      <li>{{Meldewege: interne Rufnummer / Notruf 112}}</li>
+    </ul>
+  </div>
 
-  // 3) Magic Link ile giriş (passwordless) [6](https://supabase.com/docs/reference/javascript/auth-signinwithotp)[7](https://supabase.com/docs/guides/auth/auth-email-passwordless)
-  document.getElementById('sendLink').onclick = async () => {
-    const email = document.getElementById('email').value;
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: location.origin } // Site URL yapılandırmasına uygun olmalı. [7](https://supabase.com/docs/guides/auth/auth-email-passwordless)
-    });
-    document.getElementById('authMsg').textContent =
-      error ? ('Hata: ' + error.message) : 'E-Mail gönderildi. Gelen bağlantıya tıklayın.';
-  };
+  <h2>Erste Hilfe</h2>
+  <div class="box">
+    <ul>
+      <li>{{z.B. Augenkontakt: 15 min spülen und ärztliche Hilfe}}</li>
+      <li>{{z.B. Hautkontakt: kontaminierte Kleidung entfernen, mit Wasser reinigen}}</li>
+      <li>{{z.B. Einatım: Frischluft, ggf. medizinische Abklärung}}</li>
+    </ul>
+  </div>
 
-  // 4) Taslağı kaydet (örnek tablo: ba_documents)
-  document.getElementById('save').onclick = async () => {
-    const payload = {
-      type: document.getElementById('type').value,
-      risks: document.getElementById('risks').value,
-      measures: document.getElementById('measures').value,
-      emergency: document.getElementById('emergency').value,
-      firstaid: document.getElementById('firstaid').value,
-      disposal: document.getElementById('disposal').value,
-      created_at: new Date().toISOString()
-    };
+  <h2>Sachgerechte Entsorgung / Inaktivierung</h2>
+  <div class="box">
+    <ul>
+      <li>{{z.B. Gefahrstoffabfallbehälter; Kennzeichnung; Übergabe an Entsorgungsdienst}}</li>
+      <li>{{z.B. Biostoffe: Inaktivierung gemäß Verfahren, kontaminierte Materialien ayrı toplanır}}</li>
+    </ul>
+  </div>
 
-    const { data, error } = await supabase.from('ba_documents').insert(payload);
-    document.getElementById('saveMsg').textContent =
-      error ? ('Hata: ' + error.message) : 'Kaydedildi (taslak).';
-  };
-</script>
+  <!-- İmza ve sorumluluk -->
+  <h2>Verantwortlichkeiten / Freigabe</h2>
+  <div class="sign-row">
+    <div class="sign">Erstellt durch: {{Name / Funktion}}</div>
+    <div class="sign">Geprüft durch: {{Name / Funktion}}</div>
+    <div class="sign">Freigegeben durch: {{Name / Funktion}}</div>
+  </div>
+
+  <footer>
+    Diese Betriebsanweisung umfasst die inhaltlichen Mindestanforderungen nach TRGS 555 (Gefährdungen; Schutzmaßnahmen/Verhaltensregeln; Verhalten im Gefahrfall; Erste Hilfe; sachgerechte Entsorgung). Sicherheitszeichen gemäß ASR A1.3 / ISO 7010; chemische Gefahrenpiktogramme gemäß CLP/GHS (ECHA). Bei Änderungen der Tätigkeit, der Stoffe oder der Vorschriften ist eine Aktualisierung sowie eine erneute mündliche Unterweisung erforderlich. [1](https://supabase.com/docs/reference/javascript/initializing)[2](https://app.studyraid.com/en/read/15310/531018/linking-github-account-to-cloudflare-pages)[3](https://developers.cloudflare.com/pages/configuration/debugging-pages/)
+  </footer>
+
+</div>
 </body>
 </html>
