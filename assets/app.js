@@ -52,8 +52,8 @@ try {
 
 // ---------------- EDITOR ----------------
 let PICTO=null, SUG={};
-try { PICTO = await fetch('/assets/pictos_index.json',{cache:'no-store'}).then(r=>r.json()); } catch {}
-try { SUG   = await fetch('/assets/suggestions.json',{cache:'no-store'}).then(r=>r.json()); } catch { SUG={}; }
+try { PICTO = await fetch('/assets/pictos_index.json?v=20260102',{cache:'no-store'}).then(r=>r.json()); } catch {}
+try { SUG   = await fetch('/assets/suggestions.json?v=20260102',{cache:'no-store'}).then(r=>r.json()); } catch { SUG={}; }
 
 const sections = ['hazard','tech','org','ppe','em','eh','dis'];
 const iconsBySection = { hazard:[], tech:[], org:[], ppe:[], em:[], eh:[], dis:[] };
@@ -111,7 +111,7 @@ qsa('.assignbar .target').forEach(t=>{
     const sec = t.dataset.target;
     if(!iconsBySection[sec].includes(selectedPic.code)) iconsBySection[sec].push(selectedPic.code);
     renderSectionIcons(sec);
-    await refreshPools(sec, true); // uzun cümleler + AI min. 5
+    await refreshPools(sec, true);
     if (autoExport) { await exportDocx('silent'); }
   });
 });
@@ -175,23 +175,21 @@ function enforceTwoPages(){
   else { fontHint.style.display='none'; }
 }
 
-// ---- Word export: resim yüklemeden (proxy’li kaynaklardan) PNG olarak gömme ----
+// ---- Word export: resim yüklemeden (proxy) PNG olarak gömme ----
 async function imageToPngBytes(url){
   const res = await fetch(url, {cache:'no-store'});
   if (!res.ok) throw new Error('img fetch failed');
   const ct = res.headers.get('content-type') || '';
   const blob = await res.blob();
 
-  // PNG/JPEG ise direkt bayt
   if (/png|jpeg|jpg/i.test(ct)) { const ab = await blob.arrayBuffer(); return new Uint8Array(ab); }
 
-  // SVG/GIF -> canvas rasterize
   const dataUrl = await (async ()=>{
     if (/svg/i.test(ct)) {
       const svgText = await blob.text();
       return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
     }
-    return URL.createObjectURL(blob); // GIF veya diğer
+    return URL.createObjectURL(blob);
   })();
 
   const img = new Image();
@@ -288,5 +286,5 @@ if (isEditor) {
   document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
   renderHead();
   renderPicList();
-  refreshPools(null, true); // AI devreye girer (min. 5)
+  refreshPools(null, true);
 }
