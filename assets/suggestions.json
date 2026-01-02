@@ -8,71 +8,71 @@
       ],
       "GHS05": [
         "Ätzgefahr: schwere Haut- und Augenschäden",
-        "Korrosiv gegenüber Metallen"
+        "Korrosion an Metallen möglich"
       ],
       "GHS07": [
         "Reizung der Haut/Augen; Übelkeit/Schwindel möglich"
       ],
       "GHS08": [
-        "Langzeitgesundheitsgefahr (z. B. Karzinogenität, Mutagenität)"
+        "Langfristige Gesundheitsgefahr (z. B. Karzinogenität, Mutagenität)"
       ]
     },
     "tech": {
-      "GHS02": ["Zündquellen entfernen; EX-geschützte Geräte verwenden", "Lokale Absaugung/Lüftung"],
-      "GHS05": ["Augendusche/Notdusche bereitstellen", "Beständige Auffangwannen"],
-      "GHS07": ["Dicht verschließen; Mengen begrenzen"],
-      "GHS08": ["Geschlossene Systeme; Expositionszeit minimieren"]
+      "GHS02": ["Zündquellen entfernen; EX-geschützte Geräte verwenden", "Lokale Absaugung/Lüftung sicherstellen"],
+      "GHS05": ["Augendusche/Notdusche bereitstellen", "Beständige Auffangwannen nutzen"],
+      "GHS07": ["Behälter dicht verschließen; Mengen begrenzen"],
+      "GHS08": ["Geschlossene Systeme einsetzen; Expositionszeit minimieren"]
     },
     "org": {
-      "GHS02": ["Freigabeverfahren; Mengenbegrenzung", "Nur geschulte Personen"],
-      "GHS05": ["Sicherheitsdatenblatt prüfen; Lager-/Transportregeln"],
+      "GHS02": ["Freigabeverfahren anwenden; Mengenbegrenzung", "Nur geschulte Personen zulassen"],
+      "GHS05": ["Sicherheitsdatenblatt prüfen; Lager-/Transportregeln beachten"],
       "GHS07": ["CLP-Kennzeichnung; Zutrittsregelung"],
       "GHS08": ["Arbeitsmedizinische Beratung; jährliche Unterweisung"]
     },
     "ppe": {
-      "GHS02": ["Schutzbrille, chem. Schutzhandschuhe"],
+      "GHS02": ["Schutzbrille, chemische Schutzhandschuhe"],
       "GHS05": ["Gesichtsschutz/Brille, Schutzhandschuhe, Schürze"],
-      "GHS07": ["Atemschutz nach Gefährdungsbeurteilung"],
-      "GHS08": ["Atemschutz ve kapalı koruyucu giysi (gerektiğinde)"]
+      "GHS07": ["Atemschutz gemäß Gefährdungsbeurteilung"],
+      "GHS08": ["Geeigneter Atemschutz und Schutzkleidung (falls erforderlich)"]
     },
     "em": {
-      "GHS02": ["Bölgeyi boşalt; yangın bildir; uygun söndürücü kullan"],
-      "GHS05": ["Sızıntıyı sınırlayın; kontaminasyon alanını ayırın"]
+      "GHS02": ["Bereich räumen; Brand melden; geeignetes Löschmittel verwenden"],
+      "GHS05": ["Leckage begrenzen; Kontaminationsbereich absperren"]
     },
     "eh": {
-      "GHS05": ["Göz 15 dk yıka; derhal tıbbi yardım"],
-      "GHS07": ["Taze hava; semptomları gözlemle"]
+      "GHS05": ["Augen 15 min spülen; sofort ärztliche Hilfe"],
+      "GHS07": ["Frischluft zuführen; Symptome beobachten"]
     },
     "dis": {
-      "GHS02": ["Tehlikeli atık kapları; etiketli ve kapalı"],
-      "GHS05": ["İnaktivasyon/neutralizasyon prosedürü"]
+      "GHS02": ["Gefahrstoffabfall in gekennzeichneten, geschlossenen Behältern sammeln"],
+      "GHS05": ["Inaktivierungs-/Neutralisationsverfahren beachten"]
     }
   },
   "Biostoff": {
     "hazards": { "W001": ["Infektionsgefahr (Aerosol/Kontakt)"] },
-    "tech":   { "W001": ["Gerekirse Biyogüvenlik kabini; fiziksel ayrım"] },
-    "org":    { "W001": ["Hijyen kuralları; kesici-delici güvenliği"] },
-    "ppe":    { "W001": ["Eldiven, koruyucu gözlük/visör; gerekirse solunum"] },
-    "em":     { "W001": ["Maruziyeti bildir; alanı dekontamine et"] },
-    "eh":     { "W001": ["Derhal yıkama/dekontaminasyon; tıbbi değerlendirme"] },
-    "dis":    { "W001": ["Biyolojik atık; uygun inaktivasyon ve bertaraf"] }
+    "tech":   { "W001": ["Biologische Sicherheitswerkbank (falls erforderlich); räumliche Trennung"] },
+    "org":    { "W001": ["Hygieneregeln; Sichere Handhabung von scharfen/spitzen Gegenständen"] },
+    "ppe":    { "W001": ["Einweghandschuhe, Schutzbrille/Visier; ggf. Atemschutz"] },
+    "em":     { "W001": ["Exposition melden; Bereich dekontaminieren"] },
+    "eh":     { "W001": ["Sofort waschen/dekontaminieren; medizinische Bewertung"] },
+    "dis":    { "W001": ["Biologischer Abfall: Inaktivierung und fachgerechte Entsorgung"] }
   },
   "Maschine": {
-    "hazards": { "W001": ["Quetsch-/Einzugsstellen; elektrik riski"] },
-    "tech":    { "W001": ["Koruyucu muhafaza; Not-Halt; kilitleme"] },
-    "org":     { "W001": ["Yalnızca eğitimli personel; periyodik bakım"] },
-    "ppe":     { "M001": ["Gözlük, işitme koruması (gerektiğinde), eldiven"] },
-    "em":      { "W001": ["Acil durdur; alanı güvene al; yetkiliye bildir"] },
-    "eh":      { "W001": ["Uygun ilk yardım; göz/deri temas prosedürü"] },
-    "dis":     { "W001": ["Bakım atıkları; yağ/kimyasal sızıntı toplama"] }
+    "hazards": { "W001": ["Quetsch-/Einzugstellen; elektrisches Risiko"] },
+    "tech":    { "W001": ["Schutzverkleidungen; Not-Halt; Lockout/Tagout"] },
+    "org":     { "W001": ["Nur geschultes Personal; regelmäßige Wartung"] },
+    "ppe":     { "M001": ["Schutzbrille, Gehörschutz (falls erforderlich), Handschuhe"] },
+    "em":      { "W001": ["Ausschalten; Bereich sichern; Vorgesetzte informieren"] },
+    "eh":      { "W001": ["Erste Hilfe gemäß Verletzung; Augen-/Hautkontakt-Notfallplan"] },
+    "dis":     { "W001": ["Wartungsabfälle; Öl/Chemikalien fachgerecht aufnehmen/entsorgen"] }
   },
   "PSA": {
-    "hazards": { "M001": ["KKD kullanılmadığında risk artışı"] },
-    "tech":    { "M001": ["PSA temizlik/depolama istasyonları"] },
-    "org":     { "M001": ["Uyum testi; eğitim; kullanım kayıtları"] },
-    "ppe":     { "M001": ["Kask, göz/ yüz, solunum, el/kol, ayak, düşmeye karşı koruma"] },
-    "em":      { "M001": ["KKD arızasında işi durdur; ikame temin"] },
-    "eh":      { "M001": ["İlk yardım; maruziyet değerlendirmesi"] },
-    "dis":     { "M001": ["Tek kullanımlık KKD’yi kontaminasyona göre bertaraf"] }
+    "hazards": { "M001": ["Erhöhtes Risiko bei fehlender PSA"] },
+    "tech":    { "M001": ["Reinigungs-/Lagerstationen für PSA bereitstellen"] },
+    "org":     { "M001": ["Passformprüfung; Unterweisung; Nutzungsdokumentation"] },
+    "ppe":     { "M001": ["Kopf-, Augen-/Gesichts-, Atem-, Hand-/Arm-, Fuß-, und Absturzschutz je nach Tätigkeit"] },
+    "em":      { "M001": ["Bei PSA-Defekt Arbeit unterbrechen; Ersatz bereitstellen"] },
+    "eh":      { "M001": ["Erste Hilfe; Expositionsbewertung"] },
+    "dis":     { "M001": ["Einweg-PSA je nach Kontamination entsorgen"] }
   }
 }
