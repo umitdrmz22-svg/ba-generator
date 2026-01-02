@@ -7,7 +7,7 @@ export const onRequestGet = async ({ request, env }) => {
   const asset   = u.searchParams.get('asset')   || '';
   const pics    = (u.searchParams.get('pics')||'').split(',').filter(Boolean);
 
-  // Basit, güvenli kurallı öneriler (uzun cümleler; her biri tek madde)
+  // Kurallı uzun cümleler (her satır tek cümle)
   const base: string[] = [];
   if (section==='hazard' && type==='Maschine') {
     base.push(
@@ -19,13 +19,13 @@ export const onRequestGet = async ({ request, env }) => {
   if (section==='tech') {
     base.push(
       "Lockout/Tagout (LOTO) anwenden, Anlage vollständig freischalten und mit persönlichem Schloss sichern.",
-      "Gespeicherte Energien (Druck, Feder) abbauen und Nachlaufzeiten beachten, mechanische Verriegelungen einsetzen."
+      "Gespeicherte Energien (Druck, Feder) abbauen und Nachlaufzeiten beachten."
     );
   }
   if (section==='org') {
     base.push(
       "Arbeiten nur mit schriftlicher Freigabe (Erlaubnisschein) durchführen und Abschnittsgrenzen klar kennzeichnen.",
-      "Unbefugten Zutritt verhindern und Gefährdungsbereiche abgrenzen, Warnhinweise gemäß ISO 7010 anbringen."
+      "Unbefugten Zutritt verhindern; Warnhinweise gemäß ISO 7010 anbringen."
     );
   }
   if (section==='ppe') {
@@ -37,7 +37,7 @@ export const onRequestGet = async ({ request, env }) => {
   if (section==='em') {
     base.push(
       "Bei Gefahr sofort Not‑Halt betätigen, Bereich sichern und alle Personen warnen.",
-      "Verletzte nur ohne Selbstgefährdung retten und Stromquellen freischalten; bewegte Teile stoppen."
+      "Verletzte nur ohne Selbstgefährdung retten und Stromquellen freischalten."
     );
   }
   if (section==='eh') {
@@ -48,12 +48,12 @@ export const onRequestGet = async ({ request, env }) => {
   }
   if (section==='dis') {
     base.push(
-      "Wartungsabfälle getrennt sammeln und öl-/chemikalienhaltige Abfälle gekennzeichneten Behältern zuführen.",
-      "Leckagen mit Bindemittel aufnehmen und kontaminierte Materialien als gefährliche Abfälle entsorgen."
+      "Wartungsabfälle getrennt sammeln; öl-/chemikalienhaltige Abfälle gekennzeichneten Behältern zuführen.",
+      "Leckagen mit Bindemittel aufnehmen; kontaminierte Materialien als gefährliche Abfälle entsorgen."
     );
   }
 
-  // Opsiyonel: HuggingFace veya başka LLM ile daha fazla uzun cümle üretimi
+  // LLM (opsiyonel) – varsa ekle
   let llm: string[] = [];
   if (env.AI_API_URL && env.AI_API_KEY) {
     try {
