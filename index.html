@@ -14,11 +14,14 @@
 
     .hero {
       background: linear-gradient(90deg, var(--theme-color), #111);
-      color:#fff; border-radius:12px; padding:18px 20px; margin-bottom:16px;
-      box-shadow:0 8px 24px rgba(0,0,0,.12); text-transform:uppercase;
+      color:#fff; padding:18px 20px; margin:0;
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+      text-transform:uppercase; border-radius:0;
     }
     .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
-    .muted   { font-size:12px; color:#666; }
+    /* Tam en görünüm için wrapper dışına taşır */
+    .wrapper .hero { margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); }
+    .muted { font-size:12px; color:#666; }
   </style>
 </head>
 <body class="page">
@@ -83,6 +86,7 @@
     </div>
   </div>
 
+  <!-- DÜZGÜN script etiketi (önceki sorunu çözer) -->
   <script src="/assets/app.js"></script>
 </body>
 </html>
