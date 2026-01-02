@@ -3,9 +3,7 @@
 const ALLOWED = [
   'commons.wikimedia.org',
   'upload.wikimedia.org',
-  'unece.org',
-  'symbib-light.bgrci.de',
-  'www.bghm.de'
+  'unece.org'
 ];
 
 export const onRequestGet = async ({ request }) => {
@@ -18,7 +16,6 @@ export const onRequestGet = async ({ request }) => {
     if (!ALLOWED.includes(target.host)) {
       return new Response('Host not allowed', { status: 403 });
     }
-
     const r = await fetch(target.toString(), { headers: { 'User-Agent': 'BA-Generator/1.0' } });
     if (!r.ok) return new Response('Upstream error', { status: r.status });
 
@@ -31,7 +28,7 @@ export const onRequestGet = async ({ request }) => {
         'access-control-allow-origin': '*'
       }
     });
-  } catch (e) {
+  } catch {
     return new Response('Bad src', { status: 400 });
   }
 };
