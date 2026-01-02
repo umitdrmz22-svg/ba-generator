@@ -2,17 +2,37 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<title>Betriebsanweisung – Auswahl</title>
-<link rel="stylesheet" href="/assets/style.css">
+  <meta charset="utf-8">
+  <title>Betriebsanweisung – Auswahl</title>
+
+  <!-- Ortak stil (A4 + grid + kutu düzeni) -->
+  /assets/style.css
+
+  <!-- Tür bazlı tema şeridi ön izlemesi -->
+  <style>
+    :root {
+      --theme-color: #005aa3; /* varsayılan */
+    }
+    .theme-preview {
+      height: 8px; border-radius: 4px; background: var(--theme-color); margin-bottom: 12px;
+    }
+    /* Tür → renk eşlemesi (kurumsal paletinize göre düzenleyin) */
+    .t-Gefahrstoff { --theme-color: #E53935; } /* kırmızı: kimyasal tehlike */
+    .t-Biostoff    { --theme-color: #2E7D32; } /* yeşil: biyo süreçler */
+    .t-Maschine    { --theme-color: #005AA3; } /* mavi: makine/tekniğe uyumlu */
+    .t-PSA         { --theme-color: #6A1B9A; } /* mor: KKD teması */
+  </style>
 </head>
 <body class="page">
-<div class="wrapper">
+<div class="wrapper" id="indexRoot">
+
+  <div class="theme-preview"></div>
+
   <h1>Betriebsanweisung – Auswahl</h1>
 
   <section class="box">
     <label>Typ wählen:</label>
-    <div class="row">
+    <div class="row" id="typeRow">
       <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
       <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
       <label><input type="radio" name="type" value="Maschine"> Maschine</label>
@@ -31,7 +51,7 @@
       <div>
         <label>Logo hochladen</label>
         <input id="logoFile" type="file" accept="image/*">
-        <small>PNG/JPG önerilir. Logo Supabase Storage’a yüklenir.</small>
+        <small>PNG/JPG önerilir. Logo Supabase Storage → <b>logos</b> bucket’ına yüklenir.</small>
         <div id="logoPreview" class="logo-preview"></div>
       </div>
     </div>
@@ -40,8 +60,24 @@
   <div class="actions">
     <button id="continue">Weiter zur Vorlage</button>
   </div>
+
 </div>
 
-<script type="module" src="/assets/app.js"></script>
+<!-- Uygulama mantığı (index + editor birlikte) -->
+/assets/app.js</script>
+
+<script>
+  // Tür seçimi → tema ön izlemesi
+  const indexRoot = document.getElementById('indexRoot');
+  const typeRow = document.getElementById('typeRow');
+  const preview = document.querySelector('.theme-preview');
+  typeRow?.addEventListener('change', (e) => {
+    const val = e.target?.value;
+    if (!val) return;
+    indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
+    indexRoot.classList.add('t-' + val);
+    // CSS değişkeni otomatik güncellenir; şerit rengi anında değişir
+  });
+</script>
 </body>
 </html>
