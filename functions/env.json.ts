@@ -1,5 +1,5 @@
 
-// functions/env.json.ts (Cloudflare Workers)
+// functions/env.json.ts
 export const onRequestGet = ({ env }) => {
   const payload = {
     url: env.SUPABASE_URL || null,
@@ -9,4 +9,3 @@ export const onRequestGet = ({ env }) => {
     headers: { 'content-type': 'application/json' }
   });
 };
-``
