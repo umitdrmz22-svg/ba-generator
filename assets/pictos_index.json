@@ -1,81 +1,20 @@
 
 {
   "iso": {
-    "W001": {
-      "name": "Allgemeines Warnzeichen",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_W001.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_W001.svg"
-    },
-    "M001": {
-      "name": "Allgemeines Gebotszeichen",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_M001.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_M001.svg"
-    },
-    "E003": {
-      "name": "Erste Hilfe",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_E003_-_First_aid_sign.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_E003_-_First_aid_sign.svg"
-    },
-    "F001": {
-      "name": "Feuerlöscher",
-      "url": "https://commons.wikimedia.org/wiki/File:ISO_7010_F001.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_F001.svg"
-    },
-    "authoritative_pages": {
-      "BGHM Sicherheitszeichen": "https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen",
-      "BAuA CLP/ISO Info": "https://www.baua.de/DE/Themen/Chemikalien-Biostoffe/Gefahrstoffe/Einstufung-und-Kennzeichnung/Kennzeichnungselemente/Gefahrenpiktogramme-und-Signalwoerter"
-    }
+    "W001": { "name": "Allgemeines Warnzeichen", "img": "/assets/icons/W001.png" },
+    "M001": { "name": "Allgemeines Gebotszeichen", "img": "/assets/icons/M001.png" },
+    "E003": { "name": "Erste Hilfe", "img": "/assets/icons/E003.png" },
+    "F001": { "name": "Feuerlöscher", "img": "/assets/icons/F001.png" }
   },
   "ghs": {
-    "GHS01": {
-      "name": "Explosiv",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-explos.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-explos.svg"
-    },
-    "GHS02": {
-      "name": "Entzündlich",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-flamme.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-flamme.svg"
-    },
-    "GHS03": {
-      "name": "Oxidierend",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-rondflam.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-rondflam.svg"
-    },
-    "GHS04": {
-      "name": "Gas unter Druck",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-bottle.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-bottle.svg"
-    },
-    "GHS05": {
-      "name": "Ätzend",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-acid.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-acid.svg"
-    },
-    "GHS06": {
-      "name": "Akut toxisch",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-skull.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-skull.svg"
-    },
-    "GHS07": {
-      "name": "Ausrufezeichen",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-exclam.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-exclam.svg"
-    },
-    "GHS08": {
-      "name": "Gesundheitsgefahr",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-silhouette.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-silhouette.svg"
-    },
-    "GHS09": {
-      "name": "Umweltgefährlich",
-      "url": "https://commons.wikimedia.org/wiki/File:GHS-pictogram-pollu.svg",
-      "img": "https://commons.wikimedia.org/wiki/Special:FilePath/GHS-pictogram-pollu.svg"
-    },
-    "authoritative_pages": {
-      "UNECE GHS": "https://unece.org/transport/dangerous-goods/ghs-pictograms",
-      "ECHA": "https://echa.europa.eu/regulations/clp/clp-pictograms",
-      "OSHA": "https://www.osha.gov/hazcom/pictograms"
-    }
+    "GHS01": { "name": "Explosiv",          "img": "/assets/icons/GHS01.png" },
+    "GHS02": { "name": "Entzündlich",       "img": "/assets/icons/GHS02.png" },
+    "GHS03": { "name": "Oxidierend",        "img": "/assets/icons/GHS03.png" },
+    "GHS04": { "name": "Gas unter Druck",   "img": "/assets/icons/GHS04.png" },
+    "GHS05": { "name": "Ätzend",            "img": "/assets/icons/GHS05.png" },
+    "GHS06": { "name": "Akut toxisch",      "img": "/assets/icons/GHS06.png" },
+    "GHS07": { "name": "Ausrufezeichen",    "img": "/assets/icons/GHS07.png" },
+    "GHS08": { "name": "Gesundheitsgefahr", "img": "/assets/icons/GHS08.png" },
+    "GHS09": { "name": "Umweltgefährlich",  "img": "/assets/icons/GHS09.png" }
   }
 }
