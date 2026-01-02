@@ -159,3 +159,108 @@ try {
     }
     // İlk set
     renderPictoChooser('picChooser', [
+      { group:'iso', code:'W001' }, { group:'iso', code:'M001' },
+      { group:'iso', code:'E003' }, { group:'iso', code:'F001' },
+      { group:'ghs', code:'GHS02' }, { group:'ghs', code:'GHS05' },
+      { group:'ghs', code:'GHS07' }, { group:'ghs', code:'GHS08' }
+    ]);
+
+    // Öneri havuzları
+    function fillPool(divId, items){
+      const div = qs('#'+divId); if (!div) return; div.innerHTML='';
+      (items||[]).forEach(t=>{
+        const b = document.createElement('button'); b.textContent='➕ ' + t; b.style.margin='4px';
+        b.addEventListener('click', ()=>addToList(divId.replace('Pool','List'), t));
+        div.appendChild(b);
+      });
+    }
+    function addToList(listId, text){
+      const list = qs('#'+listId); if (!list) return;
+      const li = document.createElement('div'); li.textContent='• ' + text; li.style.margin='3px 0';
+      list.appendChild(li); enforceTwoPages();
+    }
+    function addCustom(inputId, listId){
+      const el = qs('#'+inputId); const val = el?.value?.trim(); if (!val) return;
+      addToList(listId, val); el.value='';
+    }
+    function refreshPools(){
+      const type = HEAD.type || 'Maschine';
+      const pics = [...selectedPics];
+      const pick = (section)=>{
+        const out = new Set();
+        pics.forEach(p=> (SUG?.[type]?.[section]?.[p] || []).forEach(x=>out.add(x)));
+        return [...out];
+      };
+      fillPool('hazardPool', pick('hazards'));
+      fillPool('techPool',   pick('tech'));
+      fillPool('orgPool',    pick('org'));
+      fillPool('ppePool',    pick('ppe'));
+      fillPool('emPool',     pick('em'));
+      fillPool('ehPool',     pick('eh'));
+      fillPool('disPool',    pick('dis'));
+      enforceTwoPages();
+    }
+
+    qs('#hazardAdd')?.addEventListener('click', ()=>addCustom('hazardCustom','hazardList'));
+    qs('#techAdd')  ?.addEventListener('click', ()=>addCustom('techCustom','techList'));
+    qs('#orgAdd')   ?.addEventListener('click', ()=>addCustom('orgCustom','orgList'));
+    qs('#ppeAdd')   ?.addEventListener('click', ()=>addCustom('ppeCustom','ppeList'));
+    qs('#emAdd')    ?.addEventListener('click', ()=>addCustom('emCustom','emList'));
+    qs('#ehAdd')    ?.addEventListener('click', ()=>addCustom('ehCustom','ehList'));
+    qs('#disAdd')   ?.addEventListener('click', ()=>addCustom('disCustom','disList'));
+
+    // 2 sayfa denetimi
+    const root = qs('#baRoot'), fontHint = qs('#fontHint');
+    function enforceTwoPages(){
+      const a4px=1123, margin=40;
+      let fs=parseInt(getComputedStyle(root).fontSize,10);
+      const tooHigh = root.scrollHeight > (2*a4px - margin);
+      if (tooHigh && fs>10){
+        root.style.fontSize = (fs-1) + 'px';
+        if (fontHint) fontHint.style.display='block';
+        setTimeout(enforceTwoPages,0);
+      } else if (tooHigh && fs<=10){
+        if (fontHint) fontHint.style.display='block';
+        if (!qs('#limitWarn')){
+          const w=document.createElement('div'); w.id='limitWarn'; w.className='warn';
+          w.textContent='Uyarı: içerik 2 sayfayı aşıyor. Metni kısaltın.';
+          root.prepend(w);
+        }
+      } else {
+        if (fontHint) fontHint.style.display='none';
+        qs('#limitWarn')?.remove();
+      }
+    }
+    enforceTwoPages();
+
+    // Kaydet
+    qs('#save')?.addEventListener('click', async ()=>{
+      if (!supabase) { alert('Supabase yok (env/key). Kaydetme devre dışı.'); return; }
+      const { data: ses, error: uerr } = await supabase.auth.getUser();
+      if (uerr) { alert('Auth error: ' + uerr.message); return; }
+      const userId = ses?.user?.id || null;
+      if (!userId) { alert('Giriş yapın (magic link).'); return; }
+
+      const doc = {
+        user_id: userId,
+        type: HEAD.type,
+        head: HEAD,
+        scope: qs('#scope')?.value || '',
+        pictos: [...selectedPics],
+        hazards: listToArr('hazardList'),
+        tech:    listToArr('techList'),
+        org:     listToArr('orgList'),
+        ppe:     listToArr('ppeList'),
+        em:      listToArr('emList'),
+        eh:      listToArr('ehList'),
+        dis:     listToArr('disList'),
+        created_at: new Date().toISOString()
+      };
+      const { error } = await supabase.from('ba_documents').insert(doc);
+      alert(error ? ('Fehler: ' + error.message) : 'Gespeichert.');
+    });
+    function listToArr(id){ return qsa(`#${id} div`).map(x=>x.textContent.replace(/^•\s*/,'')); }
+  }
+} catch (e) {
+  console.error('Editor error:', e);
+}
