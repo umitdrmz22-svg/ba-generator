@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Betriebsanweisung – Vorlage</title>
-  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/style.css?v=20260102" />
   <style>
     :root { --theme-color:#005AA3; }
     body.theme-Gefahrstoff { --theme-color:#E53935; }
@@ -15,17 +15,20 @@
     .hero {
       background: linear-gradient(90deg, var(--theme-color), #111);
       color:#fff; padding:16px 18px; margin:0 0 16px 0;
-      box-shadow:0 8px 24px rgba(0,0,0,.12);
-      text-transform:uppercase; border-radius:0;
+      text-transform:uppercase; border-radius:0; box-shadow:0 8px 24px rgba(0,0,0,.12);
     }
     .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
-    .wrapper .hero { margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); }
 
     .ba-band {
       background: var(--theme-color);
       color:#fff; border-radius:8px; padding:12px; margin:14px 0;
       font-weight:900; letter-spacing:.5px; text-transform:uppercase;
-      text-align:center; /* ortala */
+      text-align:center;
+    }
+
+    @media print {
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .hero, .ba-band { break-inside: avoid; }
     }
 
     .layout { display:grid; grid-template-columns: 360px 1fr; gap:16px; align-items:start; }
@@ -47,17 +50,14 @@
     .list { border:1px solid #ddd; border-radius:6px; padding:10px; background:#f9fafb; min-height:80px; }
     .small { font-size:12px; color:#555; }
     #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
-
-    @media print {
-      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .hero, .ba-band { break-inside: avoid; }
-    }
   </style>
 </head>
 <body class="page" id="baBody">
-  <div class="wrapper" id="baRoot" style="font-size:14px">
-    <div class="hero"><h1>BETRIEBSANWEISUNG – VORLAGE</h1></div>
 
+  <!-- HERO tam en -->
+  <div class="hero"><h1>BETRIEBSANWEISUNG – VORLAGE</h1></div>
+
+  <div class="wrapper" id="baRoot" style="font-size:14px">
     <!-- Üst başlık bloğu -->
     <div id="head" class="box"></div>
 
@@ -157,7 +157,7 @@
     </div>
   </div>
 
-  <script src="/assets/app.js"></script>
+  <script src="/assets/app.js?v=20260102" defer></script>
   <script>
     try {
       const HEAD = JSON.parse(localStorage.getItem('BA_HEAD') || '{}');
