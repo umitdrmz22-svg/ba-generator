@@ -17,14 +17,14 @@ try {
 }
 
 // Doldurun: publishable/anon key (client-side kullanım içindir; RLS açık olmalıdır)
-const SUPABASE_KEY = 'PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE';
+const SUPABASE_KEY = sb_publishable_iKh-ZfqV3iJpr_9b7SErEA_XhrqnSsY;
 
 // Supabase JS (ESM) yükle
 const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
 
 // İstemciyi oluştur (URL + KEY varsa)
 let supabase = null;
-if (cfg?.url && SUPABASE_KEY && SUPABASE_KEY !== 'PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE') {
+if (cfg?.url && SUPABASE_KEY && SUPABASE_KEY !== sb_publishable_iKh-ZfqV3iJpr_9b7SErEA_XhrqnSsY) {
   supabase = createClient(cfg.url, SUPABASE_KEY); // createClient kullanımı.  [1](https://www.slideshare.net/ssuser0ae3f9/iso7010safetysignsguidebookeuropeenglish1pdf)
 }
 
