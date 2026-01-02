@@ -4,71 +4,75 @@
 <head>
   <meta charset="utf-8">
   <title>Betriebsanweisung – Vorlage</title>
-
   <link rel="stylesheet" href="/assets/style.css" />
-
   <style>
-    :root { --theme-color: #005aa3; }
-    body.theme-Gefahrstoff { --theme-color: #E53935; }
-    body.theme-Biostoff    { --theme-color: #2E7D32; }
-    body.theme-Maschine    { --theme-color: #005AA3; }
-    body.theme-PSA         { --theme-color: #6A1B9A; }
-
-    .hero { background: linear-gradient(120deg, var(--theme-color), #111); color:#fff;
-            border-radius:10px; padding:14px 16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
+    :root { --theme-color:#005aa3; }
+    body.theme-Gefahrstoff { --theme-color:#E53935; }
+    body.theme-Biostoff    { --theme-color:#2E7D32; }
+    body.theme-Maschine    { --theme-color:#005AA3; }
+    body.theme-PSA         { --theme-color:#6A1B9A; }
+    .hero { background:linear-gradient(120deg,var(--theme-color),#111); color:#fff; border-radius:10px; padding:14px 16px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
     .hero h1 { margin:0; font-size:20px; }
     .columns { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
-    h2 { font-size: 15px; margin: 14px 0 6px; border-bottom: 3px solid var(--theme-color); padding-bottom: 4px; }
-    .page-break { page-break-after: always; }
-    .pictos { display:flex; gap:8px; flex-wrap:wrap; }
-    .pic { min-height: 40px; border:1px solid #ccc; padding:6px 8px; background:#fff; cursor:pointer; border-radius:6px; }
+    h2 { font-size:15px; margin:14px 0 6px; border-bottom:3px solid var(--theme-color); padding-bottom:4px; }
+    .page-break { page-break-after:always; }
+    .pictos { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; }
+    .pic { border:1px solid #ccc; padding:6px; background:#fff; cursor:pointer; border-radius:6px; width:84px; text-align:center; }
+    .pic img { width:72px; height:72px; object-fit:contain; display:block; margin:0 auto 4px; }
+    .pic .code { font-size:11px; color:#555; }
     .pic.selected { outline: 3px solid var(--theme-color); }
-    .list { border:1px solid #ddd; border-radius: 4px; padding: 10px; background:#fafafa; min-height: 80px; }
-    .small { font-size: 12px; color:#555; }
+    .list { border:1px solid #ddd; border-radius:4px; padding:10px; background:#fafafa; min-height:80px; }
+    .small { font-size:12px; color:#555; }
     #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
     .btn-primary { background: var(--theme-color); color:#fff; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; }
+
+    /* Profesyonel görünüm için */
+    .box { border:1px solid #e5e5e5; border-radius:8px; padding:10px; background:#fff; }
+    .headblock { display:flex; align-items:center; gap:12px; }
+    .headblock .logo { width:80px; height:80px; object-fit:contain; border:1px solid #eee; }
+    .titlearea { flex:1; }
+    .titlearea .asset { font-size:16px; font-weight:600; }
+    .titlearea .subtitle { margin-top:2px; }
   </style>
 </head>
 <body class="page" id="baBody">
   <div class="wrapper" id="baRoot" style="font-size:14px">
-
     <div class="hero"><h1>Betriebsanweisung – Vorlage</h1></div>
 
     <div id="head"></div>
 
     <h2>ANWENDUNGSBEREICH</h2>
-    <textarea id="scope" rows="4" placeholder="Bu Betriebsanweisung hangi makine/iş/kimyasal/biostoff için geçerlidir?"></textarea>
+    <textarea id="scope" rows="4" placeholder="Für welches Arbeitsmittel/Verfahren gilt diese Betriebsanweisung?"></textarea>
 
     <h2>Gefährdungen für Mensch und Umwelt</h2>
     <div class="pictos" id="picChooser"></div>
-    <div class="small">Seçilen piktogramlara göre öneriler:</div>
+    <div class="small">Vorschläge basierend auf gewählten Piktogrammen:</div>
     <div id="hazardPool" class="list"></div>
-    <div class="small">Seçtikleriniz:</div>
+    <div class="small">Ihre Auswahl:</div>
     <div id="hazardList" class="list"></div>
-    <input id="hazardCustom" type="text" placeholder="Kendi maddeni ekle…">
-    <button id="hazardAdd">Ekle</button>
+    <input id="hazardCustom" type="text" placeholder="Eigenen Punkt hinzufügen…">
+    <button id="hazardAdd">Hinzufügen</button>
 
     <h2>Schutzmaßnahmen und Verhaltensregeln</h2>
     <div class="columns">
       <div>
         <h3>Technische Maßnahmen (S)</h3>
         <div id="techPool" class="list"></div>
-        <div class="small">Seçtikleriniz:</div>
+        <div class="small">Ihre Auswahl:</div>
         <div id="techList" class="list"></div>
-        <input id="techCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="techAdd">Ekle</button>
+        <input id="techCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="techAdd">Hinzufügen</button>
       </div>
       <div>
         <h3>Organisatorische Maßnahmen (O)</h3>
         <div id="orgPool" class="list"></div>
-        <div class="small">Seçtikleriniz:</div>
+        <div class="small">Ihre Auswahl:</div>
         <div id="orgList" class="list"></div>
-        <input id="orgCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="orgAdd">Ekle</button>
-
+        <input id="orgCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="orgAdd">Hinzufügen</button>
         <h3>Persönliche Schutzausrüstung (P)</h3>
         <div id="ppePool" class="list"></div>
-        <div class="small">Seçtikleriniz:</div>
+        <div class="small">Ihre Auswahl:</div>
         <div id="ppeList" class="list"></div>
-        <input id="ppeCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="ppeAdd">Ekle</button>
+        <input id="ppeCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="ppeAdd">Hinzufügen</button>
       </div>
     </div>
 
@@ -76,33 +80,32 @@
 
     <h2>Verhalten im Gefahrfall</h2>
     <div id="emPool" class="list"></div>
-    <div class="small">Seçtikleriniz:</div>
+    <div class="small">Ihre Auswahl:</div>
     <div id="emList" class="list"></div>
-    <input id="emCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="emAdd">Ekle</button>
+    <input id="emCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="emAdd">Hinzufügen</button>
 
     <h2>Erste Hilfe</h2>
     <div id="ehPool" class="list"></div>
-    <div class="small">Seçtikleriniz:</div>
+    <div class="small">Ihre Auswahl:</div>
     <div id="ehList" class="list"></div>
-    <input id="ehCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="ehAdd">Ekle</button>
+    <input id="ehCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="ehAdd">Hinzufügen</button>
 
     <h2>Sachgerechte Entsorgung / Inaktivierung</h2>
     <div id="disPool" class="list"></div>
-    <div class="small">Seçtikleriniz:</div>
+    <div class="small">Ihre Auswahl:</div>
     <div id="disList" class="list"></div>
-    <input id="disCustom" type="text" placeholder="Kendi maddeni ekle…"><button id="disAdd">Ekle</button>
+    <input id="disCustom" type="text" placeholder="Eigenen Punkt hinzufügen…"><button id="disAdd">Hinzufügen</button>
 
-    <div id="fontHint">Uyarı: içerik iki sayfayı aşıyor → yazı boyutu küçültüldü. (Min 10pt)</div>
+    <div id="fontHint">Hinweis: Inhalt überschreitet zwei Seiten → Schriftgröße wurde verkleinert (min. 10 pt).</div>
 
     <div class="actions" style="margin-top:10px">
-      <button id="save" class="btn-primary">Kaydet</button>
-      <button class="btn-primary" onclick="window.print()">PDF (max 2 sayfa)</button>
+      <button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button>
+      <button id="saveCloud" class="btn-primary">In Cloud speichern (optional)</button>
+      <button class="btn-primary" onclick="window.print()">PDF (max. 2 Seiten)</button>
     </div>
   </div>
 
   <script type="module" src="/assets/app.js"></script>
-
-  <!-- Tür → tema sınıfı -->
   <script>
     try {
       const HEAD = JSON.parse(localStorage.getItem('BA_HEAD') || '{}');
