@@ -2,20 +2,20 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Betriebsanweisung – Auswahl</title>
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/style.css" />
   <style>
-    :root { --theme-color:#005aa3; }
+    :root { --theme-color:#005AA3; }
     .t-Gefahrstoff { --theme-color:#E53935; }
     .t-Biostoff    { --theme-color:#2E7D32; }
     .t-Maschine    { --theme-color:#005AA3; }
     .t-PSA         { --theme-color:#6A1B9A; }
-    .hero { background:linear-gradient(120deg,var(--theme-color),#111); color:#fff; border-radius:10px; padding:16px 18px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
-    .hero h1 { margin:0; font-size:20px; }
+    .hero { background:linear-gradient(90deg,var(--theme-color),#111); color:#fff; border-radius:12px; padding:16px 18px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); text-transform:uppercase; }
+    .hero h1 { margin:0; font-size:22px; letter-spacing:.8px; }
+    .muted { font-size:12px; color:#666; }
     .optbox{ border:1px solid #ddd; border-radius:8px; padding:10px; margin-top:8px; }
     .font-sel { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .muted { font-size:12px; color:#666; }
   </style>
 </head>
 <body class="page">
@@ -36,14 +36,14 @@
     <section class="box">
       <div class="grid2">
         <div>
-          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname">
-          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung">
-          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name">
-          <label>Datum (optional)</label><input id="date" type="date">
+          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
+          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung" />
+          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name" />
+          <label>Datum (optional)</label><input id="date" type="date" />
         </div>
         <div>
           <label>Logo hochladen (optional)</label>
-          <input id="logoFile" type="file" accept="image/*">
+          <input id="logoFile" type="file" accept="image/*" />
           <small class="muted">PNG/JPG empfohlen. Ohne Cloud-Umgebung wird der Upload übersprungen.</small>
           <div id="logoPreview" class="logo-preview"></div>
         </div>
@@ -54,9 +54,9 @@
       <h3>Überschrift & Typografie (optional)</h3>
       <div class="optbox">
         <label>Name des Arbeitsmittels/Verfahrens</label>
-        <input id="assetName" type="text" placeholder="z. B. Flexmaschine">
+        <input id="assetName" type="text" placeholder="z. B. Flexmaschine" />
         <label>Untertitel</label>
-        <input id="subtitleText" type="text" value="Betriebsanweisung">
+        <input id="subtitleText" type="text" value="Betriebsanweisung" />
         <div class="font-sel">
           <label><input type="checkbox" id="subtitleBold"> Fett</label>
           <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
@@ -66,57 +66,16 @@
             </select>
           </label>
           <label>Schriftgröße:
-            <input type="number" id="fontSize" min="10" max="20" value="14">
+            <input type="number" id="fontSize" min="12" max="22" value="16" />
           </label>
         </div>
       </div>
       <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions">
-      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
-    </div>
+    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
   </div>
 
   <script type="module" src="/assets/app.js"></script>
-  <!-- Fallback -->
-  <script>
-    (function(){
-      const btn = document.getElementById('continue');
-      if(!btn) return;
-      btn.addEventListener('click',(e)=>{
-        if(btn.dataset.bound==='1') return;
-        e.preventDefault();
-        const type = [...document.querySelectorAll('input[name="type"]')].find(r=>r.checked)?.value || 'Maschine';
-        const head = {
-          type,
-          firm   : document.getElementById('firm')?.value?.trim() || '',
-          dept   : document.getElementById('dept')?.value?.trim() || '',
-          author : document.getElementById('author')?.value?.trim() || '',
-          date   : document.getElementById('date')?.value || '',
-          logoUrl: window.__uploadedLogoUrl || '',
-          title: {
-            assetName   : document.getElementById('assetName')?.value?.trim() || '',
-            subtitleText: document.getElementById('subtitleText')?.value?.trim() || 'Betriebsanweisung',
-            bold        : !!document.getElementById('subtitleBold')?.checked,
-            center      : !!document.getElementById('subtitleCenter')?.checked,
-            fontFamily  : document.getElementById('fontFamily')?.value || 'Arial',
-            fontSize    : parseInt(document.getElementById('fontSize')?.value||'14',10)
-          }
-        };
-        try { localStorage.setItem('BA_HEAD', JSON.stringify(head)); } catch {}
-        location.href = 'editor.html';
-      });
-
-      const indexRoot = document.getElementById('indexRoot');
-      const typeRow   = document.getElementById('typeRow');
-      typeRow?.addEventListener('change',(e)=>{
-        const val = e.target?.value;
-        if(!val) return;
-        indexRoot.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
-        indexRoot.classList.add('t-'+val);
-      });
-    })();
-  </script>
 </body>
 </html>
