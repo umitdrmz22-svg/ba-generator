@@ -166,7 +166,7 @@ try {
     // AI destekli öneri (Cloudflare Workers opsiyonel)
     async function aiSuggest(section, pics, head){
       try {
-        const resp = await fetch(`/functions/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`, {cache:'no-store'});
+        const resp = await fetch(`/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`, {cache:'no-store'});
         if (!resp.ok) return [];
         const data = await resp.json();
         return Array.isArray(data) ? data : [];
