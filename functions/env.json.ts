@@ -1,7 +1,6 @@
 
-// functions/env.json.ts
+// functions/env.json.ts (Cloudflare Workers)
 export const onRequestGet = ({ env }) => {
-  // Anahtarı göstermeden varlığını kontrol ediyoruz
   const payload = {
     url: env.SUPABASE_URL || null,
     hasAnonKey: Boolean(env.SUPABASE_ANON_KEY)
@@ -10,3 +9,4 @@ export const onRequestGet = ({ env }) => {
     headers: { 'content-type': 'application/json' }
   });
 };
+``
