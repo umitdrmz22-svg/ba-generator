@@ -4,29 +4,30 @@
 <head>
   <meta charset="utf-8" />
   <title>Betriebsanweisung – Auswahl</title>
-  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/style.css?v=20260102" />
   <style>
     :root { --theme-color:#005AA3; }
     .t-Gefahrstoff { --theme-color:#E53935; }
     .t-Biostoff    { --theme-color:#2E7D32; }
     .t-Maschine    { --theme-color:#005AA3; }
     .t-PSA         { --theme-color:#6A1B9A; }
-
+    /* Üst bant tam en: wrapper dışı */
     .hero {
       background: linear-gradient(90deg, var(--theme-color), #111);
       color:#fff; padding:18px 20px; margin:0;
-      box-shadow:0 8px 24px rgba(0,0,0,.12);
-      text-transform:uppercase; border-radius:0;
+      text-transform:uppercase; border-radius:0; box-shadow:0 8px 24px rgba(0,0,0,.12);
     }
     .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
-    /* Tam en görünüm için wrapper dışına taşır */
-    .wrapper .hero { margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); }
     .muted { font-size:12px; color:#666; }
   </style>
 </head>
 <body class="page">
+
+  <!-- HERO tam en -->
+  <div class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></div>
+
+  <!-- İçerik wrapper içinde -->
   <div class="wrapper t-Maschine" id="indexRoot">
-    <div class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></div>
 
     <section class="box">
       <label>Typ wählen (optional):</label>
@@ -86,7 +87,6 @@
     </div>
   </div>
 
-  <!-- DÜZGÜN script etiketi (önceki sorunu çözer) -->
-  <script src="/assets/app.js"></script>
+  <script src="/assets/app.js?v=20260102" defer></script>
 </body>
 </html>
