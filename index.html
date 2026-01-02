@@ -5,18 +5,6 @@
   <meta charset="utf-8">
   <title>Betriebsanweisung – Auswahl</title>
   <link rel="stylesheet" href="/assets/style.css" />
-  <style>
-    :root { --theme-color:#005aa3; }
-    .t-Gefahrstoff { --theme-color:#E53935; }
-    .t-Biostoff    { --theme-color:#2E7D32; }
-    .t-Maschine    { --theme-color:#005AA3; }
-    .t-PSA         { --theme-color:#6A1B9A; }
-    .hero { background:linear-gradient(120deg,var(--theme-color),#111); color:#fff; border-radius:10px; padding:16px 18px; margin-bottom:14px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
-    .hero h1 { margin:0; font-size:20px; }
-    .optbox{ border:1px solid #ddd; border-radius:8px; padding:10px; margin-top:8px; }
-    .font-sel { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .muted { font-size:12px; color:#666; }
-  </style>
 </head>
 <body class="page">
   <div class="wrapper t-Gefahrstoff" id="indexRoot">
@@ -27,10 +15,10 @@
       <div class="row" id="typeRow">
         <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
         <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-        <label><input type="radio" name="type" value="Maschine"> Maschine</label>
+        <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
         <label><input type="radio" name="type" value="PSA"> PSA</label>
       </div>
-      <div class="muted">Hinweis: Ohne Auswahl wird „Maschine“ als Standard verwendet.</div>
+      <div class="small">Hinweis: Ohne Auswahl bleibt „Maschine“ Standard.</div>
     </section>
 
     <section class="box">
@@ -44,7 +32,7 @@
         <div>
           <label>Logo hochladen (optional)</label>
           <input id="logoFile" type="file" accept="image/*">
-          <small class="muted">PNG/JPG empfohlen. Falls keine Cloud-Umgebung gesetzt ist, wird der Upload übersprungen.</small>
+          <small class="small">PNG/JPG empfohlen. Ohne Cloud-Umgebung wird der Upload übersprungen.</small>
           <div id="logoPreview" class="logo-preview"></div>
         </div>
       </div>
@@ -52,28 +40,27 @@
 
     <section class="box">
       <h3>Überschrift & Typografie (optional)</h3>
-      <div class="optbox">
-        <label>Name des Arbeitsmittels/Verfahrens</label>
-        <input id="assetName" type="text" placeholder="z. B. Flexmaschine">
-        <label>Unterschrift unter dem Namen</label>
-        <input id="subtitleText" type="text" value="Betriebsanweisung">
-        <div class="font-sel">
+      <div class="row">
+        <div style="flex:1">
+          <label>Name des Arbeitsmittels/Verfahrens</label>
+          <input id="assetName" type="text" placeholder="z. B. Flexmaschine">
+          <label>Untertitel</label>
+          <input id="subtitleText" type="text" value="Betriebsanweisung">
+        </div>
+        <div style="flex:1">
           <label><input type="checkbox" id="subtitleBold"> Fett</label>
           <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
           <label>Schriftart:
             <select id="fontFamily">
-              <option value="Calibri">Calibri</option>
-              <option value="Arial" selected>Arial</option>
-              <option value="Noto Sans">Noto Sans</option>
-              <option value="Times New Roman">Times New Roman</option>
+              <option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option>
             </select>
           </label>
           <label>Schriftgröße:
             <input type="number" id="fontSize" min="10" max="20" value="14">
           </label>
         </div>
-        <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
       </div>
+      <div class="small">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
     <div class="actions">
@@ -82,7 +69,6 @@
   </div>
 
   <script type="module" src="/assets/app.js"></script>
-
   <!-- Fallback -->
   <script>
     (function(){
@@ -93,19 +79,15 @@
         e.preventDefault();
         const type = [...document.querySelectorAll('input[name="type"]')].find(r=>r.checked)?.value || 'Maschine';
         const head = {
-          type,
-          firm: document.getElementById('firm')?.value?.trim() || '',
-          dept: document.getElementById('dept')?.value?.trim() || '',
-          author: document.getElementById('author')?.value?.trim() || '',
-          date: document.getElementById('date')?.value || '',
+          type, firm: firm?.value?.trim()||'', dept: dept?.value?.trim()||'',
+          author: author?.value?.trim()||'', date: date?.value||'',
           logoUrl: window.__uploadedLogoUrl || '',
           title: {
-            assetName   : document.getElementById('assetName')?.value?.trim() || '',
-            subtitleText: document.getElementById('subtitleText')?.value?.trim() || 'Betriebsanweisung',
-            bold        : !!document.getElementById('subtitleBold')?.checked,
-            center      : !!document.getElementById('subtitleCenter')?.checked,
-            fontFamily  : document.getElementById('fontFamily')?.value || 'Arial',
-            fontSize    : parseInt(document.getElementById('fontSize')?.value||'14',10)
+            assetName: assetName?.value?.trim()||'',
+            subtitleText: subtitleText?.value?.trim()||'Betriebsanweisung',
+            bold: !!subtitleBold?.checked, center: !!subtitleCenter?.checked,
+            fontFamily: fontFamily?.value||'Arial',
+            fontSize: parseInt(fontSize?.value||'14',10)
           }
         };
         try { localStorage.setItem('BA_HEAD', JSON.stringify(head)); } catch {}
