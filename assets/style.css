@@ -1,51 +1,160 @@
 
-/* A4 yazdırma */
-@page { size: A4; margin: 16mm; }
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Betriebsanweisung – Vorlage</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    :root { --theme-color:#005AA3; }
+    body.theme-Gefahrstoff { --theme-color:#E53935; }
+    body.theme-Biostoff    { --theme-color:#2E7D32; }
+    body.theme-Maschine    { --theme-color:#005AA3; }
+    body.theme-PSA         { --theme-color:#6A1B9A; }
 
-.page { font-family: Arial, sans-serif; color:#111; background:#f6f8fb; }
-.wrapper { max-width: 1080px; margin: 0 auto; padding: 18px; }
+    .hero {
+      background: linear-gradient(90deg, var(--theme-color), #111);
+      color:#fff; border-radius:12px; padding:16px 18px; margin-bottom:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.12); text-transform:uppercase;
+    }
+    .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
 
-h1 { font-size: 22px; letter-spacing: .6px; }
-.box {
-  border: 1px solid #e1e6ef; border-radius: 12px; padding: 12px; margin: 10px 0;
-  background:#fff; box-shadow: 0 8px 24px rgba(0,0,0,.06);
-}
+    .ba-band {
+      background: var(--theme-color);
+      color:#fff; border-radius:8px; padding:12px; margin:14px 0;
+      font-weight:900; letter-spacing:.5px; text-transform:uppercase;
+      text-align:center;  /* Ortala */
+    }
 
-.row { display: flex; gap: 16px; flex-wrap: wrap; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .layout { display:grid; grid-template-columns: 360px 1fr; gap:16px; align-items:start; }
+    .side   { position:sticky; top:10px; }
 
-label { display:block; margin:8px 0 4px; font-weight:600; }
-input, textarea, select {
-  width: 100%; padding:10px; font-size: 14px; border:1px solid #cbd5e1; border-radius:8px;
-  background:#fff; outline-color:#005aa3;
-}
+    .piclist { display:grid; grid-template-columns: 1fr; gap:10px; max-height:64vh; overflow:auto; }
+    .picrow  { display:flex; gap:10px; align-items:center; border:1px solid #d0d7de; border-radius:10px; background:#fff; padding:8px; }
+    .picrow img { width:56px; height:56px; object-fit:contain; border-radius:6px; }
+    .picrow .code { font-size:12px; font-weight:700; color:#333; }
+    .assignbar { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+    .assignbar .target { border:1px dashed #cbd5e1; border-radius:8px; padding:8px 12px; cursor:pointer; background:#f7fafc; font-weight:700; }
+    .assignbar .target:hover { background:#eef2ff; }
+    .assignbar .auto { margin-left:auto; display:flex; gap:8px; align-items:center; }
 
-.logo-preview {
-  margin-top:8px; border: 1px dashed #cbd5e1; min-height: 60px;
-  display:flex; align-items:center; justify-content:center; color:#555; border-radius:8px;
-}
+    .section-icons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; justify-content:center; }
+    .section-icons img { width:48px; height:48px; object-fit:contain; }
 
-.actions { margin-top: 14px; }
-button { padding:10px 14px; font-size: 14px; border-radius:8px; cursor:pointer; }
-.btn-primary { background:#005aa3; color:#fff; border:none; }
-.btn-primary:hover { filter: brightness(1.05); }
+    .list { border:1px solid #ddd; border-radius:6px; padding:10px; background:#f9fafb; min-height:80px; }
+    .small { font-size:12px; color:#555; }
+    #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
+  </style>
+</head>
+<body class="page" id="baBody">
+  <div class="wrapper" id="baRoot" style="font-size:14px">
+    <div class="hero"><h1>BETRIEBSANWEISUNG – VORLAGE</h1></div>
 
-/* Piktogram paneli */
-.piclist { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
-.piccard { border:1px solid #d0d7de; border-radius:10px; background:#fff; padding:8px; text-align:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.06); }
-.piccard img { width:64px; height:64px; object-fit:contain; margin:0 auto 6px; display:block; }
-.piccard .code { font-size:12px; color:#555; font-weight:700; }
-.piccard.selected { outline:3px solid var(--theme-color); }
+    <!-- Üst başlık bloğu -->
+    <div id="head" class="box"></div>
 
-.assignbar { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
-.assignbar .target { border:1px dashed #cbd5e1; border-radius:8px; padding:8px 12px; cursor:pointer; background:#f7fafc; font-weight:700; }
-.assignbar .target:hover { background:#eef2ff; }
-.assignbar .auto { margin-left:auto; display:flex; gap:8px; align-items:center; }
+    <div class="box layout">
+      <!-- SOL: Piktogram liste + atama -->
+      <aside class="side">
+        <div class="ba-band">Piktogramm‑Liste</div>
+        <div id="picList" class="piclist"></div>
 
-.ba-band { background: var(--theme-color); color:#fff; padding:10px 12px; font-weight:800; border-radius:8px; margin:12px 0; letter-spacing:.4px; text-transform:uppercase; }
-.section-icons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
-.section-icons img { width:48px; height:48px; object-fit:contain; }
+        <div class="assignbar">
+          <span class="small">Ausgewähltes Piktogramm zuordnen:</span>
+          <div class="target" data-target="hazard">Gefährdungen</div>
+          <div class="target" data-target="tech">Technisch (S)</div>
+          <div class="target" data-target="org">Organisatorisch (O)</div>
+          <div class="target" data-target="ppe">PSA (P)</div>
+          <div class="target" data-target="em">Gefahrfall</div>
+          <div class="target" data-target="eh">Erste Hilfe</div>
+          <div class="target" data-target="dis">Entsorgung</div>
+          <div class="auto"><label><input type="checkbox" id="autoExport" /> Automatisch in Word übernehmen</label></div>
+        </div>
 
-.list { border:1px solid #ddd; border-radius:6px; padding:10px; background:#f9fafb; min-height:80px; }
-.small { font-size:12px; color:#555; }
-#fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
+        <div class="small">Tipp: Piktogramm anklicken → hedef bölüme tıkla. AI/yerel havuz uzun cümleleri getirir; her cümleyi tek tek seçebilirsin.</div>
+      </aside>
+
+      <!-- SAĞ: Metin/öneri paneli -->
+      <main>
+        <div class="box">
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+            <div><label>Nr. (optional)</label><input id="metaNr" type="text" /></div>
+            <div><label>Datum (optional)</label><input id="metaDate" type="date" /></div>
+            <div><label>Firma (optional)</label><input id="metaFirma" type="text" /></div>
+            <div><label>Tätigkeit (optional)</label><input id="metaTaet" type="text" /></div>
+            <div><label>Arbeitsbereich/-platz (optional)</label><input id="metaArb" type="text" /></div>
+            <div><label>Verantwortlich (optional)</label><input id="metaVer" type="text" /></div>
+          </div>
+        </div>
+
+        <div class="ba-band">Anwendungsbereich</div>
+        <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
+
+        <div class="ba-band">Gefährdungen für Mensch und Umwelt</div>
+        <div id="icons-hazard" class="section-icons"></div>
+        <div class="small">Vorschläge (lange Sätze, einzeln wählbar):</div>
+        <div id="hazardPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="hazardList" class="list"></div>
+
+        <div class="ba-band">Schutzmaßnahmen und Verhaltensregeln – Technisch (S)</div>
+        <div id="icons-tech" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="techPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="techList" class="list"></div>
+
+        <div class="ba-band">Schutzmaßnahmen und Verhaltensregeln – Organisatorisch (O)</div>
+        <div id="icons-org" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="orgPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="orgList" class="list"></div>
+
+        <div class="ba-band">Persönliche Schutzausrüstung (P)</div>
+        <div id="icons-ppe" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="ppePool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="ppeList" class="list"></div>
+
+        <div class="ba-band">Verhalten im Gefahrfall</div>
+        <div id="icons-em" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="emPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="emList" class="list"></div>
+
+        <div class="ba-band">Erste Hilfe</div>
+        <div id="icons-eh" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="ehPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="ehList" class="list"></div>
+
+        <div class="ba-band">Sachgerechte Entsorgung / Inaktivierung</div>
+        <div id="icons-dis" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="disPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="disList" class="list"></div>
+
+        <div id="fontHint" class="small" style="display:none;">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße automatisch reduziert (min. 10 pt).</div>
+
+        <div class="actions" style="margin-top:10px">
+          <button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button>
+          <button class="btn-primary" onclick="window.print()">PDF</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    try {
+      const HEAD = JSON.parse(localStorage.getItem('BA_HEAD') || '{}');
+      document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
+    } catch {}
+  </script>
+</body>
+</html>
