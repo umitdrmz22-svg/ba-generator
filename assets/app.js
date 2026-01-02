@@ -38,4 +38,46 @@ document.getElementById('continue')?.addEventListener('click', () => {
   const payload = { type, firm, dept, author, date, logoUrl };
   localStorage.setItem('BA_HEAD', JSON.stringify(payload));
   location.href = '/editor.html';
+  
+/ Piktogram dizinini yükle
+const PICTO = await fetch('/assets/pictos_index.json').then(r => r.json());
+
+// ISO ve GHS piktogram seçiciye grid olarak bas
+function renderPictoChooser(containerId, groupKeys) {
+  const cont = document.getElementById(containerId);
+  cont.innerHTML = '';
+  groupKeys.forEach(k => {
+    const src = PICTO[k.group][k.code].url;
+    const div = document.createElement('div');
+    div.className = 'pic';
+    div.dataset.code = k.code;
+    const img = document.createElement('img');
+    // Wikimedia “File:” sayfası → gerçek görsel linki: thumbnail yerine sayfa gösterir.
+    // Kolay yol: <a href> ile sayfaya gidelim; img’i de sayfaya referansla yüklemeyelim.
+    // Alternatif: küçük önizleme PNG’yi kullanmak için '/thumb/' yolunu türetmek gerekir.
+    // Sadelik için: tıklayınca seç, ayrıntı için yeni sekmede “File” sayfasını aç.
+    const a = document.createElement('a');
+    a.href = src; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = PICTO[k.group][k.code].name + ' (' + k.code + ')';
+    div.appendChild(a);
+    div.onclick = () => togglePicSelection(div);
+    cont.appendChild(div);
+  });
+}
+
+function togglePicSelection(el) {
+  const code = el.dataset.code;
+  if (selectedPics.has(code)) { selectedPics.delete(code); el.classList.remove('selected'); }
+  else { selectedPics.add(code); el.classList.add('selected'); }
+  refreshPools();  // piktogramlara göre öneri havuzunu güncelle
+}
+
+// Örnek kullanım:
+renderPictoChooser('picChooser', [
+  { group: 'iso', code: 'W001' }, { group: 'iso', code: 'M001' },
+  { group: 'iso', code: 'E003' }, { group: 'iso', code: 'F001' },
+  { group: 'ghs', code: 'GHS02' }, { group: 'ghs', code: 'GHS05' },
+  { group: 'ghs', code: 'GHS07' }, { group: 'ghs', code: 'GHS08' }
+]);
+
 });
