@@ -36,7 +36,7 @@ function initIndex(){
     reader.onload = () => {
       const dataUrl = reader.result;
       window.__uploadedLogoUrl = dataUrl;
-      logoPrev.innerHTML = `<img src="${dataUrl}" alt="Logo" style="height:48px;object-fit:contain;border-radius:8px;" />`;
+      logoPrev.innerHTML = `<img src="${dataUrl}" alt="Logo" style="max-height:56px;object-fit:contain;border-radius:8px;">`;
     };
     reader.readAsDataURL(f);
   });
@@ -61,8 +61,8 @@ function initIndex(){
       }
     };
     setHEAD(head);
-    // WICHTIG: relative Navigation beibehalten
-    window.location.href = 'editor.html';
+    // WICHTIG: Verwende eine relative Seite (Cloudflare Pages: /editor wird auf /editor.html gemappt)
+    window.location.href = 'editor';
   });
 
   // Farbthema umschalten
@@ -79,20 +79,20 @@ const sections = ['hazard','tech','org','ppe','em','eh','dis'];
 const iconsBySection = { hazard:[], tech:[], org:[], ppe:[], em:[], eh:[], dis:[] };
 let selectedPic=null, HEAD={};
 
-/* Bild-Helfer: <img> mit Fallback-Kette erzeugen */
-function proxyUrl(u){
-  // wsrv/weserv Proxy
+/* Bild-Helfer: sichere Quellen + Fallback */
+function staticallyUrl(u){
+  // Statically: https://cdn.statically.io/img/<host>/<pfad>?w=64&f=png
   const clean = u.replace(/^https?:\/\//,'');
-  return `https://images.weserv.nl/?url=${encodeURIComponent(clean)}`;
+  return `https://cdn.statically.io/img/${clean}?w=64&f=png`;
 }
-function altProxyUrl(u){
+function weservUrl(u){
   const clean = u.replace(/^https?:\/\//,'');
-  return `https://wsrv.nl/?url=${encodeURIComponent(clean)}`;
+  return `https://images.weserv.nl/?url=${encodeURIComponent(clean)}&w=64`;
 }
 function makeImg(srcCandidates, alt='Piktogramm', size=56, cls=''){
   const img = document.createElement('img');
   img.width = size; img.height = size; img.loading = 'lazy';
-  img.decoding = 'async'; img.referrerPolicy = 'no-referrer';
+  img.decoding = 'async'; img.referrerPolicy = 'no-referrer'; img.crossOrigin = 'anonymous';
   if (cls) img.className = cls;
 
   const list = [...srcCandidates].filter(Boolean);
@@ -101,7 +101,7 @@ function makeImg(srcCandidates, alt='Piktogramm', size=56, cls=''){
     if (idx>=list.length) return;
     img.src = list[idx++];
   };
-  img.onerror = ()=> trySet();
+  img.addEventListener('error', trySet);
 
   trySet();
   img.alt = alt;
@@ -119,12 +119,24 @@ function flattenPicto(src){
     Object.keys(obj).forEach(code=>{
       const item = obj[code];
       const raw = item.imgRaw ?? item.img;
-      out.push({
-        group, code, name:item.name,
-        // Kandidaten: klein (img), raw (hochauflösend), proxys
-        thumbCandidates: [item.img, proxyUrl(item.img), altProxyUrl(item.img), proxyUrl(raw), altProxyUrl(raw)],
-        hiCandidates: [raw, proxyUrl(raw), altProxyUrl(raw), item.img, proxyUrl(item.img), altProxyUrl(item.img)]
-      });
+
+      // Kandidaten für WEB-Thumbnail (klein) und WORD (hochauflösend)
+      const webCandidates = [
+        item.img,                       // falls bereits proxied
+        staticallyUrl(raw),
+        staticallyUrl(item.img),
+        weservUrl(raw),
+        weservUrl(item.img),
+        raw                              // letztversuch direkt
+      ];
+      const docxCandidates = [
+        raw,
+        staticallyUrl(raw).replace('?w=64&f=png',''), // volles Bild (ohne Parameter) – Statically leitet durch
+        weservUrl(raw).replace('&w=64',''),           // volles Bild – Weserv
+        item.img
+      ];
+
+      out.push({ group, code, name:item.name, webCandidates, docxCandidates });
     });
   });
   return out;
@@ -145,19 +157,19 @@ async function initEditor(){
   HEAD = getHEAD();
   document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type ?? 'Maschine'));
 
-  // Daten laden: RELATIVE Pfade (lokal sicher)
-  PICTO = await fetch('./assets/pictos_index.json?v=20260105',{cache:'no-store'}).then(r=>r.json());
-  SUG = await fetch('./assets/suggestions.json?v=20260105',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
+  // Daten laden: ABSOLUTE Pfade (unter Root). Cloudflare Pages mappt /editor → /editor.html
+  PICTO = await fetch('/assets/pictos_index.json?v=20260105',{cache:'no-store'}).then(r=>r.json());
+  SUG = await fetch('/assets/suggestions.json?v=20260105',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
 
   renderHead();
   buildPicList();
   wireAssign();
   wireModal();
   renderSectionIcons();
-  renderAllSuggestions();   // NEU: beim Start Vorschläge zeigen
+  renderAllSuggestions();            // beim Start Vorschläge zeigen
   enforceTwoPages();
 
-  // DOCX-Bibliothek dynamisch laden (CDN)
+  // DOCX-Bibliothek dynamisch laden (mehrere CDNs; garantiert vor Export)
   await ensureDocxLib();
 }
 
@@ -208,7 +220,7 @@ function buildPicList(){
     }).forEach(p=>{
       const row = document.createElement('div'); row.className='picrow';
 
-      const img = makeImg(p.thumbCandidates, `${p.code} ${p.name}`, 56);
+      const img = makeImg(p.webCandidates, `${p.code} ${p.name}`, 56);
       const code = document.createElement('div'); code.className='code'; code.textContent = p.code;
       const name = document.createElement('div'); name.style.fontSize='12px'; name.style.color='#334155'; name.textContent = p.name;
 
@@ -246,7 +258,7 @@ function openModalWith(p){
   pool.forEach(x=>{
     const card = document.createElement('div'); card.className='piccard';
 
-    const img = makeImg(x.thumbCandidates, `${x.code} ${x.name}`, 72);
+    const img = makeImg(x.webCandidates, `${x.code} ${x.name}`, 72);
     const code = document.createElement('div'); code.style.fontWeight='800'; code.textContent = x.code;
     const name = document.createElement('div'); name.className='small'; name.textContent = x.name;
 
@@ -271,7 +283,7 @@ function wireAssign(){
       const wrap = document.createElement('div');
       wrap.style.display='flex'; wrap.style.gap='10px'; wrap.style.alignItems='center';
 
-      const img = makeImg(selectedPic.thumbCandidates, `${selectedPic.code} ${selectedPic.name}`, 40);
+      const img = makeImg(selectedPic.webCandidates, `${selectedPic.code} ${selectedPic.name}`, 40);
       const code = document.createElement('strong'); code.textContent = selectedPic.code;
       const name = document.createElement('span'); name.className='small'; name.style.color='#334155'; name.textContent = selectedPic.name;
 
@@ -279,7 +291,7 @@ function wireAssign(){
       qs('#'+listId)?.appendChild(wrap);
 
       iconsBySection[target].push(selectedPic);
-      renderSuggestions(target);   // NEU: direkt Vorschläge zeigen/aktualisieren
+      renderSuggestions(target);   // direkt Vorschläge zeigen/aktualisieren
       renderSectionIcons();
       enforceTwoPages();
     });
@@ -332,7 +344,7 @@ function renderSectionIcons(){
   sections.forEach(sec=>{
     const first = iconsBySection[sec][0];
     if(first){
-      const img = makeImg(first.thumbCandidates, `${first.code} ${first.name}`, 48);
+      const img = makeImg(first.webCandidates, `${first.code} ${first.name}`, 48);
       host.appendChild(img);
     }else{
       const ph = document.createElement('div');
@@ -354,13 +366,27 @@ function enforceTwoPages(){
 /* -------- Word-Export (.docx) -------- */
 async function ensureDocxLib(){
   if (window.docx) return;
-  await new Promise((resolve)=>{
-    const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/docx@8.4.0/build/index.js';
-    s.onload = resolve;
-    document.head.appendChild(s);
-  });
+  const cdns = [
+    'https://cdn.jsdelivr.net/npm/docx@8.4.0/build/index.js',
+    'https://unpkg.com/docx@8.4.0/build/index.js',
+    'https://cdn.skypack.dev/docx@8.4.0'   // ESM; wird als Fallback geladen
+  ];
+  for (const src of cdns){
+    try{
+      // Bereits eingebunden?
+      if ([...document.scripts].some(s=>s.src===src)) continue;
+      await new Promise((resolve, reject)=>{
+        const s = document.createElement('script');
+        s.src = src; s.async = true;
+        s.onload = ()=>resolve(); s.onerror = ()=>reject(new Error('CDN nicht erreichbar'));
+        document.head.appendChild(s);
+      });
+      if (window.docx) return;
+    }catch(_e){ /* nächster CDN */ }
+  }
+  if (!window.docx) throw new Error('DOCX-Bibliothek konnte nicht geladen werden.');
 }
+
 async function fetchAsArrayBufferWithFallback(candidates){
   for (const u of candidates){
     try{
@@ -386,26 +412,9 @@ function buildDocParagraphs(sectionId, title){
   return [ new Paragraph({ children:[ new TextRun({ text:title, bold:true, size:26, font:'Inter' }) ] }), ...runs ];
 }
 
-function picsToTableRows(docxNS, pics){
-  const { TableRow, TableCell, Paragraph, ImageRun, TextRun, WidthType } = docxNS;
-  const rows = [];
-  for (const p of pics){
-    rows.push(new TableRow({
-      children: [
-        new TableCell({
-          width:{size:1200, type:WidthType.DXA},
-          children:[ new Paragraph({ children:[ new TextRun({text:''}) ] }) ],
-          // Bild später asynchron ersetzt
-        }),
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:p.code, bold:true, font:'Inter', size:24 }) ] }) ] }),
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:p.name, font:'Inter', size:24 }) ] }) ] })
-      ]
-    }));
-  }
-  return rows;
-}
-
 async function makeDocx(){
+  // Stelle sicher, dass die Bibliothek garantiert geladen ist
+  await ensureDocxLib();
   const { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, WidthType } = docx;
 
   // Kopfzeile
@@ -420,13 +429,13 @@ async function makeDocx(){
   let logoPara = null;
   if (HEAD.logoUrl) {
     try {
-      const buf = await fetchAsArrayBufferWithFallback([HEAD.logoUrl, proxyUrl(HEAD.logoUrl), altProxyUrl(HEAD.logoUrl)]);
+      const buf = await fetchAsArrayBufferWithFallback([HEAD.logoUrl, staticallyUrl(HEAD.logoUrl), weservUrl(HEAD.logoUrl)]);
       const img = new ImageRun({ data:buf, transformation:{ width:140, height:60 } });
       logoPara = new Paragraph({ children:[ img ] });
     } catch(_e){ /* ohne Logo weiter */ }
   }
 
-  // Piktogramm-Tabelle vorbereiten
+  // Piktogramm-Tabelle
   const allRows = [];
   for (const sec of sections){
     const pics = collectPics(sec);
@@ -440,30 +449,28 @@ async function makeDocx(){
         })
       ]
     }));
-    // Platzhalter-Zeilen (Bilder werden gleich eingebettet)
-    const rows = picsToTableRows(docx, pics);
-    for (const r of rows) allRows.push(r);
-    // Bilder laden und in die jeweilige erste Zelle setzen
-    for (let i=0;i<pics.length;i++){
-      const pic = pics[i];
+    // Zeilen mit Bildern + Code + Name
+    for (const p of pics){
+      let imgRun = null;
       try{
-        const ab = await fetchAsArrayBufferWithFallback(pic.hiCandidates);
-        const image = new ImageRun({ data:ab, transformation:{ width:28, height:28 } });
-        const cell = allRows[allRows.length - pics.length + i].children[0]; // erste Zelle der i-ten Zeile
-        cell.children = [ new Paragraph({ children:[ image ] }) ];
+        const ab = await fetchAsArrayBufferWithFallback(p.docxCandidates);
+        imgRun = new ImageRun({ data:ab, transformation:{ width:28, height:28 } });
       }catch(_e){
-        // falls Bild nicht ladbar, Text-Fallback
-        const cell = allRows[allRows.length - pics.length + i].children[0];
-        cell.children = [ new Paragraph({ children:[ new TextRun({ text:'(Bild)', font:'Inter', size:22 }) ] }) ];
+        // Text-Fallback
+        imgRun = new TextRun({ text:'(Bild)', font:'Inter', size:22 });
       }
+      allRows.push(new TableRow({
+        children: [
+          new TableCell({ children:[ new Paragraph({ children:[ imgRun instanceof TextRun ? imgRun : imgRun ] }) ] }),
+          new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:p.code, bold:true, font:'Inter', size:24 }) ] }) ] }),
+          new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:p.name, font:'Inter', size:24 }) ] }) ] })
+        ]
+      }));
     }
   }
 
   const picTable = allRows.length
-    ? new Table({
-        width:{ size:100, type:WidthType.PERCENTAGE },
-        rows: allRows
-      })
+    ? new Table({ width:{ size:100, type:WidthType.PERCENTAGE }, rows: allRows })
     : null;
 
   // Textabschnitte
@@ -489,4 +496,12 @@ async function makeDocx(){
   document.body.appendChild(a); a.click(); a.remove();
 }
 
-qs('#exportDocx')?.addEventListener('click', ()=> makeDocx().catch(err=>alert('Export fehlgeschlagen: '+err.message)));
+// Export-Button: Garantiert zuerst Bibliothek laden, dann Export
+qs('#exportDocx')?.addEventListener('click', async ()=>{
+  try{
+    await ensureDocxLib();
+    await makeDocx();
+  }catch(err){
+    alert('Export fehlgeschlagen: '+(err?.message ?? err));
+  }
+});
