@@ -1,20 +1,27 @@
 
 {
   "iso": {
-    "W001": { "name": "Allgemeines Warnzeichen", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_W001.svg" },
-    "M001": { "name": "Allgemeines Gebotszeichen", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_M001.svg" },
-    "E003": { "name": "Erste Hilfe", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_E003_-_First_aid_sign.svg" },
-    "F001": { "name": "Feuerlöscher", "img": "/img?src=https://commons.wikimedia.org/wiki/Special:FilePath/ISO_7010_F001.svg" }
+    "W001": {
+      "name": "Warnung vor elektrischer Spannung",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/ISO_7010_W012.svg/96px-ISO_7010_W012.svg.png"
+    },
+    "M001": {
+      "name": "Allgemeines Gebotszeichen (z. B. Schutzbrille tragen)",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/ISO_7010_M001.svg/96px-ISO_7010_M001.svg.png"
+    },
+    "E003": {
+      "name": "Erste-Hilfe-Einrichtung",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/ISO_7010_E003.svg/96px-ISO_7010_E003.svg.png"
+    }
   },
   "ghs": {
-    "GHS01": { "name": "Explosiv",          "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-explos.gif" },
-    "GHS02": { "name": "Entzündlich",       "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-flamme.gif" },
-    "GHS03": { "name": "Oxidierend",        "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-rondflam.gif" },
-    "GHS04": { "name": "Gas unter Druck",   "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-bottle.gif" },
-    "GHS05": { "name": "Ätzend",            "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-acid.gif" },
-    "GHS06": { "name": "Akut toxisch",      "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-skull.gif" },
-    "GHS07": { "name": "Ausrufezeichen",    "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-exclam.gif" },
-    "GHS08": { "name": "Gesundheitsgefahr", "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-silhouette.gif" },
-    "GHS09": { "name": "Umweltgefährlich",  "img": "/img?src=https://unece.org/sites/default/files/imported/trans/danger/publi/ghs/pictograms/GHS-pictogram-pollu.gif" }
+    "GHS02": {
+      "name": "Entzündbar",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/GHS-pictogram-flamme.svg/96px-GHS-pictogram-flamme.svg.png"
+    },
+    "GHS07": {
+      "name": "Achtung (reizend, gesundheitsschädlich)",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png"
+    }
   }
 }
