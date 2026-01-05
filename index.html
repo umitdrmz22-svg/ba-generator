@@ -9,26 +9,21 @@
   /assets/style.css?v=20260105
 </head>
 <body class="page">
-  <header class="hero">
-    <div class="brand">
-      <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
-    </div>
-  </header>
+  <header class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></header>
 
   <main class="wrapper t-Maschine" id="indexRoot">
-    <section class="card">
-      <div class="row">
-        <div class="chipset">
-          <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
-          <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-          <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
-          <label><input type="radio" name="type" value="PSA"> PSA</label>
-        </div>
-        <span class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</span>
+    <section class="box">
+      <label>Typ wählen (optional):</label>
+      <div class="row" id="typeRow">
+        <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
+        <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
+        <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
+        <label><input type="radio" name="type" value="PSA"> PSA</label>
       </div>
+      <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
     </section>
 
-    <section class="card">
+    <section class="box">
       <div class="grid2">
         <div>
           <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
@@ -46,22 +41,20 @@
       </div>
     </section>
 
-    <section class="card">
+    <section class="box">
       <h3>Überschrift & Typografie (optional)</h3>
       <div class="row">
-        <div class="col">
+        <div style="flex:1">
           <label>Name des Arbeitsmittels/Verfahrens</label>
-          <input id="assetName" type="text" placeholder="z. B. Trennschleifer" />
+          <input id="assetName" type="text" placeholder="z. B. Trennschleifer" />
           <label>Untertitel</label>
           <input id="subtitleText" type="text" value="Betriebsanweisung" />
         </div>
-        <div class="col">
-          <div class="chipset">
-            <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
-            <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
-          </div>
+        <div style="flex:1">
+          <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
+          <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
           <label>Schriftart:
-            <select id="fontFamily"><option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option></select>
+            <select id="fontFamily"><option>Inter</option><option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option></select>
           </label>
           <label>Schriftgröße:
             <input type="number" id="fontSize" min="14" max="26" value="18" />
@@ -71,12 +64,9 @@
       <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions">
-      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
-    </div>
+    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
   </main>
 
   /assets/app.js?v=20260105</script>
 </body>
 </html>
-``
