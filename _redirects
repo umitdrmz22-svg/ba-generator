@@ -1,11 +1,7 @@
 
-# editor uzantısız erişim
-/editor     /editor.html 200
+# /sayfa ve /yine -> köke
+/sayfa   /            200
+/yine    /            200
 
-# kolay hatırlanan alias'lar
-/sayfa      /index.html  200
-/yine       /index.html  200
-
-# SPA fallback: TANIMSIZ tüm yolları index'e ver (son satır olmalı)
-# Cloudflare Pages için doğru sözdizimi:
- /*          /index.html  200
+# /editor -> gerçek dosya
+/editor  /editor.html 200
