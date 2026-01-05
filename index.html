@@ -3,51 +3,46 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <base href="/" />
+  /
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Betriebsanweisung – Auswahl</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20260105">
+  /assets/style.css?v=20260105
 </head>
-<body class="page theme-Maschine" id="bodyRoot">
-  <header class="hero">
-    <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
-  </header>
+<body class="page">
+  <header class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></header>
 
-  <main class="wrapper" id="indexRoot">
-    <!-- Typ-Auswahl -->
-    <section class="box">
-      <label>Typ wählen (optional):</label>
+  <main class="wrapper t-Maschine" id="indexRoot">
+    <section class="card">
+      <label>Typ wählen:</label>
       <div class="row" id="typeRow">
-        <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
-        <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-        <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
-        <label><input type="radio" name="type" value="PSA"> PSA</label>
+        <label class="chip"><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
+        <label class="chip"><input type="radio" name="type" value="Biostoff"> Biostoff</label>
+        <label class="chip"><input type="radio" name="type" value="Maschine" checked> Maschine</label>
+        <label class="chip"><input type="radio" name="type" value="PSA"> PSA</label>
       </div>
       <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
     </section>
 
-    <!-- Metadaten -->
-    <section class="box">
+    <section class="card">
       <div class="grid2">
         <div>
-          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
-          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung" />
-          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name" />
-          <label>Datum (optional)</label><input id="date" type="date" />
+          <label>Unternehmen</label><input id="firm" type="text" placeholder="Firmenname" />
+          <label>Abteilung</label><input id="dept" type="text" placeholder="Abteilung" />
+          <label>Ersteller</label><input id="author" type="text" placeholder="Name" />
+          <label>Datum</label><input id="date" type="date" />
         </div>
         <div>
-          <label>Logo‑URL oder Upload (optional)</label>
-          <input id="logoFile" type="file" accept="image/*" />
+          <label>Logo (URL oder Upload)</label>
           <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
-          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine URL genutzt werden.</small>
+          <input id="logoFile" type="file" accept="image/*" />
+          <small class="muted">PNG/JPG empfohlen. Bei fehlendem Upload bitte URL nutzen.</small>
           <div id="logoPreview" class="logo-preview"></div>
         </div>
       </div>
     </section>
 
-    <!-- Typografie -->
-    <section class="box">
-      <h3>Überschrift & Typografie (optional)</h3>
+    <section class="card">
+      <h3>Überschrift & Typografie</h3>
       <div class="row">
         <div style="flex:1">
           <label>Name des Arbeitsmittels/Verfahrens</label>
@@ -66,14 +61,12 @@
           </label>
         </div>
       </div>
-      <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions">
-      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
-    </div>
+    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
   </main>
 
-  <script src="/assets/app.js?v=20260105"></script>
+  /assets/app.js?v=20260105</script>
 </body>
 </html>
+``
