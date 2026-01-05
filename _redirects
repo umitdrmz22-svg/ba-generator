@@ -1,7 +1,4 @@
 
-# /sayfa ve /yine -> köke
-/sayfa   /            200
-/yine    /            200
-
-# /editor -> gerçek dosya
-/editor  /editor.html 200
+/sayfa    /            200
+/yine     /            200
+/editor   /editor.html 200
