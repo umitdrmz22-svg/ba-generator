@@ -3,73 +3,58 @@
   "Maschine": {
     "hazard": {
       "W001": [
-        "Elektrische Gefährdungen: Vor Arbeitsbeginn alle Zuleitungen und Gehäuse sichtbar prüfen und beschädigte Leitungen sofort außer Betrieb nehmen.",
-        "Eingriffe nur durch Elektrofachkräfte oder unter deren Aufsicht durchführen und die fünf Sicherheitsregeln konsequent anwenden.",
-        "Nach dem Freischalten die Spannungsfreiheit mit geeignetem Messgerät feststellen und gegen Wiedereinschalten sichern.",
-        "Feuchtigkeit, leitfähiger Staub und enge metallische Räume erhöhen das Risiko; zusätzliche Schutzmaßnahmen einhalten.",
-        "Ereignisse dokumentieren und der verantwortlichen Führungskraft melden, um Wiederholungen zu vermeiden."
+        "Vor Arbeitsbeginn Sichtprüfung durchführen; fehlende/defekte Schutzeinrichtungen melden und Betrieb unterbinden.",
+        "Gefährliche Bewegungen, Quetsch- und Schnittstellen kennzeichnen; Eingriffsbereiche absperren."
       ],
       "GHS02": [
-        "Zündquellen wie Funken, offene Flamme und heiße Oberflächen konsequent fernhalten und entzündliche Medien dicht lagern.",
-        "Lokale Absaugung und ausreichende Lüftung sicherstellen, elektrostatische Aufladung minimieren und erden.",
-        "Beim Umfüllen Behälter und Anlagen erden und leitfähige Schläuche einsetzen.",
-        "Geeignete Löschmittel (z. B. CO₂, Schaum) bereithalten und Beschäftigte unterweisen.",
-        "Nach Brandereignissen den Bereich räumen, Ursache analysieren und Abstellmaßnahmen dokumentieren."
+        "Zündquellen (Funken, heiße Oberflächen) fernhalten; ausreichende Lüftung/Absaugung betreiben.",
+        "Behälter erden; beim Umfüllen elektrostatische Aufladung minimieren."
       ]
     },
     "tech": {
       "W001": [
-        "Lockout/Tagout (LOTO) anwenden, Anlage vollständig freischalten und mit persönlichem Schloss sichern.",
-        "Gespeicherte Energien (Druck, Feder) abbauen und Nachlaufzeiten beachten, mechanische Verriegelungen einsetzen.",
-        "Nach Instandhaltung eine dokumentierte Funktionsprüfung durchführen, Schutzsysteme testen.",
-        "Nur zugelassene Arbeitsmittel einsetzen und Wartungsintervalle gemäß Prüfliste einhalten.",
-        "Steuerungsänderungen nur durch Autorisierte durchführen und Änderungen dokumentieren."
+        "Schutzhauben, Lichtschranken und Verriegelungen funktionsgeprüft betreiben; Umgehungen sind verboten.",
+        "Lockout/Tagout (LOTO) anwenden; gespeicherte Energien abbauen und Nachlaufzeiten beachten."
       ]
     },
     "org": {
       "W001": [
-        "Arbeiten nur mit schriftlicher Freigabe (Erlaubnisschein) durchführen und Abschnittsgrenzen klar kennzeichnen.",
-        "Unbefugten Zutritt verhindern und Gefährdungsbereiche abgrenzen; Warnhinweise gemäß ISO 7010 anbringen.",
-        "Betriebsanweisungen aktuell halten und Unterweisungen jährlich mit Praxisbezug durchführen.",
-        "Beinahe‑Ereignisse melden, Ursachen analysieren und Abstellmaßnahmen nachverfolgen.",
-        "Ersatzteile/Änderungen nur mit Herstellerfreigabe; CE‑Konformität sicherstellen."
+        "Arbeiten nur mit Unterweisung/Freigabe; Sperrbereiche markieren und Unbefugten Zutritt verhindern.",
+        "Wartung nach Plan; Prüfprotokolle führen und Mängel zeitnah beseitigen."
       ]
     },
     "ppe": {
-      "M001": [
-        "Schutzbrille mit Seitenschutz und ggf. Gesichtsschutz gegen Spanflug verwenden.",
-        "Gehörschutz bei Lärmexposition über Grenzwert tragen und Wirksamkeit prüfen.",
-        "Schnittfeste Handschuhe nur dort einsetzen, wo keine Einzugsgefahr besteht; enganliegende Kleidung wählen.",
-        "Sicherheitsschuhe mit Zehenschutz tragen; rutschhemmende Sohlen bei glatten Böden bevorzugen.",
-        "Hautschutzplan bei Kühlschmierstoffen beachten; kontaminierte Kleidung zeitnah wechseln."
+      "M004": [
+        "Augenschutz mit Seitenschutz tragen; bei Gefahr von Span-/Funkenflug Gesichtsschutz ergänzen."
+      ],
+      "M003": [
+        "Gehörschutz bei Lärmexposition über Auslösewert tragen; Wirksamkeit regelmäßig prüfen."
+      ],
+      "M009": [
+        "Schutzhandschuhe entsprechend Medium/Arbeitsschritt auswählen; Einzugsstellen beachten."
       ]
     },
     "em": {
       "W001": [
-        "Bei Gefahr sofort Not‑Halt betätigen, Bereich sichern und alle Personen warnen.",
-        "Verletzte nur ohne Selbstgefährdung retten und Stromquellen freischalten; bewegte Teile stoppen.",
-        "Vorgesetzte informieren und Ereignis dokumentieren (Ursache, Maßnahmen, Beteiligte).",
-        "Ersthelfer und Brandschutzhelfer koordinieren; Sammelpunkt nutzen; Lüftung maximieren.",
-        "Ursachenanalyse durchführen und Abstellmaßnahmen prüfen."
+        "Gefahr → Not-Halt betätigen, Bereich sichern, Personen warnen; Vorgesetzte informieren.",
+        "Nur ohne Selbstgefährdung eingreifen; Brandfall → passende Löschmittel einsetzen."
       ]
     },
     "eh": {
       "E003": [
-        "Schnitt-/Quetschverletzungen blutungsstillend versorgen und verunreinigte Wunden spülen.",
-        "Bei Augenkontakt mindestens 15 Minuten spülen und ärztliche Abklärung veranlassen.",
-        "Bei Stromunfall erst nach Freischalten berühren; Vitalfunktionen prüfen; ggf. reanimieren.",
-        "Notruf absetzen und alle Erste‑Hilfe‑Leistungen dokumentieren.",
-        "Ursachen und Folgemaßnahmen bewerten, um Wiederholungen zu vermeiden."
+        "Wunden blutungsstillend versorgen und kontaminierte Bereiche spülen; Notruf absetzen.",
+        "Unfall dokumentieren; ggf. ärztliche Abklärung veranlassen."
+      ],
+      "E011": [
+        "Augenkontakt: mindestens 15 Minuten spülen; Kontaklinsen entfernen; Arzt aufsuchen."
       ]
     },
     "dis": {
       "W001": [
-        "Wartungsabfälle getrennt sammeln; öl-/chemikalienhaltige Abfälle gekennzeichneten Behältern zuführen.",
-        "Leckagen mit Bindemittel aufnehmen; kontaminierte Materialien als gefährliche Abfälle entsorgen.",
-        "Kühlschmierstoffe gemäß Herstellerangaben wechseln/entsorgen; Nachweise führen.",
-        "Bereich reinigen; Rutschgefahr beseitigen; Auffangwannen/Abscheider regelmäßig prüfen.",
-        "SDB/Betriebsanleitung beachten; Anpassungen dokumentieren."
+        "Abfälle sortenrein erfassen; öl-/chemiehaltige Abfälle gekennzeichneten Behältern zuführen.",
+        "Bereich reinigen; Rutschgefahr beseitigen; Nachweise führen."
       ]
     }
   }
 }
+``
