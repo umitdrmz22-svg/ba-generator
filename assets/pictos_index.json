@@ -107,3 +107,31 @@
     "W013": { "name": "Warnung: Scharfe Elemente", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/ISO_7010_W013_-_Warning;_Sharp_element.svg/96px-ISO_7010_W013_-_Warning;_Sharp_element.svg.png" },
     "W014": { "name": "Warnung: Automatischer Anlauf", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/ISO_7010_W014_-_Warning;_Automatic_start-up.svg/96px-ISO_7010_W014_-_Warning;_Automatic_start-up.svg.png" },
     "W015": { "name": "Warnung: Quetschgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/ISO_7010_W015_-_Warning;_Crushing.svg/96px-ISO_7010_W015_-_Warning;_Crushing.svg.png" },
+    "W016": { "name": "Warnung: Überkopf-LastUemit, iki şeyi aynı anda çözüyoruz:
+
+1) **ERR_TOO_MANY_REDIRECTS** (editor açılmıyor → yönlendirme döngüsü)  
+2) **Tam piktogram & öneri dosyaları** (JSON’ları burada veriyorum ve indirilebilir linkleri ekliyorum)
+
+---
+
+## 1) Editor’un açılmaması: yönlendirme döngüsü (ERR_TOO_MANY_REDIRECTS)
+
+Bu hata genelde iki sebepten çıkar:
+
+- **Cloudflare SSL/TLS modu “Flexible”** iken origin (kaynak) **HTTP→HTTPS** veya **HTTPS→HTTP** zorluyorsa **sonsuz döngü** oluşur. Çözüm: Cloudflare **SSL/TLS Encryption Mode** değerini **Full** (mümkünse **Full (strict)**) yapın ve çakışan HTTPS→HTTP yönlendirmelerini kaldırın. [5](https://developers.cloudflare.com/ssl/troubleshooting/too-many-redirects/)  
+- **_redirects** dosyasında **kendi kendine** dönen kurallar (ör. `/` → `/` veya `/editor`’un tekrar `/editor`’a dönmesi) varsa döngüye girer. _redirects dosyasının doğru biçimi ve uygulama kapsamı Cloudflare Pages dokümanında anlatılır. [7](https://developers.cloudflare.com/pages/configuration/redirects/)
+
+### Hızlı düzeltme adımları
+
+**A. Cloudflare’da SSL/TLS ayarı**  
+- Cloudflare Dashboard → **SSL/TLS** → **Encryption mode**: **Full** veya **Full (strict)** seçin. (Flexible çoğu senaryoda redirect loop’a yol açar.) [5](https://developers.cloudflare.com/ssl/troubleshooting/too-many-redirects/)  
+- “Always Use HTTPS” açık ise origin üzerinde ters yönde (HTTPS→HTTP) kural olmadığından emin olun. [5](https://developers.cloudflare.com/ssl/troubleshooting/too-many-redirects/)
+
+**B. `_redirects` dosyası (Cloudflare Pages)**  
+Kök dizine **_redirects** (uzantısız, düz metin) ekleyin. **Sadece gerekli rotaları** tanımlayın—fazla kural eklemek döngü riskini arttırır. Önerilen **minimal** dosya:
+
+```text
+# Cloudflare Pages _redirects (minimal, döngü yok)
+/sayfa    /            200
+/editor   /editor.html 200
+``
