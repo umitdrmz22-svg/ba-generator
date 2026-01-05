@@ -1,16 +1,11 @@
 
 // functions/img.ts
-const ALLOWED = [
-  'commons.wikimedia.org',
-  'upload.wikimedia.org',
-  'unece.org'
-];
+const ALLOWED = ['commons.wikimedia.org', 'upload.wikimedia.org', 'unece.org'];
 
 export const onRequestGet = async ({ request }) => {
   const u = new URL(request.url);
   const src = u.searchParams.get('src') || '';
   if (!src) return new Response('Missing src', { status: 400 });
-
   try {
     const target = new URL(src);
     if (!ALLOWED.includes(target.host)) {
@@ -18,9 +13,8 @@ export const onRequestGet = async ({ request }) => {
     }
     const r = await fetch(target.toString(), { headers: { 'User-Agent': 'BA-Generator/1.0' } });
     if (!r.ok) return new Response('Upstream error', { status: r.status });
-
     const buf = await r.arrayBuffer();
-    const ct  = r.headers.get('content-type') || 'application/octet-stream';
+    const ct = r.headers.get('content-type') || 'application/octet-stream';
     return new Response(buf, {
       headers: {
         'content-type': ct,
@@ -32,3 +26,4 @@ export const onRequestGet = async ({ request }) => {
     return new Response('Bad src', { status: 400 });
   }
 };
+``
