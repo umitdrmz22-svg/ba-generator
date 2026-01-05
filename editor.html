@@ -5,8 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Betriebsanweisung – Vorlage</title>
+
+  <!-- CSP (nur falls Header yoksa): externe Bilder/Skriptler için izin -->
+  <meta http-equiv="Content-Security-Policy"
+        content="img-src https: data: blob:; script-src 'self' https:; connect-src https:; style-src 'self' https: 'unsafe-inline';">
+
+  <!-- Schrift -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Stil -->
   <link rel="stylesheet" href="/assets/style.css?v=20260106">
 </head>
 <body class="page" id="baBody">
@@ -17,48 +25,43 @@
   <main class="wrapper layout" id="baRoot">
     <!-- Seitenleiste -->
     <aside class="side box">
-      <div class="side-scroll">
-        <div id="head"></div>
+      <div id="head"></div>
 
-        <!-- ZUORDNEN – ÜSTE ALINDI -->
-        <div class="ba-band">ZUORDNEN</div>
-        <div class="assignbar">
-          <button class="target" data-target="hazard">Gefährdungen</button>
-          <button class="target" data-target="tech">Technisch (S)</button>
-          <button class="target" data-target="org">Organisatorisch (O)</button>
-          <button class="target" data-target="ppe">PSA (P)</button>
-          <button class="target" data-target="em">Gefahrfall</button>
-          <button class="target" data-target="eh">Erste Hilfe</button>
-          <button class="target" data-target="dis">Entsorgung</button>
-          <div class="auto">
-            <button id="exportDocx" class="btn-primary">Als Word (.docx) speichern</button>
-            <button id="exportPdf" class="btn-primary" disabled>PDF (coming soon)</button>
-          </div>
+      <!-- **NEU: ZUORDNEN ganz oben und kompakt** -->
+      <div class="ba-band" style="margin-top:8px;">ZUORDNEN</div>
+      <div class="assignbar assignbar-sticky">
+        <button class="target" data-target="hazard">Gefährdungen</button>
+        <button class="target" data-target="tech">Technisch (S)</button>
+        <button class="target" data-target="org">Organisatorisch (O)</button>
+        <button class="target" data-target="ppe">PSA (P)</button>
+        <button class="target" data-target="em">Gefahrfall</button>
+        <button class="target" data-target="eh">Erste Hilfe</button>
+        <button class="target" data-target="dis">Entsorgung</button>
+        <div class="auto">
+          <button id="exportDocx" class="btn-primary btn-compact">Als Word (.docx) speichern</button>
+          <button id="exportPdf" class="btn-primary btn-compact" disabled>PDF (coming soon)</button>
         </div>
-
-        <!-- Piktogramm-Liste -->
-        <div class="ba-band">PIKTOGRAMM‑LISTE</div>
-        <div class="filterbar">
-          <div class="chips">
-            <label><input type="checkbox" class="grp" value="iso" checked> ISO</label>
-            <label><input type="checkbox" class="grp" value="ghs" checked> GHS</label>
-            <label><input type="checkbox" class="grp" value="adr" checked> ADR</label>
-          </div>
-          <input type="search" id="picSearch" placeholder="Suche nach Code oder Bezeichnung …">
-        </div>
-        <div class="piclist compact" id="picList"></div>
-
-        <p id="fontHint">Hinweis: Verwende eine moderne Schrift (Inter), um die Darstellung zu verbessern.</p>
       </div>
+
+      <!-- **Piktogramm-Liste jetzt alt tarafta** -->
+      <div class="ba-band">PIKTOGRAMM‑LISTE</div>
+      <div class="filterbar filter-compact">
+        <div class="chips">
+          <label><input type="checkbox" class="grp" value="iso" checked> ISO</label>
+          <label><input type="checkbox" class="grp" value="ghs" checked> GHS</label>
+          <label><input type="checkbox" class="grp" value="adr" checked> ADR</label>
+        </div>
+        <input type="search" id="picSearch" placeholder="Suche nach Code oder Bezeichnung …">
+      </div>
+      <div class="piclist piclist-compact" id="picList"></div>
+      <p id="fontHint" class="small" style="display:none;margin-top:6px;">Hinweis: Verwende eine moderne Schrift (Inter), um die Darstellung zu verbessern.</p>
     </aside>
 
-    <!-- Hauptinhalt -->
-    <section class="box">
-      <!-- Abschnittsicons -->
+    <!-- Hauptinhalt (kompakt) -->
+    <section class="box box-compact">
       <div class="section-icons" id="secIcons"></div>
 
-      <!-- Metaformular (optional) -->
-      <div class="grid3 small" style="margin-bottom:8px;">
+      <div class="grid3 small meta-grid">
         <label>Nr. (optional) <input id="metaNr" type="text"></label>
         <label>Datum (optional) <input id="metaDate" type="date"></label>
         <label>Firma (optional) <input id="metaFirm" type="text"></label>
@@ -67,61 +70,73 @@
         <label>Verantwortlich (optional) <input id="metaResp" type="text"></label>
       </div>
 
-      <!-- Abschnitte -->
       <div class="ba-band">ANWENDUNGSBEREICH</div>
-      <div id="appScope" class="list"></div>
+      <div id="appScope" class="list list-compact"></div>
 
       <div class="ba-band">GEFÄHRDUNGEN FÜR MENSCH UND UMWELT</div>
-      <div id="hazardList" class="list"></div>
-      <div class="ft-row">
+      <div id="hazardList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="hazardFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('hazardFree','hazardList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('hazardFree','hazardList')">➕ Hinzufügen</button>
       </div>
-      <div id="hazardSug" class="sug"></div>
+      <div id="hazardSug" class="sug sug-compact"></div>
 
       <div class="ba-band">SCHUTZMASSNAHMEN UND VERHALTENSREGELN – TECHNISCH (S)</div>
-      <div id="techList" class="list"></div>
-      <div class="ft-row">
+      <div id="techList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="techFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('techFree','techList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('techFree','techList')">➕ Hinzufügen</button>
       </div>
-      <div id="techSug" class="sug"></div>
+      <div id="techSug" class="sug sug-compact"></div>
 
       <div class="ba-band">SCHUTZMASSNAHMEN UND VERHALTENSREGELN – ORGANISATORISCH (O)</div>
-      <div id="orgList" class="list"></div>
-      <div class="ft-row">
+      <div id="orgList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="orgFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('orgFree','orgList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('orgFree','orgList')">➕ Hinzufügen</button>
       </div>
-      <div id="orgSug" class="sug"></div>
+      <div id="orgSug" class="sug sug-compact"></div>
 
       <div class="ba-band">PERSÖNLICHE SCHUTZAUSRÜSTUNG (P)</div>
-      <div id="ppeList" class="list"></div>
-      <div class="ft-row">
+      <div id="ppeList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="ppeFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('ppeFree','ppeList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('ppeFree','ppeList')">➕ Hinzufügen</button>
       </div>
-      <div id="ppeSug" class="sug"></div>
+      <div id="ppeSug" class="sug sug-compact"></div>
 
       <div class="ba-band">VERHALTEN IM GEFAHRFALL</div>
-      <div id="emList" class="list"></div>
-      <div class="ft-row">
+      <div id="emList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="emFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('emFree','emList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('emFree','emList')">➕ Hinzufügen</button>
       </div>
-      <div id="emSug" class="sug"></div>
+      <div id="emSug" class="sug sug-compact"></div>
 
       <div class="ba-band">ERSTE HILFE</div>
-      <div id="ehList" class="list"></div>
-      <div class="ft-row">
+      <div id="ehList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="ehFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('ehFree','ehList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('ehFree','ehList')">➕ Hinzufügen</button>
       </div>
-      <div id="ehSug" class="sug"></div>
+      <div id="ehSug" class="sug sug-compact"></div>
 
       <div class="ba-band">SACHGERECHTE ENTSORGUNG / INAKTIVIERUNG</div>
-      <div id="disList" class="list"></div>
-      <div class="ft-row">
+      <div id="disList" class="list list-compact"></div>
+      <div class="ft-row ft-compact">
         <input id="disFree" type="text" placeholder="Freitext hinzufügen …">
-        <button class="btn-primary" onclick="addFreeText('disFree','disList')">➕ Hinzufügen</button>
+        <button class="btn-primary btn-compact" onclick="addFreeText('disFree','disList')">➕ Hinzufügen</button>
       </div>
+      <div id="disSug" class="sug sug-compact"></div>
+
+      <p class="small" style="margin-top:6px;">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße wird automatisch reduziert (min. 10 pt).</p>
+    </section>
+  </main>
+
+  <!-- DOCX-Bibliothek **ön‑yükleme** (CSP izinliyse) -->
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.4.0/build/index.js" defer></script>
+
+  <!-- Uygulama -->
+  <script src="/assets/app.js?v=20260106" defer></script>
+</body>
+</html>
