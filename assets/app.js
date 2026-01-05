@@ -36,7 +36,7 @@ function initIndex(){
     reader.onload = () => {
       const dataUrl = reader.result;
       window.__uploadedLogoUrl = dataUrl;
-      logoPrev.innerHTML = `<img src="${dataUrl}" alt="Logo" style="max-height:56px;object-fit:contain;border-radius:8px;">`;
+      logoPrev.innerHTML = `${dataUrl}`;
     };
     reader.readAsDataURL(f);
   });
@@ -61,8 +61,7 @@ function initIndex(){
       }
     };
     setHEAD(head);
-    // WICHTIG: Verwende eine relative Seite (Cloudflare Pages: /editor wird auf /editor.html gemappt)
-    window.location.href = 'editor';
+    window.location.href = '/editor';
   });
 
   // Farbthema umschalten
@@ -79,17 +78,17 @@ const sections = ['hazard','tech','org','ppe','em','eh','dis'];
 const iconsBySection = { hazard:[], tech:[], org:[], ppe:[], em:[], eh:[], dis:[] };
 let selectedPic=null, HEAD={};
 
-/* Bild-Helfer: sichere Quellen + Fallback */
+/* Bild-Helfer: güvenli src adayları + fallback */
 function staticallyUrl(u){
-  // Statically: https://cdn.statically.io/img/<host>/<pfad>?w=64&f=png
   const clean = u.replace(/^https?:\/\//,'');
+  // küçük web thumb
   return `https://cdn.statically.io/img/${clean}?w=64&f=png`;
 }
 function weservUrl(u){
   const clean = u.replace(/^https?:\/\//,'');
   return `https://images.weserv.nl/?url=${encodeURIComponent(clean)}&w=64`;
 }
-function makeImg(srcCandidates, alt='Piktogramm', size=56, cls=''){
+function makeImg(srcCandidates, alt='Piktogramm', size=44, cls=''){
   const img = document.createElement('img');
   img.width = size; img.height = size; img.loading = 'lazy';
   img.decoding = 'async'; img.referrerPolicy = 'no-referrer'; img.crossOrigin = 'anonymous';
@@ -106,7 +105,7 @@ function makeImg(srcCandidates, alt='Piktogramm', size=56, cls=''){
   trySet();
   img.alt = alt;
   img.style.objectFit = 'contain';
-  img.style.borderRadius = '8px';
+  img.style.borderRadius = '6px';
   img.style.background = '#fff';
   return img;
 }
@@ -120,20 +119,19 @@ function flattenPicto(src){
       const item = obj[code];
       const raw = item.imgRaw ?? item.img;
 
-      // Kandidaten für WEB-Thumbnail (klein) und WORD (hochauflösend)
       const webCandidates = [
-        item.img,                       // falls bereits proxied
+        item.img,                       // JSON'da varsa proxied
         staticallyUrl(raw),
         staticallyUrl(item.img),
         weservUrl(raw),
         weservUrl(item.img),
-        raw                              // letztversuch direkt
+        raw
       ];
       const docxCandidates = [
         raw,
-        staticallyUrl(raw).replace('?w=64&f=png',''), // volles Bild (ohne Parameter) – Statically leitet durch
-        weservUrl(raw).replace('&w=64',''),           // volles Bild – Weserv
-        item.img
+        item.img,
+        staticallyUrl(raw).replace('?w=64&f=png',''),
+        weservUrl(raw).replace('&w=64','')
       ];
 
       out.push({ group, code, name:item.name, webCandidates, docxCandidates });
@@ -157,23 +155,23 @@ async function initEditor(){
   HEAD = getHEAD();
   document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type ?? 'Maschine'));
 
-  // Daten laden: ABSOLUTE Pfade (unter Root). Cloudflare Pages mappt /editor → /editor.html
-  PICTO = await fetch('/assets/pictos_index.json?v=20260105',{cache:'no-store'}).then(r=>r.json());
-  SUG = await fetch('/assets/suggestions.json?v=20260105',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
+  // Mutlak yollar (Pages altında güvenli)
+  PICTO = await fetch('/assets/pictos_index.json?v=20260106',{cache:'no-store'}).then(r=>r.json());
+  SUG = await fetch('/assets/suggestions.json?v=20260106',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
 
   renderHead();
   buildPicList();
   wireAssign();
   wireModal();
   renderSectionIcons();
-  renderAllSuggestions();            // beim Start Vorschläge zeigen
+  renderAllSuggestions();
   enforceTwoPages();
 
-  // DOCX-Bibliothek dynamisch laden (mehrere CDNs; garantiert vor Export)
-  await ensureDocxLib();
+  // DOCX hazır mı kontrol (editor.html head'te preload var)
+  await ensureDocxReady();
 }
 
-/* Kopfbereich rendern (Logo FIX) */
+/* Kopfbereich rendern (Logo gerçekten <img>) */
 function renderHead(){
   const headDiv=qs('#head');
   const subStyle = `
@@ -184,18 +182,18 @@ function renderHead(){
     text-transform:uppercase; letter-spacing:.6px;
   `;
   const logoHtml = HEAD.logoUrl
-    ? `<img src="${HEAD.logoUrl}" alt="Logo" style="width:140px;height:auto;object-fit:contain;border-radius:8px;" />`
+    ? `${HEAD.logoUrl}`
     : '';
   headDiv.innerHTML = `
-    <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+    <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
       <div style="flex:1">
         <div style="${subStyle}">
           ${HEAD.title?.subtitleText ?? 'Betriebsanweisung'}
         </div>
-        <div style="font-size:14px;color:#334155;margin-top:6px">
+        <div style="font-size:14px;color:#334155;margin-top:4px">
           ${(HEAD.title?.assetName ?? '').trim()}
         </div>
-        <div class="small" style="margin-top:6px">
+        <div class="small" style="margin-top:4px">
           ${HEAD.firm||''} ${HEAD.dept?('· '+HEAD.dept):''} ${HEAD.author?('· '+HEAD.author):''} ${HEAD.date?('· '+HEAD.date):''}
         </div>
       </div>
@@ -204,7 +202,7 @@ function renderHead(){
   `;
 }
 
-/* Piktogramm-Liste (Seitenleiste) */
+/* Piktogramm-Liste */
 function buildPicList(){
   const list = qs('#picList');
   const all = flattenPicto(PICTO);
@@ -220,7 +218,7 @@ function buildPicList(){
     }).forEach(p=>{
       const row = document.createElement('div'); row.className='picrow';
 
-      const img = makeImg(p.webCandidates, `${p.code} ${p.name}`, 56);
+      const img = makeImg(p.webCandidates, `${p.code} ${p.name}`, 44);
       const code = document.createElement('div'); code.className='code'; code.textContent = p.code;
       const name = document.createElement('div'); name.style.fontSize='12px'; name.style.color='#334155'; name.textContent = p.name;
 
@@ -245,7 +243,7 @@ function highlightRow(el){
   el.classList.add('selected');
 }
 
-/* Modal mit Piktogramm-Kacheln */
+/* Modal */
 function wireModal(){
   qs('#modalClose')?.addEventListener('click', ()=> qs('#picModal').hidden = true);
 }
@@ -258,7 +256,7 @@ function openModalWith(p){
   pool.forEach(x=>{
     const card = document.createElement('div'); card.className='piccard';
 
-    const img = makeImg(x.webCandidates, `${x.code} ${x.name}`, 72);
+    const img = makeImg(x.webCandidates, `${x.code} ${x.name}`, 64);
     const code = document.createElement('div'); code.style.fontWeight='800'; code.textContent = x.code;
     const name = document.createElement('div'); name.className='small'; name.textContent = x.name;
 
@@ -272,7 +270,7 @@ function filterSameGroup(group){
   return flattenPicto(PICTO).filter(p=>p.group===group);
 }
 
-/* Zuordnung zu Abschnitten */
+/* Zuordnung */
 function wireAssign(){
   qsa('.assignbar .target').forEach(btn=>{
     btn.addEventListener('click', ()=>{
@@ -283,7 +281,7 @@ function wireAssign(){
       const wrap = document.createElement('div');
       wrap.style.display='flex'; wrap.style.gap='10px'; wrap.style.alignItems='center';
 
-      const img = makeImg(selectedPic.webCandidates, `${selectedPic.code} ${selectedPic.name}`, 40);
+      const img = makeImg(selectedPic.webCandidates, `${selectedPic.code} ${selectedPic.name}`, 36);
       const code = document.createElement('strong'); code.textContent = selectedPic.code;
       const name = document.createElement('span'); name.className='small'; name.style.color='#334155'; name.textContent = selectedPic.name;
 
@@ -291,38 +289,35 @@ function wireAssign(){
       qs('#'+listId)?.appendChild(wrap);
 
       iconsBySection[target].push(selectedPic);
-      renderSuggestions(target);   // direkt Vorschläge zeigen/aktualisieren
+      renderSuggestions(target);
       renderSectionIcons();
       enforceTwoPages();
     });
   });
 }
 
-/* Vorschläge (mind. 5) — beim Laden und nach Zuordnung */
+/* Vorschläge */
 function processKeyFromHead(){
   const s = (HEAD?.title?.assetName ?? '').toLowerCase();
   const keys = Object.keys(SUG);
   const match = keys.find(k => s.includes(k.toLowerCase()));
   return match || 'Allgemein';
 }
-function renderAllSuggestions(){
-  sections.forEach(renderSuggestions);
-}
+function renderAllSuggestions(){ sections.forEach(renderSuggestions); }
 function renderSuggestions(section){
-  const holder = qs('#'+section+'Sug');
-  if(!holder) return;
+  const holder = qs('#'+section+'Sug'); if(!holder) return;
 
   const key = processKeyFromHead();
   const candidatesPrimary = ((SUG[key] ?? {})[section] ?? []);
   const candidatesFallback = ((SUG['Allgemein'] ?? {})[section] ?? []);
-  let arr = candidatesPrimary.length ? candidatesPrimary : candidatesFallback;
+  const arr = candidatesPrimary.length ? candidatesPrimary : candidatesFallback;
 
   const top5 = arr.slice(0,5);
   holder.innerHTML = '';
   top5.forEach(text=>{
     const row = document.createElement('div');
-    row.style.display='flex'; row.style.gap='8px'; row.style.alignItems='center';
-    const btn = document.createElement('button'); btn.className='btn-primary'; btn.style.padding='6px 10px'; btn.textContent='➕';
+    row.style.display='flex'; row.style.gap='6px'; row.style.alignItems='center';
+    const btn = document.createElement('button'); btn.className='btn-primary btn-compact'; btn.textContent='➕';
     const span = document.createElement('span'); span.textContent = text;
 
     btn.addEventListener('click', ()=>{
@@ -337,26 +332,26 @@ function renderSuggestions(section){
   });
 }
 
-/* Abschnitts-Icons oben (erste Auswahl je Abschnitt) */
+/* Abschnitts-Icons */
 function renderSectionIcons(){
   const host = qs('#secIcons'); if(!host) return;
   host.innerHTML='';
   sections.forEach(sec=>{
     const first = iconsBySection[sec][0];
     if(first){
-      const img = makeImg(first.webCandidates, `${first.code} ${first.name}`, 48);
+      const img = makeImg(first.webCandidates, `${first.code} ${first.name}`, 40);
       host.appendChild(img);
     }else{
       const ph = document.createElement('div');
       ph.className='small';
-      ph.style.padding='8px'; ph.style.border='1px dashed #cbd5e1'; ph.style.borderRadius='8px';
+      ph.style.padding='6px'; ph.style.border='1px dashed #cbd5e1'; ph.style.borderRadius='8px';
       ph.textContent = sec.toUpperCase();
       host.appendChild(ph);
     }
   });
 }
 
-/* 2-Seiten-Regel grob erzwingen */
+/* Zwei-Seiten-Regel */
 function enforceTwoPages(){
   const total = document.body.innerText.length;
   const hint = qs('#fontHint');
@@ -364,27 +359,14 @@ function enforceTwoPages(){
 }
 
 /* -------- Word-Export (.docx) -------- */
-async function ensureDocxLib(){
-  if (window.docx) return;
-  const cdns = [
-    'https://cdn.jsdelivr.net/npm/docx@8.4.0/build/index.js',
-    'https://unpkg.com/docx@8.4.0/build/index.js',
-    'https://cdn.skypack.dev/docx@8.4.0'   // ESM; wird als Fallback geladen
-  ];
-  for (const src of cdns){
-    try{
-      // Bereits eingebunden?
-      if ([...document.scripts].some(s=>s.src===src)) continue;
-      await new Promise((resolve, reject)=>{
-        const s = document.createElement('script');
-        s.src = src; s.async = true;
-        s.onload = ()=>resolve(); s.onerror = ()=>reject(new Error('CDN nicht erreichbar'));
-        document.head.appendChild(s);
-      });
-      if (window.docx) return;
-    }catch(_e){ /* nächster CDN */ }
-  }
-  if (!window.docx) throw new Error('DOCX-Bibliothek konnte nicht geladen werden.');
+async function ensureDocxReady(){
+  // editor.html'da preload var; yine de hazır mı kontrol et
+  const ok = ()=> !!window.docx && !!window.docx.Document && !!window.docx.Packer;
+  if (ok()) return;
+  await new Promise((resolve)=>{
+    let i=0;
+    const t = setInterval(()=>{ if(ok()){ clearInterval(t); resolve(); } if(++i>50){ clearInterval(t); resolve(); } }, 120);
+  });
 }
 
 async function fetchAsArrayBufferWithFallback(candidates){
@@ -401,23 +383,19 @@ function collectTexts(listId){
     .map(div=>div.textContent?.trim() ?? '')
     .filter(Boolean);
 }
-function collectPics(section){
-  return iconsBySection[section] ?? [];
-}
+function collectPics(section){ return iconsBySection[section] ?? []; }
 
 function buildDocParagraphs(sectionId, title){
-  const { Paragraph, TextRun } = docx;
+  const { Paragraph, TextRun } = window.docx;
   const texts = collectTexts(sectionId);
   const runs = texts.map(t => new Paragraph({ children:[ new TextRun({ text:t, font:'Inter', size:24 }) ] }));
   return [ new Paragraph({ children:[ new TextRun({ text:title, bold:true, size:26, font:'Inter' }) ] }), ...runs ];
 }
 
 async function makeDocx(){
-  // Stelle sicher, dass die Bibliothek garantiert geladen ist
-  await ensureDocxLib();
-  const { Document, Packer, Paragraph, TextRun, HeadingLevel, ImageRun, Table, TableRow, TableCell, WidthType } = docx;
+  if (!window.docx) throw new Error('DOCX-Bibliothek konnte nicht geladen werden.');
+  const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType } = window.docx;
 
-  // Kopfzeile
   const headPara = new Paragraph({
     children:[
       new TextRun({ text:(HEAD.title?.subtitleText ?? 'Betriebsanweisung'), bold:true, size:28, font:'Inter' }),
@@ -425,7 +403,6 @@ async function makeDocx(){
     ]
   });
 
-  // Logo
   let logoPara = null;
   if (HEAD.logoUrl) {
     try {
@@ -435,33 +412,26 @@ async function makeDocx(){
     } catch(_e){ /* ohne Logo weiter */ }
   }
 
-  // Piktogramm-Tabelle
-  const allRows = [];
+  const rows = [];
   for (const sec of sections){
     const pics = collectPics(sec);
     if (pics.length===0) continue;
-    // Abschnittstitel
-    allRows.push(new TableRow({
-      children:[
-        new TableCell({
-          columnSpan:3,
-          children:[ new Paragraph({ children:[ new TextRun({ text:sec.toUpperCase(), bold:true, size:26, font:'Inter' }) ] }) ]
-        })
-      ]
+
+    rows.push(new TableRow({
+      children:[ new TableCell({ columnSpan:3, children:[ new Paragraph({ children:[ new TextRun({ text:sec.toUpperCase(), bold:true, size:26, font:'Inter' }) ] }) ] }) ]
     }));
-    // Zeilen mit Bildern + Code + Name
+
     for (const p of pics){
-      let imgRun = null;
+      let imgRun;
       try{
         const ab = await fetchAsArrayBufferWithFallback(p.docxCandidates);
         imgRun = new ImageRun({ data:ab, transformation:{ width:28, height:28 } });
       }catch(_e){
-        // Text-Fallback
         imgRun = new TextRun({ text:'(Bild)', font:'Inter', size:22 });
       }
-      allRows.push(new TableRow({
-        children: [
-          new TableCell({ children:[ new Paragraph({ children:[ imgRun instanceof TextRun ? imgRun : imgRun ] }) ] }),
+      rows.push(new TableRow({
+        children:[
+          new TableCell({ children:[ new Paragraph({ children:[ imgRun ] }) ] }),
           new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:p.code, bold:true, font:'Inter', size:24 }) ] }) ] }),
           new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:p.name, font:'Inter', size:24 }) ] }) ] })
         ]
@@ -469,12 +439,9 @@ async function makeDocx(){
     }
   }
 
-  const picTable = allRows.length
-    ? new Table({ width:{ size:100, type:WidthType.PERCENTAGE }, rows: allRows })
-    : null;
+  const table = rows.length ? new Table({ width:{ size:100, type:WidthType.PERCENTAGE }, rows }) : null;
 
-  // Textabschnitte
-  const paras = [
+  const children = [
     headPara,
     ...(logoPara ? [ logoPara ] : []),
     ...buildDocParagraphs('appScope','Anwendungsbereich'),
@@ -485,10 +452,10 @@ async function makeDocx(){
     ...buildDocParagraphs('emList','Verhalten im Gefahrfall'),
     ...buildDocParagraphs('ehList','Erste Hilfe'),
     ...buildDocParagraphs('disList','Sachgerechte Entsorgung / Inaktivierung'),
-    ...(picTable ? [ picTable ] : [])
+    ...(table ? [ table ] : [])
   ];
 
-  const doc = new Document({ sections:[ { properties:{}, children: paras } ] });
+  const doc = new Document({ sections:[ { properties:{}, children } ] });
   const blob = await Packer.toBlob(doc);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -496,12 +463,16 @@ async function makeDocx(){
   document.body.appendChild(a); a.click(); a.remove();
 }
 
-// Export-Button: Garantiert zuerst Bibliothek laden, dann Export
+/* Export-Button */
 qs('#exportDocx')?.addEventListener('click', async ()=>{
   try{
-    await ensureDocxLib();
+    await ensureDocxReady();
     await makeDocx();
   }catch(err){
     alert('Export fehlgeschlagen: '+(err?.message ?? err));
   }
 });
+
+/* Modal kapatma */
+function wireModal(){ qs('#modalClose')?.addEventListener('click', ()=> qs('#picModal').hidden = true); }
+function filterSameGroup(group){ return flattenPicto(PICTO).filter(p=>p.group===group); }
