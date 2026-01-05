@@ -8,10 +8,13 @@
   <title>Betriebsanweisung – Auswahl</title>
   <link rel="stylesheet" href="/assets/style.css?v=20260105">
 </head>
-<body class="page">
-  <header class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></header>
+<body class="page theme-Maschine" id="bodyRoot">
+  <header class="hero">
+    <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
+  </header>
 
-  <main class="wrapper t-Maschine" id="indexRoot">
+  <main class="wrapper" id="indexRoot">
+    <!-- Typ-Auswahl -->
     <section class="box">
       <label>Typ wählen (optional):</label>
       <div class="row" id="typeRow">
@@ -23,6 +26,7 @@
       <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
     </section>
 
+    <!-- Metadaten -->
     <section class="box">
       <div class="grid2">
         <div>
@@ -35,12 +39,13 @@
           <label>Logo‑URL oder Upload (optional)</label>
           <input id="logoFile" type="file" accept="image/*" />
           <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
-          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine Logo‑URL genutzt werden.</small>
+          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine URL genutzt werden.</small>
           <div id="logoPreview" class="logo-preview"></div>
         </div>
       </div>
     </section>
 
+    <!-- Typografie -->
     <section class="box">
       <h3>Überschrift & Typografie (optional)</h3>
       <div class="row">
@@ -64,7 +69,9 @@
       <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
+    <div class="actions">
+      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
+    </div>
   </main>
 
   <script src="/assets/app.js?v=20260105"></script>
