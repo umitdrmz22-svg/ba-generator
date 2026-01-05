@@ -3,90 +3,134 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <title>Betriebsanweisung – Auswahl</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20260102" />
-  <style>
-    :root { --theme-color:#005AA3; }
-    .t-Gefahrstoff { --theme-color:#E53935; }
-    .t-Biostoff    { --theme-color:#2E7D32; }
-    .t-Maschine    { --theme-color:#005AA3; }
-    .t-PSA         { --theme-color:#6A1B9A; }
-    /* Üst bant tam en: wrapper dışı */
-    .hero {
-      background: linear-gradient(90deg, var(--theme-color), #111);
-      color:#fff; padding:18px 20px; margin:0;
-      text-transform:uppercase; border-radius:0; box-shadow:0 8px 24px rgba(0,0,0,.12);
-    }
-    .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
-    .muted { font-size:12px; color:#666; }
-  </style>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Betriebsanweisung – Vorlage</title>
+  <link rel="stylesheet" href="/assets/style.css?v=20260105" />
 </head>
-<body class="page">
+<body class="page" id="baBody">
+  <header class="hero">
+    <h1>BETRIEBSANWEISUNG – VORLAGE</h1>
+  </header>
 
-  <!-- HERO tam en -->
-  <div class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></div>
+  <div class="wrapper" id="baRoot" style="font-size:14px">
+    <!-- Üst başlık bloğu -->
+    <section class="box" id="head"></section>
 
-  <!-- İçerik wrapper içinde -->
-  <div class="wrapper t-Maschine" id="indexRoot">
+    <section class="box layout">
+      <!-- SOL: Piktogram listesi + atama -->
+      <aside class="side">
+        <div class="ba-band">Piktogramm‑Liste</div>
 
-    <section class="box">
-      <label>Typ wählen (optional):</label>
-      <div class="row" id="typeRow">
-        <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
-        <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-        <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
-        <label><input type="radio" name="type" value="PSA"> PSA</label>
-      </div>
-      <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
+        <div class="filterbar">
+          <input id="picSearch" type="search" placeholder="Code/Bezeichnung suchen…" />
+          <div class="chips">
+            <label><input type="checkbox" class="grp" value="iso" checked> ISO</label>
+            <label><input type="checkbox" class="grp" value="ghs" checked> GHS</label>
+            <label><input type="checkbox" class="grp" value="adr" checked> ADR</label>
+          </div>
+        </div>
+
+        <div id="picList" class="piclist"></div>
+
+        <div class="assignbar">
+          <span class="small">Ausgewähltes Piktogramm zuordnen:</span>
+          <div class="target" data-target="hazard">Gefährdungen</div>
+          <div class="target" data-target="tech">Technisch (S)</div>
+          <div class="target" data-target="org">Organisatorisch (O)</div>
+          <div class="target" data-target="ppe">PSA (P)</div>
+          <div class="target" data-target="em">Gefahrfall</div>
+          <div class="target" data-target="eh">Erste Hilfe</div>
+          <div class="target" data-target="dis">Entsorgung</div>
+          <div class="auto"><label><input type="checkbox" id="autoExport" /> Automatisch in Word übernehmen</label></div>
+        </div>
+
+        <div class="small">Tipp: Piktogramm anklicken → hedef bölüme tıkla. Tüm piktolar görünür; arama/filtre kullan.</div>
+      </aside>
+
+      <!-- SAĞ: Metin / öneri paneli -->
+      <main>
+        <div class="box">
+          <div class="grid3">
+            <div><label>Nr. (optional)</label><input id="metaNr" type="text" /></div>
+            <div><label>Datum (optional)</label><input id="metaDate" type="date" /></div>
+            <div><label>Firma (optional)</label><input id="metaFirma" type="text" /></div>
+            <div><label>Tätigkeit (optional)</label><input id="metaTaet" type="text" /></div>
+            <div><label>Arbeitsbereich/-platz (optional)</label><input id="metaArb" type="text" /></div>
+            <div><label>Verantwortlich (optional)</label><input id="metaVer" type="text" /></div>
+          </div>
+        </div>
+
+        <div class="ba-band">Anwendungsbereich</div>
+        <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
+
+        <div class="ba-band">Gefährdungen für Mensch und Umwelt</div>
+        <div id="icons-hazard" class="section-icons"></div>
+        <div class="small">Vorschläge (lange Sätze, einzeln wählbar):</div>
+        <div id="hazardPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="hazardList" class="list"></div>
+
+        <div class="ba-band">Schutzmaßnahmen und Verhaltensregeln – Technisch (S)</div>
+        <div id="icons-tech" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="techPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="techList" class="list"></div>
+
+        <div class="ba-band">Schutzmaßnahmen und Verhaltensregeln – Organisatorisch (O)</div>
+        <div id="icons-org" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="orgPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="orgList" class="list"></div>
+
+        <div class="ba-band">Persönliche Schutzausrüstung (P)</div>
+        <div id="icons-ppe" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="ppePool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="ppeList" class="list"></div>
+
+        <div class="ba-band">Verhalten im Gefahrfall</div>
+        <div id="icons-em" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="emPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="emList" class="list"></div>
+
+        <div class="ba-band">Erste Hilfe</div>
+        <div id="icons-eh" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="ehPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="ehList" class="list"></div>
+
+        <div class="ba-band">Sachgerechte Entsorgung / Inaktivierung</div>
+        <div id="icons-dis" class="section-icons"></div>
+        <div class="small">Vorschläge:</div>
+        <div id="disPool" class="list"></div>
+        <div class="small">Ihre Auswahl:</div>
+        <div id="disList" class="list"></div>
+
+        <div id="fontHint" class="small" style="display:none;">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße automatisch reduziert (min. 10 pt).</div>
+
+        <div class="actions" style="margin-top:10px">
+          <button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button>
+          <button class="btn-primary" onclick="window.print()">PDF</button>
+        </div>
+      </main>
     </section>
-
-    <section class="box">
-      <div class="grid2">
-        <div>
-          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
-          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung" />
-          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name" />
-          <label>Datum (optional)</label><input id="date" type="date" />
-        </div>
-        <div>
-          <label>Logo hochladen (optional)</label>
-          <input id="logoFile" type="file" accept="image/*" />
-          <small class="muted">PNG/JPG empfohlen. Ohne Cloud-Umgebung wird der Upload übersprungen.</small>
-          <div id="logoPreview" class="logo-preview"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="box">
-      <h3>Überschrift & Typografie (optional)</h3>
-      <div class="row">
-        <div style="flex:1">
-          <label>Name des Arbeitsmittels/Verfahrens</label>
-          <input id="assetName" type="text" placeholder="z. B. Flexmaschine" />
-          <label>Untertitel (z. B. Betriebsanweisung)</label>
-          <input id="subtitleText" type="text" value="Betriebsanweisung" />
-        </div>
-        <div style="flex:1">
-          <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
-          <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
-          <label>Schriftart:
-            <select id="fontFamily">
-              <option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option>
-            </select>
-          </label>
-          <label>Schriftgröße:
-            <input type="number" id="fontSize" min="14" max="26" value="18" />
-          </label>
-        </div>
-      </div>
-      <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
-    </section>
-
-    <div class="actions">
-      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
-    </div>
   </div>
 
-  <script src="/assets/app.js?v=20260102" defer></script>
+  <script defer src="/assets/app.js?v=20260105"></script>
+  <script>
+    // Tema rengini sayfa açılışında da uygula (ek güvence)
+    try {
+      const HEAD = JSON.parse(localStorage.getItem('BA_HEAD') || '{}');
+      document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
+    } catch {}
+  </script>
 </body>
 </html>
+``
