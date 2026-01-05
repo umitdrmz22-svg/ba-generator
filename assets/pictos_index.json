@@ -1,27 +1,196 @@
-
 {
-  "iso": {
-    "W001": {
-      "name": "Warnung vor elektrischer Spannung",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/ISO_7010_W012.svg/96px-ISO_7010_W012.svg.png"
-    },
-    "M001": {
-      "name": "Allgemeines Gebotszeichen (z. B. Schutzbrille tragen)",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/ISO_7010_M001.svg/96px-ISO_7010_M001.svg.png"
-    },
-    "E003": {
-      "name": "Erste-Hilfe-Einrichtung",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/ISO_7010_E003.svg/96px-ISO_7010_E003.svg.png"
-    }
-  },
   "ghs": {
+    "GHS01": {
+      "name": "Explosive",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-explos.svg"
+    },
     "GHS02": {
-      "name": "Entzündbar",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/GHS-pictogram-flamme.svg/96px-GHS-pictogram-flamme.svg.png"
+      "name": "Flammable",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-flamme.svg"
+    },
+    "GHS03": {
+      "name": "Oxidizing",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-flamme_ueber_kreis.svg"
+    },
+    "GHS04": {
+      "name": "Gas cylinder",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-gas-cylinder.svg"
+    },
+    "GHS05": {
+      "name": "Corrosive",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-acid.svg"
+    },
+    "GHS06": {
+      "name": "Acute toxicity (fatal)",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-skull.svg"
     },
     "GHS07": {
-      "name": "Achtung (reizend, gesundheitsschädlich)",
-      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png"
+      "name": "Harmful/Irritant",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-exclam.svg"
+    },
+    "GHS08": {
+      "name": "Health hazard",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-respiratory-hazard.svg"
+    },
+    "GHS09": {
+      "name": "Environment",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/GHS-pictogram-pollu.svg"
+    }
+  },
+  "iso": {
+    "E003": {
+      "name": "Erste Hilfe / First aid",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_E003_-_First_aid_sign.svg"
+    },
+    "E004": {
+      "name": "Notruftelefon / Emergency telephone",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_E004_emergency_telephone.svg"
+    },
+    "E007": {
+      "name": "Sammelstelle / Assembly point",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_E007_-_Emergency_assembly_point.svg"
+    },
+    "E011": {
+      "name": "Augendusche / Eyewash station",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_E011_Eyewash_station.svg"
+    },
+    "E012": {
+      "name": "Sicherheitsdusche / Safety shower",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_E012_safety_shower.svg"
+    },
+    "F001": {
+      "name": "Feuerlöscher / Fire extinguisher",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_F001_fire_extinguisher.svg"
+    },
+    "F002": {
+      "name": "Wandhydrant / Fire hose reel",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_F002_fire_hose_reel.svg"
+    },
+    "F003": {
+      "name": "Feuerleiter / Fire ladder",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_F003_fire_ladder.svg"
+    },
+    "F005": {
+      "name": "Feuermelder / Fire alarm call point",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_F005_fire_alarm_call_point.svg"
+    },
+    "P001": {
+      "name": "Allgemeines Verbot / General prohibition",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_P001_general_prohibition.svg"
+    },
+    "P002": {
+      "name": "Rauchen verboten / No smoking",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_P002_No_Smoking.svg"
+    },
+    "P003": {
+      "name": "Keine offene Flamme / No open flame",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_P003_No_Open_Flame.svg"
+    },
+    "P004": {
+      "name": "Durchgang verboten / No thoroughfare",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_P004_No_thoroughfare.svg"
+    },
+    "P006": {
+      "name": "Kein Zugang für Flurförderzeuge / No access for industrial vehicles",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_P006_No_access_for_industrial_vehicles.svg"
+    },
+    "P010": {
+      "name": "Nicht berühren / Do not touch",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_P010_Do_not_touch.svg"
+    },
+    "M001": {
+      "name": "Allgemeines Gebot / General mandatory action",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_M001_general_mandatory_action.svg"
+    },
+    "M003": {
+      "name": "Gehörschutz tragen / Wear ear protection",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_M003_-_Wear_ear_protection.svg"
+    },
+    "M004": {
+      "name": "Augenschutz tragen / Wear eye protection",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_M004_Wear_eye_protection.svg"
+    },
+    "M009": {
+      "name": "Schutzhandschuhe tragen / Wear protective gloves",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_M009_Wear_protective_gloves.svg"
+    },
+    "M012": {
+      "name": "Handlauf benutzen / Use handrail",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_M012_Use_handrail.svg"
+    },
+    "M018": {
+      "name": "Sicherheitsgurt/-geschirr tragen / Wear safety harness",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_M018_Wear_safety_harness.svg"
+    },
+    "W001": {
+      "name": "Allgemeine Warnung / General warning",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_W001_general_warning.svg"
+    },
+    "W012": {
+      "name": "Warnung vor heißer Oberfläche / Hot surface",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_W017_-_Warning;_Hot_surface.svg"
+    },
+    "W021": {
+      "name": "Warnung vor elektrischer Spannung / Electricity",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_W012_-_Warning;_Electricity.svg"
+    },
+    "W017": {
+      "name": "Warnung vor Überkopfhindernis / Overhead obstacle",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ISO_7010_W017_-_Warning;_Overhead_obstacle.svg"
+    }
+  },
+  "adr": {
+    "ADR1": {
+      "name": "Class 1 Explosives",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_1_Explosives.svg"
+    },
+    "ADR2": {
+      "name": "Class 2 Gases",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_2_Gases.svg"
+    },
+    "ADR3": {
+      "name": "Class 3 Flammable liquids",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_3_Flammable_liquids.svg"
+    },
+    "ADR4_1": {
+      "name": "Class 4.1 Flammable solids",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_4.1_Flammable_solids.svg"
+    },
+    "ADR4_2": {
+      "name": "Class 4.2 Spontaneously combustible",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_4.2_Spontaneously_combustible.svg"
+    },
+    "ADR4_3": {
+      "name": "Class 4.3 Dangerous when wet",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_4.3_Dangerous_when_wet.svg"
+    },
+    "ADR5_1": {
+      "name": "Class 5.1 Oxidizing",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_5.1_Oxidizing.svg"
+    },
+    "ADR5_2": {
+      "name": "Class 5.2 Organic peroxides",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_5.2_Organic_peroxides.svg"
+    },
+    "ADR6_1": {
+      "name": "Class 6.1 Toxic substances",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_6.1_Toxic_substances.svg"
+    },
+    "ADR6_2": {
+      "name": "Class 6.2 Infectious substances",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_6.2_Infectious_substances.svg"
+    },
+    "ADR7": {
+      "name": "Class 7 Radioactive material",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_7_Radioactive_material.svg"
+    },
+    "ADR8": {
+      "name": "Class 8 Corrosive",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_8_Corrosive.svg"
+    },
+    "ADR9": {
+      "name": "Class 9 Miscellaneous",
+      "img": "https://commons.wikimedia.org/wiki/Special:Redirect/file/ADR_Class_9_Miscellaneous.svg"
     }
   }
 }
