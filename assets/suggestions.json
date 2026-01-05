@@ -5,311 +5,311 @@
       "W001": [
         "Vor Arbeitsbeginn Sichtprüfung durchführen; fehlende/defekte Schutzeinrichtungen melden und Betrieb unterbinden.",
         "Gefährliche Bewegungen, Quetsch- und Schnittstellen kennzeichnen; Eingriffsbereiche absperren.",
-        "Pinchpoints und Einzugstellen deutlich markieren; nur bei Stillstand und Freigabe eingreifen.",
-        "Werkzeuge/Spannmittel auf Beschädigung prüfen; Rotationsrisiken beachten.",
-        "Kabel/Schläuche stolperfrei führen; Rutsch-/Sturzgefahr minimieren."
+        "Nur geschulte Personen dürfen Maschinen bedienen; Hände fern von Einzugsstellen halten.",
+        "Rotierende Teile: Rückschlag- und Bruchgefahr; nur freigegebene Werkzeuge verwenden.",
+        "Arbeitsumgebung frei halten (Stolper-/Rutschgefahr); Beleuchtung sicherstellen."
       ],
       "W012": [
-        "Elektrische Gefährdungen: Leitungen/Gehäuse prüfen; Beschädigungen sofort melden; Betrieb untersagen.",
-        "Spannungsfreiheit vor Eingriff feststellen; nur Elektrofachkräfte oder elektrotechnisch unterwiesene Personen zugelassen.",
-        "Isolationswiderstände/Schutzmaßnahmen regelmäßig prüfen; Fehlerstromschutz berücksichtigen.",
-        "Schaltschränke verschlossen halten; Zutritt nur Berechtigte.",
-        "Feuchtigkeit/Nässe fernhalten; FI/RCBO richtig dimensioniert einsetzen."
+        "Elektrische Gefährdungen: Leitungen/Gehäuse prüfen; Beschädigungen sofort melden und Betrieb unterbinden.",
+        "Nur durch Elektrofachkräfte freischalten; Wiedereinschalten verhindern (LOTO).",
+        "Feuchtigkeit meiden; Steckverbindungen und Schutzleiter regelmäßig kontrollieren.",
+        "Isolationsprüfung nach Wartung; Protokollierung vor Inbetriebnahme.",
+        "Warnhinweise (ISO 7010) gut sichtbar anbringen."
       ],
       "GHS02": [
-        "Brand-/Explosionsgefahr: Zündquellen fernhalten; Lüftung/Absaugung betreiben; Erdung beim Umfüllen sicherstellen.",
-        "Aerosol/Nebel vermeiden; geschlossene Systeme bevorzugen; Leckagen sofort beheben.",
-        "Sammelstellen für brennbare Stoffe kennzeichnen; Mengenbegrenzung beachten.",
-        "Heißarbeiten nur mit Erlaubnisschein; Bereich nachkontrollieren.",
-        "Feuerlöscherklasse passend bereitstellen (CO₂/Schaum/Pulver)."
+        "Zündquellen fernhalten; Lüftung/Absaugung betreiben; Potenzialausgleich beim Umfüllen sicherstellen.",
+        "Explosionsschutzkonzept (ATEX) beachten; Funkenarme Werkzeuge verwenden.",
+        "Offene Flammen, Heißarbeiten und Rauchen im Bereich untersagen; Verbotszeichen (P003/P002) anbringen.",
+        "Dämpfe/Gase nicht einatmen; Messungen bei kritischen Tätigkeiten veranlassen.",
+        "Löschmittel bereitstellen (CO₂/Schaum) und Unterweisung durchführen."
       ]
     },
     "tech": {
       "W001": [
         "Schutzeinrichtungen (Hauben, Lichtschranken, Verriegelungen) funktionsgeprüft betreiben; Umgehungen sind verboten.",
-        "Lockout/Tagout (LOTO) anwenden; gespeicherte Energien abbauen; Nachlaufzeiten beachten.",
-        "Sichere Werkzeugwechselprozesse etablieren; Spannmittel kontrollieren.",
-        "Fehlermeldungen dokumentieren; Wiederanlauf nur nach Freigabe.",
-        "Prozessparameter (Drehzahl/Vorschub) innerhalb freigegebener Grenzen halten."
+        "Not-Halt, Verriegelung und Sicherheitskreise regelmäßig testen; Testergebnisse dokumentieren.",
+        "Parameter, Werkzeuge und Spannmittel freigeben; Einrichtbetrieb mit reduzierter Geschwindigkeit.",
+        "Gefährdungsbeurteilung aktuell halten; Änderungen nur nach Freigabe umsetzen.",
+        "Schwingungs-/Lärmminderung (Dämpfung, Kapselung) vor Personenmaßnahmen."
       ],
       "GHS02": [
-        "Explosionsschutz: leitfähige Verbindungen, Potenzialausgleich, Funkenarme Werkzeuge; ATEX‑Zonen beachten.",
-        "Lüftung an der Quelle; Absaugmengen protokollieren; Filterwechsel planmäßig.",
-        "Behälterdichtheit prüfen; flüchtige Stoffe kalt halten; Erwärmung verhindern.",
-        "Erdungsprüfungen im Wartungsplan; Ableitwiderstände dokumentieren.",
-        "Zündquellenmanagement: Heizelemente, Funken, elektrostatische Ladung kontrollieren."
+        "Explosionsschutz: leitfähige Verbindungen, Potenzialausgleich, geerdete Behälter; elektrostatische Aufladung minimieren.",
+        "Lokale Absaugung an der Quelle; Lüftung auf Durchsatz prüfen.",
+        "Dichtheit und Leckagen regelmäßig prüfen; Sensorik/Alarme testen.",
+        "Temperatur-/Drucküberwachung implementieren; Abschaltungen bei Grenzwertüberschreitung.",
+        "Ersatzstoff-/Verfahrensprüfung (Substitution) dokumentieren."
       ]
     },
     "org": {
       "W001": [
-        "Arbeiten nur nach Unterweisung/Freigabe; Zuständigkeiten und Sperrbereiche kennzeichnen; Warnhinweise nach ISO 7010 anbringen.",
-        "Prüf- und Wartungsintervalle dokumentieren; Mängel zeitnah beseitigen.",
-        "Schichtübergaben standardisieren; Abweichungen/Beinahe‑Ereignisse melden.",
-        "Arbeitsanweisungen aktuell halten; Änderungen kommunizieren.",
-        "Flucht‑/Rettungswege freihalten; Notfallorganisation klar kommunizieren."
+        "Arbeiten nur nach Unterweisung/Freigabe; Zuständigkeiten und Sperrbereiche kennzeichnen.",
+        "Sichtbare Kennzeichnung nach ISO 7010; Betriebsanweisungen am Arbeitsplatz bereitstellen.",
+        "Wartungs-/Prüfintervalle planen; Mängel zeitnah beseitigen; Eskalationswege festlegen.",
+        "Störungsmanagement mit Ursachenanalyse und Maßnahmenverfolgung.",
+        "Beinahe-Ereignisse melden; Lessons Learned kommunizieren."
       ]
     },
     "ppe": {
       "M004": [
-        "Augenschutz mit Seitenschutz; bei Funkenflug Gesichtsschutz ergänzen.",
-        "Klare Sichtscheiben; Kratzer/Trübungen austauschen.",
-        "Eignung gemäß EN‑Normen (z. B. EN 166) sicherstellen.",
-        "Reinigung und Aufbewahrung staubfrei; Kontamination vermeiden.",
-        "Individuelle Passform und Tragekomfort regelmäßig prüfen."
+        "Augenschutz mit Seitenschutz; bei Funken-/Spanflug Gesichtsschutz ergänzen.",
+        "Schutzbrillen regelmäßig reinigen und auf Kratzer prüfen.",
+        "Bei chemisch/mechanisch gemischten Risiken Kombinationsschutz wählen.",
+        "Ersatzbrillen an kritischen Punkten bereitstellen.",
+        "Brillen- und Visierkompatibilität mit Atemschutz prüfen."
       ],
       "M003": [
-        "Gehörschutz bei Lärmexposition über Auslösewert tragen; Wirksamkeit regelmäßig prüfen.",
-        "Otoplastiken/Schalen je nach Tätigkeit auswählen; SNR‑Werte dokumentieren.",
-        "Gebläse-/Kommunikationssysteme bei Bedarf nutzen.",
-        "Tragezeiten planen; Pausenbereiche lärmärmer halten.",
-        "Unterweisung zum richtigen Einsetzen und Pflegen durchführen."
+        "Gehörschutz über Auslösewert tragen; Auswahl nach dB-Werten; Wirksamkeit regelmäßig prüfen.",
+        "Individuell angepasste Stöpsel/Schalen; Dichtschluss kontrollieren.",
+        "Ruhezeiten einhalten; Lärmquellen technisch minimieren.",
+        "Messungen dokumentieren; Kennzeichnung Lärmbereiche.",
+        "Unterweisung zum Einsetzen/Pflege des Gehörschutzes."
       ],
       "M009": [
         "Schutzhandschuhe dem Medium/Arbeitsgang entsprechend auswählen; Einzugsstellen beachten.",
-        "Durchstich-/Schnittschutzlevel definieren; Chemikalienbeständigkeit prüfen.",
-        "Wechselintervalle und Dekontamination festlegen.",
-        "Handschuhgröße und Ergonomie sicherstellen.",
-        "Benetzte Handschuhe bei Stromnähe vermeiden."
+        "Durchstich-/Schnittschutzklassen beachten; regelmäßige Sichtprüfung.",
+        "Bei Chemikalien Beiblätter (Schutzdauer) berücksichtigen.",
+        "Handschuhe trocknen/reinigen; Ersatz rechtzeitig bereitstellen.",
+        "Finger-/Handschutz mit Werkzeugführung abstimmen."
       ]
     },
     "em": {
       "W001": [
-        "Gefahr → Not‑Halt betätigen, Bereich sichern und Personen warnen; Vorgesetzte informieren.",
-        "Nur ohne Selbstgefährdung eingreifen; Aufgaben/Verantwortungen klar verteilen.",
-        "Störungen systematisch identifizieren; Wiederanlauf nach Freigabe.",
-        "Evakuierungswege/Versammlungsorte nutzen; Roll‑Call durchführen.",
-        "Ereignis dokumentieren; Ursachenanalyse anstoßen."
+        "Gefahr → Not-Halt betätigen, Bereich sichern, Personen warnen; Vorgesetzte informieren.",
+        "Nur ohne Selbstgefährdung eingreifen; Evakuierungswege freihalten.",
+        "Brandfall: passende Löschmittel einsetzen; Rückzündung beachten; Evakuierung einleiten.",
+        "Störung dokumentieren; Wiederanlauf erst nach Freigabe.",
+        "Ersthelfer informieren; ggf. Notruf absetzen."
       ]
     },
     "eh": {
       "E003": [
-        "Wunden blutungsstillend versorgen, kontaminierte Bereiche spülen; Notruf veranlassen; Maßnahmen dokumentieren.",
-        "Erkannte Gesundheitsrisiken melden; Erste‑Hilfe‑Kasten regelmäßig prüfen.",
-        "Unfälle zeitnah erfassen; Nachsorge organisieren.",
-        "Kontakt zu Ersthelfern/BS-Ansprechpartner sicherstellen.",
-        "Arbeitsfähigkeit erst nach ärztlicher Freigabe wiederaufnehmen."
+        "Wunden blutungsstillend versorgen; kontaminierte Bereiche spülen; Notruf veranlassen.",
+        "Erste-Hilfe-Ausstattung prüfen; Verbrauchsmaterial ergänzen.",
+        "Unfallhergang dokumentieren; Arzt/Weiterbehandlung koordinieren.",
+        "Hygieneregeln einhalten; Kreuzkontamination vermeiden.",
+        "Nachsorge: Einschränkungen & Wiedereingliederung abstimmen."
       ],
       "E011": [
-        "Augenkontakt: mindestens 15 Minuten spülen; Kontaklinsen entfernen; ärztliche Abklärung veranlassen.",
-        "pH‑neutrale Spüllösungen bereithalten; Reste ordnungsgemäß entsorgen.",
-        "Wischbewegungen vermeiden; Wasserlauf moderat halten.",
-        "Begleitperson hinzuziehen; Sichtprüfung nach Spülung.",
-        "Dokumentation und weitere Beobachtung über 24 h."
+        "Augenkontakt: mindestens 15 Minuten spülen; Kontaklinsen entfernen; ärztliche Abklärung.",
+        "Augendusche gut zugänglich; Beschilderung und Beleuchtung sicherstellen.",
+        "Spüllösung/Trinkwasserqualität prüfen; Haltbarkeit beachten.",
+        "Spülprotokoll/ Ereignis dokumentieren.",
+        "Begleitrisiken (Chemikalien/Partikel) bewerten."
       ]
     },
     "dis": {
       "W001": [
         "Abfälle sortenrein erfassen; öl-/chemiehaltige Abfälle gekennzeichneten Behältern zuführen; Entsorgungsnachweise führen.",
-        "Arbeitsbereich reinigen; Rutschgefahr beseitigen; Auffangwannen/Abscheider regelmäßig prüfen.",
-        "Gefahrstofflecks umgehend binden; Bindemittel nachführen.",
-        "Altöle/KSS fachgerecht entsorgen; Verbleib dokumentieren.",
-        "Transport/Übergabe mit Begleitdokumenten absichern."
+        "Arbeitsbereich reinigen; Rutschgefahr beseitigen; Auffangwannen/Abscheider prüfen.",
+        "Gefahrstoffreste gemäß CLP/Kategorie entsorgen; Übergabebelege dokumentieren.",
+        "Leih-/Mehrweggebinde regelkonform retournieren.",
+        "Reinigungs- und Pflegepläne einhalten; Auditspuren pflegen."
       ]
     }
   },
   "Prozesse": {
     "Schweißen": {
       "hazard": [
-        "UV/IR‑Strahlung, Funkenflug, Schweißrauch – Abschirmung und Absaugung an der Quelle.",
-        "Brandgefahr im Umfeld – brennbare Materialien entfernen; Löschmittel und Brandschutzhelfer bereitstellen.",
-        "Augen-/Hautschäden – geeignete Filterstufen und Schutzkleidung verwenden.",
-        "Lärm-/Hitzeexposition – Pausenplanung und Hydration beachten.",
-        "Schlacke/Metallspritzer – Schutzscheiben, Hitzeschutz betreiben."
+        "UV/IR‑Strahlung, Funkenflug, Schweißrauch; Abschirmungen und Absaugung einsetzen.",
+        "Brand-/Explosionsgefahr im Umfeld; brennbare Materialien entfernen.",
+        "Metallschlacke und heiße Oberflächen; Verbrennung vorbeugen.",
+        "Lichtbogeneinwirkung auf Elektrik vermeiden; Schutzabstände einhalten.",
+        "Stolper-/Kabelsalat vermeiden; Ordnung am Arbeitsplatz."
       ],
       "tech": [
-        "Absaugung direkt am Lichtbogen; Luftmengen dokumentieren.",
-        "Parameter/ Zusatzwerkstoffe festhalten; QS‑Freigabe vor Serienbetrieb.",
+        "Absaugung direkt am Lichtbogen; Filterstand und Luftführung prüfen.",
         "Stromquelle vor Wartung freischalten (LOTO); Nachlaufzeiten beachten.",
-        "Masseanschlüsse/Leitungen prüfen; Kontaktwiderstände minimieren.",
-        "Funkenflug mit Abschirmmatten reduzieren; Brandschutzwache benennen."
+        "Zusatzwerkstoffe/Parameter dokumentieren; Freigabeprozesse nutzen.",
+        "Abschirmungen korrekt positionieren; Sichtfenster intakt halten.",
+        "Werkstück fixieren; Funkenflugbarrieren verwenden."
       ],
       "org": [
-        "Heißarbeiten‑Erlaubnisschein; Freigabe; Nachkontrolle auf Glimmnester.",
-        "Sperrbereich ausweisen; Unbefugten Zutritt verhindern.",
-        "Unterweisung und PSA‑Check vor Arbeitsbeginn.",
-        "Störungs- und Mängelmeldeweg definieren.",
-        "Erste‑Hilfe‑/Augendusche in Nähe sicherstellen."
+        "Heißarbeiten‑Erlaubnisschein; Freigabe vor Start.",
+        "Nachkontrolle auf Glimmnester; Rundgang nach Arbeitsende.",
+        "PSA‑Kontrolle vor Einsatz; Unterweisung aktuell halten.",
+        "Sperrbereiche kennzeichnen; Unbefugten Zutritt verhindern.",
+        "Lagerung von Gasflaschen gesichert; Fluchtwege frei."
       ],
       "ppe": [
-        "Schweißschirm mit passender Schutzstufe; flammhemmende Kleidung; hitzebeständige Handschuhe.",
-        "Gehörschutz bei Lärmexposition; Atemschutz bei Rauch.",
-        "Sicherheitsschuhe mit Zehenschutz; Nähte/Reflektoren hitzefest.",
-        "Augenschutzersatz bereithalten; Sichtscheiben sauber.",
-        "PSA‑Reinigung und Lagerung gemäß Herstellerangaben."
+        "Schweißschirm mit passender Schutzstufe; hitzebeständige Handschuhe.",
+        "Flammhemmende Kleidung; geschlossene Schuhe; Knöchelschutz.",
+        "Gehörschutz bei Lärm; Atemschutz bei Rauch.",
+        "Augen-/Gesichtsschutz ohne Kratzer; Ersatz bereitstellen.",
+        "PSA sauber halten; Tauschintervalle beachten."
       ],
       "em": [
-        "Brandfall: geeignete Löschmittel (CO₂/Schaum) einsetzen; Rückzündung beachten; Bereich räumen.",
-        "Not‑Halt; Spannungslos schalten; Ersthelfer koordinieren.",
-        "Verbrennungen kühlen; Kontamination vermeiden.",
-        "Rauchgasinhalation – Frischluft und ärztliche Kontrolle.",
-        "Ereignis dokumentieren; Ursachenanalyse veranlassen."
+        "Brandfall: geeignete Löschmittel (CO₂/Schaum) einsetzen; Rückzündung beachten.",
+        "Bereich räumen; Personen warnen; Notruf absetzen.",
+        "Stromquelle spannungsfrei; Gaszufuhr schließen.",
+        "Ersthelfer koordinieren; Verletzte betreuen.",
+        "Ereignis dokumentieren; Ursachenanalyse."
       ],
       "eh": [
-        "Augenverletzungen sofort spülen; Schweißbrand kühlen; Arzt; Dokumentation.",
-        "Schnitt-/Verbrennungen hygienisch versorgen; Infektionsschutz.",
-        "Schwindel/Hitzestress beobachten; ggf. Pause/Flüssigkeit.",
-        "Erste‑Hilfe‑Kasten vollständig halten; Verbrauch nachführen.",
-        "Nachuntersuchung bei anhaltenden Beschwerden."
+        "Augenverletzungen: umgehend spülen; Schweißbrand kühlen; ärztliche Abklärung.",
+        "Schnitt-/Verbrennung versorgen; sterile Abdeckung.",
+        "Rauchinhalation: Frischluft; Beschwerden bewerten.",
+        "Erste-Hilfe-Material nachfüllen.",
+        "Nachsorge und Rückmeldung an Führungskräfte."
       ],
       "dis": [
-        "Schweißzusatz-/Schlacke‑Reste getrennt sammeln; fachgerecht entsorgen.",
+        "Schweißschlacke/Zusatzreste getrennt sammeln; fachgerecht entsorgen.",
         "Kontaminierte Tücher/Filter als Gefahrstoffabfall behandeln.",
-        "Metallabfälle sortenrein; Rückführung prüfen.",
-        "Rauchfilterturnus planen; Nachweise führen.",
-        "Arbeitsplatz reinigen; Rutsch-/Brandlast senken."
+        "Werkplatz reinigen; Funkenreste beseitigen.",
+        "Leere Druckgasflaschen gesichert lagern/retournieren.",
+        "Nachweise und Übergabeprotokolle führen."
       ]
     },
     "CNC": {
       "hazard": [
-        "Einzug-/Quetschstellen – Eingriffe nur bei Stillstand und Freigabe.",
-        "Rotierende Teile – Schutzhauben geschlossen halten.",
-        "Span-/Splitterflug – Augenschutz obligatorisch.",
-        "Lärm-/KSS‑Exposition – Gehör-/Atemschutz passend wählen.",
-        "Verklemmen/Bruch – Werkzeugzustand prüfen."
+        "Einzug-/Quetschstellen; nur bei Stillstand eingreifen.",
+        "Werkzeugbruch; Schutzhauben geschlossen halten.",
+        "KSS-Aerosole; Kontakt vermeiden.",
+        "Lärm/Schwingung; technische Maßnahmen bevorzugen.",
+        "Stolpergefahr durch Späne/KSS; Ordnung halten."
       ],
       "tech": [
-        "Verriegelungen/Lichtschranken prüfen; Umgehungen verboten.",
-        "Werkzeugbruchüberwachung aktiv; Schnittdaten freigegeben.",
-        "KSS‑Leckage vermeiden; Auffang-/Filtration funktionsfähig.",
-        "Spannmittelkontrolle und Nullpunktmanagement.",
-        "Wartungspläne/Schmierintervalle einhalten."
+        "Verriegelungen/Lichtschranken prüfen; Einrichtbetrieb reduziert.",
+        "Werkzeugbruchüberwachung aktiv; Parameter freigeben.",
+        "KSS-Leckagen verhindern; Auffangsysteme funktional.",
+        "Späneentsorgung sicher; Transporte getrennt.",
+        "Not-Halt, Türkontakte zyklisch testen."
       ],
       "org": [
-        "Programm-/Einrichtfreigaben dokumentieren.",
-        "Störungsmanagement mit Eskalation definieren.",
-        "Sperrbereiche und Kennzeichnungen aktuell halten.",
-        "Schichtübergaben strukturiert durchführen.",
-        "Erfahrungsaustausch (KVP) fördern."
+        "Programm-/Einrichtfreigabe dokumentieren.",
+        "Störungsmanagement mit Eskalationswegen.",
+        "Sperrzonen kennzeichnen; Unbefugte fernhalten.",
+        "Wartungspläne und Checklisten befolgen.",
+        "Ergonomie beachten; Pausen planen."
       ],
       "ppe": [
         "Sicherheitsschuhe; enganliegende Kleidung.",
-        "Augenschutz bei Span-/KSS‑Kontakt.",
-        "Handschuhe nur außerhalb Einzugbereichs.",
-        "Gehörschutz bei hoher Lärmexposition.",
-        "Hautschutz bei KSS‑Kontakt."
+        "Augenschutz gegen Spanflug.",
+        "Geeignete Handschuhe (außer Einzugsnähe).",
+        "Gehörschutz bei Lärm.",
+        "Hautschutzpläne (KSS) beachten."
       ],
       "em": [
-        "Not‑Halt; Maschine spannungsfrei; Bereich sichern.",
-        "Operator/Verantwortliche informieren.",
-        "Ursachenanalyse und Fehlerprotokoll.",
-        "Werkzeug-/Spannmittelprüfung vor Wiederanlauf.",
-        "Dokumentation und Freigabeprozess."
+        "Not-Halt betätigen; Maschine spannungsfrei.",
+        "Bereich sichern; Führungskräfte informieren.",
+        "Ursachenanalyse vor Wiederanlauf.",
+        "Gefährliche Teile/Punkte absperren.",
+        "Beobachtungsphase nach Störung."
       ],
       "eh": [
-        "Schnittverletzungen versorgen; Arzt bei Bedarf.",
-        "Augenkontakt mit KSS – sofort spülen.",
-        "Hautkontakte reinigen; Hautschutz erneuern.",
-        "Schwindel/Husten ernst nehmen; medizinische Abklärung.",
-        "Unfallmeldung/Ersthelfer dokumentieren."
+        "Schnittverletzungen versorgen; Verband anlegen.",
+        "KSS‑Kontakt: gründlich spülen; Arzt.",
+        "Augenverletzung: Augendusche nutzen.",
+        "Unfall dokumentieren; Nachsorge.",
+        "Bei Lärm: Beschwerden melden."
       ],
       "dis": [
-        "KSS fachgerecht wechseln/entsorgen.",
-        "Öl-/Chemieabfälle gekennzeichnete Behälter.",
-        "Metallspäne sortenrein; Recycling prüfen.",
-        "Filterwechsel dokumentieren.",
-        "Arbeitsbereich reinigen."
+        "KSS fachgerecht wechseln/entsorgen; Nachweis führen.",
+        "Späne sortenrein; Metallrecycling.",
+        "Filter/Bindemittel vorschriftsgemäß entsorgen.",
+        "Reinigungspläne einhalten.",
+        "Leckagen sofort beseitigen."
       ]
     },
     "Gefahrstoffschrank": {
       "hazard": [
-        "Chemische/Brandgefahr; falsche Lagergruppen reagieren.",
-        "Dämpfe/Gase – Lüftung/Filter sicherstellen.",
-        "Leckage – Bindemittel und Auffangwannen bereithalten.",
-        "Fehlende Erdung – elektrostatische Risiken.",
-        "Unbefugter Zugriff – Berechtigungen verwalten."
+        "Brand-/Chemiegefahr; falsche Lagergruppen reagieren.",
+        "Dämpfe: Lüftung sicherstellen.",
+        "Leckagen: Bindemittel bereit halten.",
+        "Unbefugter Zugriff erschweren.",
+        "Kennzeichnung/Inventar aktuell halten."
       ],
       "tech": [
-        "Technische Lüftung betreiben; Filterwechsel dokumentieren.",
-        "Erdung/Potenzialausgleich prüfen.",
-        "Auffangwannen auf Dichtheit testen.",
-        "Leckagemelder falls vorhanden warten.",
-        "Kennzeichnungen/CLP‑Etiketten aktuell halten."
+        "Technische Lüftung/Filter betreiben.",
+        "Erdung/Auffangwannen; Dichtheit prüfen.",
+        "Leckagemelder testen.",
+        "Temperatur- und Drucküberwachung.",
+        "Substitution prüfen und dokumentieren."
       ],
       "org": [
-        "Lagergruppen nach TRGS/CLP strikt einhalten.",
-        "Inventarführung/Bestandsgrenzen definieren.",
-        "Zugangsberechtigungen und Unterweisungen.",
-        "Sicherheitsdatenblätter (SDS) griffbereit.",
-        "Alarm‑/Notfallkette festlegen."
+        "Lagergruppen nach TRGS/CLP.",
+        "Zugangsberechtigungen festlegen.",
+        "Sperrbereiche/Fluchtwege frei.",
+        "Unterweisung/BA bereitstellen.",
+        "Inventur regelmäßig."
       ],
       "ppe": [
         "Chemikalienbeständige Handschuhe.",
-        "Schutzbrille/Visier.",
+        "Augenschutz/Visier.",
         "Schürze/Schutzkleidung.",
-        "Ggf. Atemschutz je Medium.",
-        "Augendusche/Notdusche in Nähe."
+        "Bei Bedarf Atemschutz.",
+        "Notdusche/Augendusche in Nähe."
       ],
       "em": [
-        "Leckage/Brand: Bereich räumen; Löschmittel passend.",
-        "Notruf; Ersthelfer koordinieren.",
-        "Dekontamination/Neutralisation nur freigegeben.",
-        "Quellensperrung und Abdichtung.",
-        "Ereignis dokumentieren."
+        "Leckage/Brand: Bereich räumen.",
+        "Löschmittel passend einsetzen.",
+        "Notruf absetzen.",
+        "Ereignis dokumentieren.",
+        "Wiederanlauf nach Freigabe."
       ],
       "eh": [
-        "Hautkontakt – viel Wasser; Augenkontakt – min. 15 Min spülen.",
-        "SDS‑Hinweise beachten; Arzt.",
-        "Kontaminierte Kleidung entfernen.",
-        "Vergiftungsanzeichen beobachten.",
-        "Erste‑Hilfe‑Material nachführen."
+        "Hautkontakt: gründlich spülen.",
+        "Augenkontakt: ≥15 Min spülen.",
+        "Arzt/Weiterbehandlung.",
+        "SDS beachten.",
+        "Nachsorge dokumentieren."
       ],
       "dis": [
+        "Leckagebinder verwenden.",
         "Kontaminierte Materialien als Gefahrstoffabfall.",
-        "Bindemittelreste getrennt entsorgen.",
-        "Gebinde ordnungsgemäß verschließen.",
-        "Entsorgungsnachweise führen.",
-        "Lagerbereich reinigen."
+        "Nachweise führen.",
+        "Gebinde ordnungsgemäß schließen.",
+        "Reinigung nach Ereignis."
       ]
     },
     "Spraydosen": {
       "hazard": [
         "Aerosole entzündbar; Druckbehälter.",
-        "Explosion bei Erwärmung; Sonnen‑/Hitzeeinwirkung vermeiden.",
-        "Lösemitteldämpfe – Gesundheitsschutz.",
-        "Fehlbedienung – Sprühnebelkontamination.",
-        "Statik – Erdung größerer Gebinde."
+        "Explosionsgefahr bei Erwärmung.",
+        "Lösemittel: Gesundheitsgefahr.",
+        "Statische Aufladung beim Umfüllen.",
+        "Dämpfe vermeiden."
       ],
       "tech": [
-        "Lüftung/Absaugung sicherstellen.",
+        "Lüftung/Absaugung.",
         "Zündquellen fernhalten.",
+        "Leitfähige Verbindungen/Erdung.",
         "Temperaturgrenzen beachten.",
-        "Leckagen sofort beheben.",
-        "Sichere Lagerung/Transport."
+        "Dichtheit prüfen."
       ],
       "org": [
-        "Mengenbegrenzung; Freigabe/Unterweisung.",
+        "Lagern begrenzen/kennzeichnen.",
         "CLP‑Kennzeichnung prüfen.",
-        "Sperrbereiche markieren.",
-        "Panik‑/Evakuationsplan bekannt machen.",
-        "Reinigungs-/Wartungspläne."
+        "Freigabe/Unterweisung.",
+        "Sperrbereiche bei Sprüharbeiten.",
+        "Inventar pflegen."
       ],
       "ppe": [
-        "Augen‑/Atemschutz je nach Produkt.",
+        "Atem-/Augenschutz je nach Produkt.",
         "Chemikalienhandschuhe.",
         "Schutzkleidung gegen Nebel.",
-        "Gehörschutz falls nötig.",
-        "Hautschutzplan beachten."
+        "Gehörschutz bei Lärm.",
+        "PSA‑Pflege."
       ],
       "em": [
-        "Brand/Explosion – Bereich räumen.",
-        "Löschmittel gemäß Produkt.",
+        "Brand/Explosion: Bereich räumen.",
+        "Passende Löschmittel.",
         "Druckbehälter nicht erhitzen.",
-        "Notruf; Ersthelfer.",
-        "Dokumentation/Eskalation."
+        "Notruf.",
+        "Dokumentation."
       ],
       "eh": [
-        "Einatmen – Frischluft.",
-        "Augenkontakt – spülen.",
-        "Hautkontakt – waschen.",
-        "Beschwerden – Arzt.",
-        "SDS beachten."
+        "Einatmen: Frischluft.",
+        "Augenkontakt: spülen.",
+        "Hautkontakt: waschen.",
+        "Beschwerden: Arzt.",
+        "Meldung an Führungskraft."
       ],
       "dis": [
         "Leer-/Restdosen als Gefahrstoffabfall.",
-        "Sammelbehälter bereitstellen.",
-        "Nachweise führen.",
-        "Bereich reinigen.",
-        "Geruchsquellen eliminieren."
+        "Sammelbehälter verwenden.",
+        "Nachweise/Übergabeprotokolle.",
+        "Arbeitsbereich reinigen.",
+        "Geruchsentfernung sicherstellen."
       ]
     },
     "Hubarbeitsbühne": {
@@ -318,255 +318,254 @@
         "Quetschstellen.",
         "Stromleitungskontakt.",
         "Wetterrisiken.",
-        "Fehlende Rettungskonzepte."
+        "Unebene Flächen."
       ],
       "tech": [
-        "Standsicherheit; Neigung; Lastgrenzen.",
-        "Notablass testen.",
-        "Anschlagpunkte prüfen.",
-        "Bühnenprüfung vor Einsatz.",
-        "Wartung nach Plan."
+        "Standsicherheit; Neigung prüfen.",
+        "Notablass funktionsfähig.",
+        "Rettungskonzept bereit.",
+        "Anschlagpunkte geprüft.",
+        "Vor‑Einsatz‑Checkliste."
       ],
       "org": [
         "Bedienberechtigung erforderlich.",
         "Arbeitsbereich absperren.",
         "Wettergrenzen definieren.",
-        "Rettungskonzept.",
-        "Freigabeprozesse."
+        "Freigabeprozess.",
+        "Kommunikation klar."
       ],
       "ppe": [
-        "PSAgA mit Anschlaghilfe.",
+        "PSAgA geeignet.",
         "Helm.",
-        "Handschuhe/Augenschutz.",
-        "Witterungsgerechte Kleidung.",
-        "Sicherheitsschuhe."
+        "Handschuhe.",
+        "Augenschutz.",
+        "Warnkleidung."
       ],
       "em": [
-        "Notablass betätigen.",
+        "Notfall: Notablass.",
         "Bereich sichern.",
         "Notruf.",
         "Ersthelfer koordinieren.",
-        "Unfallmeldung."
+        "Dokumentation."
       ],
       "eh": [
         "Sturzverletzungen versorgen.",
         "Schock vermeiden.",
-        "Ärztliche Kontrolle.",
-        "Dokumentation.",
-        "Nachsorge planen."
+        "Arzt.",
+        "Bewegung prüfen.",
+        "Nachsorge."
       ],
       "dis": [
         "Leckagen aufnehmen.",
         "Betriebsstoffe entsorgen.",
         "Fläche reinigen.",
-        "Nachweise führen.",
-        "Sperrung bis Freigabe."
+        "Protokoll/Checkliste.",
+        "Freigabe zum Wiederanlauf."
       ]
     },
     "Arbeiten_an_der_Elektrik": {
       "hazard": [
-        "Elektrischer Schlag/Lichtbogen.",
-        "Verbrennung/Brand.",
-        "Enger metallischer Raum – Risiko steigt.",
-        "Feuchtigkeits-/Nässeeinfluss.",
-        "Fehlerhafte Schutzmaßnahmen."
+        "Elektrischer Schlag/Verbrennung.",
+        "Lichtbogen.",
+        "Brandgefahr.",
+        "Metallische Enge = Risiko.",
+        "Feuchtigkeit vermeiden."
       ],
       "tech": [
-        "Fünf Sicherheitsregeln: Freischalten – gegen Wiedereinschalten sichern – Spannungsfreiheit feststellen – Erden/Kurzschließen – Abdecken/Absperren.",
-        "LOTO anwenden.",
-        "Messgeräte kalibriert einsetzen.",
-        "Schutzpotentiale prüfen.",
-        "Werkzeuge isoliert verwenden."
+        "5 Sicherheitsregeln; LOTO.",
+        "Spannungsfreiheit feststellen.",
+        "Gegen Wiedereinschalten sichern.",
+        "Abdeckung prüfen.",
+        "Isolationsprüfung dokumentieren."
       ],
       "org": [
-        "Nur Elektrofachkräfte oder unter deren Leitung.",
-        "Freigabeprozesse und Meldewege.",
+        "Nur Elektrofachkräfte/unter deren Leitung.",
+        "Freigabeprozesse.",
         "Beinahe‑Ereignisse melden.",
-        "Dokumentation/Unterweisung.",
-        "Sperrbereiche/Schilder."
+        "Sperrbereiche kennzeichnen.",
+        "Unterweisung aktuell."
       ],
       "ppe": [
         "Isolierende Handschuhe/Schuhe.",
         "Augenschutz.",
         "Enganliegende Kleidung.",
         "Schmuck ablegen.",
-        "Gesichtsschutz bei Lichtbogenrisiko."
+        "Helm bei Überkopfarbeiten."
       ],
       "em": [
-        "Stromunfall: erst nach Freischalten berühren.",
+        "Stromunfall: erst nach Freischalten helfen.",
         "Vitalfunktionen prüfen; ggf. reanimieren.",
-        "Notruf; Ersthelfer.",
-        "Brandfall: passende Löschmittel.",
-        "Dokumentation/Eskalation."
+        "Notruf; Ersthelfer koordinieren.",
+        "Bereich sichern.",
+        "Dokumentation."
       ],
       "eh": [
         "Verbrennungen kühlen.",
         "Augenverletzungen spülen.",
-        "Arzt/Diagnostik.",
-        "Nachbeobachtung.",
-        "Unfallmeldung."
+        "Arzt.",
+        "Nachsorge.",
+        "Unterweisung erneuern."
       ],
       "dis": [
         "Elektronikschrott getrennt erfassen.",
         "Betriebsstoffe ordnungsgemäß entsorgen.",
         "Nachweise führen.",
-        "Bereich reinigen.",
-        "Sperrung bis Freigabe."
+        "Reinigung/Ordnung wiederherstellen.",
+        "Auditspur erhalten."
       ]
     },
     "Reinigen_Säuren_Basen_Chlor": {
       "hazard": [
-        "Ätz-/Reizwirkung; Gasentwicklung.",
-        "Rutschgefahr; Fehldosierung.",
-        "Verwechslungsgefahr bei Chemikalien.",
-        "Materialunverträglichkeiten.",
-        "Atemwegsreizungen."
+        "Ätz-/Reizwirkung.",
+        "Gasentwicklung.",
+        "Rutschgefahr.",
+        "Verwechslungsgefahr.",
+        "Materialunverträglichkeit."
       ],
       "tech": [
-        "Dosieranlagen nutzen; erst Wasser, dann Säure.",
-        "Lüftung; Absaugung an Quelle.",
-        "Materialverträglichkeit prüfen.",
-        "Augendusche/Notdusche in Nähe.",
-        "Spritzschutz und Auffangwannen."
+        "Verdünnung: erst Wasser, dann Säure.",
+        "Dosieranlagen verwenden.",
+        "Lüftung sicherstellen.",
+        "Neutralisationsplanung.",
+        "Notdusche/Augendusche nahe."
       ],
       "org": [
-        "Gefahrstoffunterweisung; Lagergruppen; Betriebsanweisung am Arbeitsplatz.",
-        "SDS griffbereit; Notfallkette bekannt.",
-        "Freigabe/Erlaubnisschein bei Gefahr.",
-        "Kennzeichnungen/CLP aktuell.",
-        "Mengen-/Zeitfenster planen."
+        "Gefahrstoffunterweisung.",
+        "Lagergruppen/Trennung.",
+        "BA am Arbeitsplatz.",
+        "Freigabe für starke Säuren/Basen.",
+        "Inventar/Belege pflegen."
       ],
       "ppe": [
         "Chemikalienhandschuhe.",
-        "Schutzbrille/Visier.",
-        "Schürze/Schutzkleidung.",
-        "Ggf. Atemschutz.",
-        "Schuhschutz/Überzieher."
+        "Augenschutz/Visier.",
+        "Schürze/Kleidung.",
+        "Atemschutz bei Dampf.",
+        "Wechsel-/Pflegeintervalle."
       ],
       "em": [
-        "Leckage/Verätzung: Bereich sichern; neutralisieren nur freigegeben.",
-        "Notruf; Erste Hilfe einleiten.",
-        "Kontaminierte Kleidung entfernen.",
-        "Augenkontakt: min. 15 Min spülen.",
-        "Dokumentation."
+        "Leckage/Verätzung: Bereich sichern.",
+        "Neutralisation nur freigegeben.",
+        "Notruf/Erste Hilfe.",
+        "Dokumentation.",
+        "Wiederanlauf nach Freigabe."
       ],
       "eh": [
         "Hautkontakt: viel Wasser.",
-        "Augenkontakt: min. 15 Min spülen.",
-        "SDS beachten; Arzt.",
-        "Nachbeobachtung.",
-        "PSA‑Wechsel."
+        "Augenkontakt: ≥15 Min spülen.",
+        "Arzt.",
+        "SDS beachten.",
+        "Nachsorge."
       ],
       "dis": [
         "Neutralisierte Lösungen sachgerecht entsorgen.",
         "Kontaminierte Materialien als Gefahrstoffabfall.",
-        "Gebinde korrekt etikettieren.",
-        "Nachweise führen.",
-        "Bereich reinigen."
+        "Nachweise/Übergabeprotokolle.",
+        "Reinigung sicherstellen.",
+        "Auditspur."
       ]
     },
     "Hochdruckreiniger": {
       "hazard": [
-        "Hautdurchdringende Strahlen; Rückstoß.",
-        "Elektrisches Risiko in nasser Umgebung.",
+        "Hautdurchdringende Strahlen.",
+        "Rückstoß.",
+        "Elektro‑Risiko in nasser Umgebung.",
         "Rutschgefahr.",
-        "Fehlbedienung – Verletzungsgefahr.",
-        "Spritznebel – Sichtbehinderung."
+        "Umherfliegende Partikel."
       ],
       "tech": [
-        "Druckbereich sichern; geeignete Düsen/Schutz.",
-        "FI‑Schutzschalter einsetzen.",
+        "Druckbereich sichern.",
+        "Düse/Strahlführung kontrollieren.",
+        "FI‑Schutzschalter nutzen.",
         "Kabel/Schläuche prüfen.",
-        "Abschalt-/Sicherheitsfunktionen testen.",
-        "Wartung gemäß Hersteller."
+        "Abschirmung bei empfindlichen Flächen."
       ],
       "org": [
         "Arbeitsbereich absperren.",
-        "Unterweisung/PSA‑Check.",
-        "Betriebszustände dokumentieren.",
-        "Störungs-/Meldeweg definieren.",
-        "Freigabe/Überwachung."
+        "Unterweisung dokumentieren.",
+        "Betriebszustände protokollieren.",
+        "Gefahrstellen kennzeichnen.",
+        "Schichtplanung und Pausen."
       ],
       "ppe": [
         "Schnittfeste Handschuhe.",
         "Schutzbrille/Visier.",
         "Sicherheitsschuhe.",
         "Regen-/Schutzkleidung.",
-        "Gehörschutz nach Bedarf."
+        "Gehörschutz bei Lärm."
       ],
       "em": [
         "Verletzung/Leckage: Gerät spannungsfrei.",
         "Bereich sichern; Erste Hilfe.",
         "Notruf bei schweren Verletzungen.",
-        "Dokumentation/Eskalation.",
-        "Ursachenanalyse vor Wiederanlauf."
+        "Dokumentation.",
+        "Freigabe nach Prüfung."
       ],
       "eh": [
         "Hochdruckverletzungen sofort ärztlich abklären.",
         "Wunden spülen/abdecken.",
-        "Infektionsprophylaxe.",
-        "Nachbeobachtung.",
-        "Ersthelfer informieren."
+        "Schmerz-/Infektionskontrolle.",
+        "Nachsorge.",
+        "Meldung an Führungskraft."
       ],
       "dis": [
         "Reinigungschemikalienreste getrennt sammeln.",
         "Abwasserregelungen beachten.",
         "Nachweise führen.",
-        "Fläche reinigen.",
-        "PSA reinigen und lagern."
+        "Flächen reinigen.",
+        "Materialschonung prüfen."
       ]
     },
     "Leiterarbeit": {
       "hazard": [
-        "Absturz; Umkippen.",
+        "Absturz/Umkippen.",
         "Stromleitungsnähe.",
         "Rutschige Sprossen.",
-        "Überlastung.",
-        "Fehlaufstieg."
+        "Fehlende Fixierung.",
+        "Überstreckung/Haltung."
       ],
       "tech": [
-        "Leiter auf festen Untergrund; Neigungswinkel korrekt.",
+        "Fester Untergrund; Neigungswinkel korrekt.",
         "Gegen Wegrutschen sichern.",
-        "Nur geprüfte Leitern verwenden.",
-        "Lastgrenzen beachten.",
-        "Aufsatz/Haken kontrollieren."
+        "Nur geprüfte Leitern.",
+        "Werkzeuge sichern (Verbindung).",
+        "Beleuchtung und Witterung beachten."
       ],
       "org": [
         "Alleinarbeit vermeiden.",
         "Geeignete Leiter auswählen.",
         "Freigabe bei Höhenarbeit.",
         "Rettungskonzept.",
-        "Sperrbereich."
+        "Unterweisung und Kontrolle."
       ],
       "ppe": [
         "Sicherheitsschuhe.",
         "PSAgA bei Bedarf.",
         "Handschuhe für Griff.",
-        "Witterungsgerechte Kleidung.",
-        "Augenschutz bei Überkopfarbeiten."
+        "Leichte Schutzkleidung.",
+        "Helm bei Überkopfarbeiten."
       ],
       "em": [
         "Sturz: Erste Hilfe; Notruf.",
         "Bereich sichern.",
-        "Unfallmeldung.",
-        "Nachbeobachtung.",
-        "Wiederanlauf erst nach Freigabe."
+        "Dokumentation.",
+        "Ursachenanalyse.",
+        "Freigabe vor Wiederaufnahme."
       ],
       "eh": [
         "Prellungen/Verletzungen versorgen.",
         "Arzt bei Frakturverdacht.",
-        "Dokumentation.",
-        "Ruhe/Entlastung.",
-        "Nachsorge."
+        "Ruhe/Schonung.",
+        "Nachsorge.",
+        "Erneute Unterweisung."
       ],
       "dis": [
         "Defekte Leitern kennzeichnen/aussondern.",
-        "Verpackungs-/Hilfsstoffe entsorgen.",
-        "Bereich reinigen.",
-        "Nachweise führen.",
-        "Ersatz beschaffen."
+        "Verpackungs-/Hilfsstoffe ordnungsgemäß entsorgen.",
+        "Arbeitsbereich säubern.",
+        "Nachweise pflegen.",
+        "Auditspur sichern."
       ]
     }
   }
 }
-``
