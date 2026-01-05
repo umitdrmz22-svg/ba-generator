@@ -15,6 +15,7 @@
     <section class="box" id="head"></section>
 
     <section class="box layout">
+      <!-- Linke Spalte: Piktogramme -->
       <aside class="side">
         <div class="ba-band">PIKTOGRAMM‑LISTE</div>
         <div class="filterbar">
@@ -42,7 +43,9 @@
         <div class="small">Tipp: Piktogramm anklicken → Zielbereich wählen. Alle Piktogramme sind sichtbar; Suche/Filter nutzen.</div>
       </aside>
 
+      <!-- Rechte Spalte: Inhalte -->
       <main>
+        <!-- Metadaten -->
         <div class="box">
           <div class="grid3">
             <div><label>Nr. (optional)</label><input id="metaNr" type="text" /></div>
@@ -54,6 +57,7 @@
           </div>
         </div>
 
+        <!-- Bereiche mit Freitext-Platz -->
         <div class="ba-band">ANWENDUNGSBEREICH</div>
         <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
 
@@ -124,6 +128,11 @@
   </div>
 
   <script src="/assets/app.js?v=20260105"></script>
-  <script>try{const H=JSON.parse(localStorage.getItem('BA_HEAD')||'{}');document.getElementById('baBody')?.classList.add('theme-'+(H?.type||'Maschine'));}catch{}</script>
+  <script>
+    try {
+      const H = JSON.parse(localStorage.getItem('BA_HEAD')||'{}');
+      document.getElementById('baBody')?.classList.add('theme-'+(H?.type||'Maschine'));
+    } catch {}
+  </script>
 </body>
 </html>
