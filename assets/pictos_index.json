@@ -1,68 +1,42 @@
 
 {
   "ghs": {
-    "GHS01": { "name": "Explosiv", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/GHS-pictogram-explos.svg/96px-GHS-pictogram-explos.svg.png" },
-    "GHS02": { "name": "Entzündbar", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/GHS-pictogram-flamme.svg/96px-GHS-pictogram-flamme.svg.png" },
-    "GHS03": { "name": "Oxidierend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/GHS-pictogram-flamme_ueber_kreis.svg/96px-GHS-pictogram-flamme_ueber_kreis.svg.png" },
-    "GHS04": { "name": "Gas unter Druck", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/GHS-pictogram-gas-cylinder.svg/96px-GHS-pictogram-gas-cylinder.svg.png" },
-    "GHS05": { "name": "Ätzend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/GHS-pictogram-acid.svg/96px-GHS-pictogram-acid.svg.png" },
-    "GHS06": { "name": "Akute Toxizität (fatal)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/GHS-pictogram-skull.svg/96px-GHS-pictogram-skull.svg.png" },
-    "GHS07": { "name": "Gesundheitsschädlich / Reizend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png" },
-    "GHS08": { "name": "Gesundheitsgefahr (z. B. CMR)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/GHS-pictogram-respiratory-hazard.svg/96px-GHS-pictogram-respiratory-hazard.svg.png" },
-    "GHS09": { "name": "Umweltgefährlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/GHS-pictogram-pollu.svg/96px-GHS-pictogram-pollu.svg.png" }
-  },
-  "iso": {
-    "E001": { "name": "Notausgang (links)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ISO_7010_E001.svg/96px-ISO_7010_E001.svg.png" },
-    "E002": { "name": "Notausgang (rechts)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/ISO_7010_E002.svg/96px-ISO_7010_E002.svg.png" },
-    "E003": { "name": "Erste Hilfe",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/ISO_7010_E003_-_First_aid_sign.svg/96px-ISO_7010_E003_-_First_aid_sign.svg.png" },
-    "E004": { "name": "Notruftelefon",         "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/ISO_7010_E004_emergency_telephone.svg/96px-ISO_7010_E004_emergency_telephone.svg.png" },
-    "E005": { "name": "Richtungspfeil (90°)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg/96px-ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg.png" },
-    "E006": { "name": "Richtungspfeil (45°)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg/96px-ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg.png" },
-    "E007": { "name": "Sammelstelle",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ISO_7010_E007_-_Emergency_assembly_point.svg/96px-ISO_7010_E007_-_Emergency_assembly_point.svg.png" },
-    "E011": { "name": "Augendusche",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/ISO_7010_E011_Eyewash_station.svg/96px-ISO_7010_E011_Eyewash_station.svg.png" },
-    "E012": { "name": "Sicherheitsdusche",     "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/ISO_7010_E012_safety_shower.svg/96px-ISO_7010_E012_safety_shower.svg.png" },
-
-    "F001": { "name": "Feuerlöscher",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/ISO_7010_F001_fire_extinguisher.svg/96px-ISO_7010_F001_fire_extinguisher.svg.png" },
-    "F002": { "name": "Wandhydrant",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/ISO_7010_F002_fire_hose_reel.svg/96px-ISO_7010_F002_fire_hose_reel.svg.png" },
-    "F003": { "name": "Feuerleiter",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/ISO_7010_F003_fire_ladder.svg/96px-ISO_7010_F003_fire_ladder.svg.png" },
-    "F005": { "name": "Brandmelder",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ISO_7010_F005_fire_alarm_call_point.svg/96px-ISO_7010_F005_fire_alarm_call_point.svg.png" },
-
-    "P001": { "name": "Allgemeines Verbot",    "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/ISO_7010_P001_general_prohibition.svg/96px-ISO_7010_P001_general_prohibition.svg.png" },
-    "P002": { "name": "Rauchen verboten",      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/ISO_7010_P002_No_Smoking.svg/96px-ISO_7010_P002_No_Smoking.svg.png" },
-    "P003": { "name": "Offenes Feuer verboten","img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/ISO_7010_P003_No_Open_Flame.svg/96px-ISO_7010_P003_No_Open_Flame.svg.png" },
-    "P004": { "name": "Durchgang verboten",    "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/ISO_7010_P004_No_thoroughfare.svg/96px-ISO_7010_P004_No_thoroughfare.svg.png" },
-    "P006": { "name": "Kein Zugang für Flurförderzeuge", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/ISO_7010_P006_No_access_for_industrial_vehicles.svg/96px-ISO_7010_P006_No_access_for_industrial_vehicles.svg.png" },
-    "P010": { "name": "Nicht berühren",        "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/ISO_7010_P010_Do_not_touch.svg/96px-ISO_7010_P010_Do_not_touch.svg.png" },
-
-    "M001": { "name": "Allgemeines Gebot",     "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/ISO_7010_M001_general_mandatory_action.svg/96px-ISO_7010_M001_general_mandatory_action.svg.png" },
-    "M003": { "name": "Gehörschutz tragen",    "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/ISO_7010_M003_-_Wear_ear_protection.svg/96px-ISO_7010_M003_-_Wear_ear_protection.svg.png" },
-    "M004": { "name": "Augenschutz tragen",    "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/ISO_7010_M004_Wear_eye_protection.svg/96px-ISO_7010_M004_Wear_eye_protection.svg.png" },
-    "M008": { "name": "Sicherheitsschuhe tragen","img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/ISO_7010_M008.svg/96px-ISO_7010_M008.svg.png" },
-    "M009": { "name": "Schutzhandschuhe tragen","img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/ISO_7010_M009_Wear_protective_gloves.svg/96px-ISO_7010_M009_Wear_protective_gloves.svg.png" },
-    "M012": { "name": "Handlauf benutzen",     "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/ISO_7010_M012_Use_handrail.svg/96px-ISO_7010_M012_Use_handrail.svg.png" },
-    "MUemit, tamam: **tüm dosyaları** burada **kopyalanabilir** şekilde veriyorum—indirmen gerekmiyor.  
-Ayrıca UI’yi **2026** estetiğine taşıdım (modern tipografi, yumuşak gölgeler, akışkan butonlar, modal/“açılır pencere” piktogram tarayıcısı), **PSA rengini sarı** yaptım ve **logo** hem sayfada hem Word çıktısında **sağ üstte** doğru şekilde yerleşiyor.
-
-> **Uyumluluk ve yapı**: Bölümler (Anwendungsbereich, Gefahren, Schutzmaßnahmen S/O/P, Gefahrfall, Erste Hilfe, Entsorgung) **DGUV/BG** yayınlarındaki Muster‑Betriebsanweisung ile uyumludur; piktogram seti **ISO 7010** + **CLP‑GHS** + **ADR** Avrupa standardları temelinde hazırlanmıştır. [1](https://muster.mohandes-ins.com/19-betriebsanweisung-rauchverbot-vorlage/unvergleichlich-betriebsanweisung-word-vorlage-wordde/)[2](https://www.dguv-lug.de/berufsbildende-schulen/arbeitsschutz/betriebsanweisungen/)[3](https://kb.viviotech.net/display/KB/Cloudflare+SSL+Settings+-+When+to+Use+Each+Option)[4](https://www.answeroverflow.com/m/1277961623293919323)[5](https://developers.cloudflare.com/ssl/)
-
----
-
-## 1) **/assets/pictos_index.json**  *(tam set, proxy’li; kopyala‑yapıştır)*
-
-> **Not**: Tüm görseller **CORS sorunsuz** çalışsın diye **proxy** üzerinden çağrılır: `"/functions/img?src=<https url>"`. `functions/img.ts` dosyanız `upload.wikimedia.org`, `commons.wikimedia.org` ve `unece.org` için izinli. [6](https://gordonbeeming.com/blog/2025-08-19/securing-your-site-a-practical-hsts-preloading-guide-for-cloudflare-users)
-
-```json
-{
-  "ghs": {
-    "GHS01": { "name": "Explosiv", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/GHS-pictogram-explos.svg/96px-GHS-pictogram-explos.svg.png" },
-    "GHS02": { "name": "Entzündbar", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/GHS-pictogram-flamme.svg/96px-GHS-pictogram-flamme.svg.png" },
-    "GHS03": { "name": "Oxidierend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/GHS-pictogram-flamme_ueber_kreis.svg/96px-GHS-pictogram-flamme_ueber_kreis.svg.png" },
-    "GHS04": { "name": "Gas unter Druck", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/GHS-pictogram-gas-cylinder.svg/96px-GHS-pictogram-gas-cylinder.svg.png" },
-    "GHS05": { "name": "Ätzend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/GHS-pictogram-acid.svg/96px-GHS-pictogram-acid.svg.png" },
-    "GHS06": { "name": "Akute Toxizität (fatal)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/GHS-pictogram-skull.svg/96px-GHS-pictogram-skull.svg.png" },
-    "GHS07": { "name": "Gesundheitsschädlich/Reizend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png" },
-    "GHS08": { "name": "Gesundheitsgefahr (z. B. CMR)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/GHS-pictogram-respiratory-hazard.svg/96px-GHS-pictogram-respiratory-hazard.svg.png" },
-    "GHS09": { "name": "Umweltgefährlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/GHS-pictogram-pollu.svg/96px-GHS-pictogram-pollu.svg.png" }
+    "GHS01": {
+      "name": "Explosiv",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/GHS-pictogram-explos.svg/96px-GHS-pictogram-explos.svg.png"
+    },
+    "GHS02": {
+      "name": "Entzündbar",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/GHS-pictogram-flamme.svg/96px-GHS-pictogram-flamme.svg.png"
+    },
+    "GHS03": {
+      "name": "Oxidierend",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/GHS-pictogram-flamme_ueber_kreis.svg/96px-GHS-pictogram-flamme_ueber_kreis.svg.png"
+    },
+    "GHS04": {
+      "name": "Gas unter Druck",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/GHS-pictogram-gas-cylinder.svg/96px-GHS-pictogram-gas-cylinder.svg.png"
+    },
+    "GHS05": {
+      "name": "Ätzend",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/GHS-pictogram-acid.svg/96px-GHS-pictogram-acid.svg.png"
+    },
+    "GHS06": {
+      "name": "Akute Toxizität (fatal)",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/GHS-pictogram-skull.svg/96px-GHS-pictogram-skull.svg.png"
+    },
+    "GHS07": {
+      "name": "Gesundheitsschädlich / Reizend",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png"
+    },
+    "GHS08": {
+      "name": "Gesundheitsgefahr (z. B. CMR)",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/GHS-pictogram-respiratory-hazard.svg/96px-GHS-pictogram-respiratory-hazard.svg.png"
+    },
+    "GHS09": {
+      "name": "Umweltgefährlich",
+      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/GHS-pictogram-pollu.svg/96px-GHS-pictogram-pollu.svg.png"
+    }
   },
   "iso": {
     "E001": { "name": "Notausgang (links)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ISO_7010_E001.svg/96px-ISO_7010_E001.svg.png" },
@@ -76,35 +50,43 @@ Ayrıca UI’yi **2026** estetiğine taşıdım (modern tipografi, yumuşak göl
     "F001": { "name": "Feuerlöscher", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/ISO_7010_F001_fire_extinguisher.svg/96px-ISO_7010_F001_fire_extinguisher.svg.png" },
     "F002": { "name": "Wandhydrant", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/ISO_7010_F002_fire_hose_reel.svg/96px-ISO_7010_F002_fire_hose_reel.svg.png" },
     "F003": { "name": "Feuerleiter", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/ISO_7010_F003_fire_ladder.svg/96px-ISO_7010_F003_fire_ladder.svg.png" },
-    "F004": { "name": "Feuerlösch‑Ausrüstung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/ISO_7010_F004_-_Collection_of_fire_fighting_equipment.svg/96px-ISO_7010_F004_-_Collection_of_fire_fighting_equipment.svg.png" },
+    "F004": { "name": "Sammlung brandbekämpfender Ausrüstung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ISO_7010_F004_-_Collection_of_fire_fighting_equipment.svg/96px-ISO_7010_F004_-_Collection_of_fire_fighting_equipment.svg.png" },
     "F005": { "name": "Brandmelder", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ISO_7010_F005_fire_alarm_call_point.svg/96px-ISO_7010_F005_fire_alarm_call_point.svg.png" },
+    "F006": { "name": "Feuer‑Notruftelefon", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/ISO_7010_F006_fire_emergency_telephone.svg/96px-ISO_7010_F006_fire_emergency_telephone.svg.png" },
 
     "P001": { "name": "Allgemeines Verbot", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/ISO_7010_P001_general_prohibition.svg/96px-ISO_7010_P001_general_prohibition.svg.png" },
     "P002": { "name": "Rauchen verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/ISO_7010_P002_No_Smoking.svg/96px-ISO_7010_P002_No_Smoking.svg.png" },
     "P003": { "name": "Offenes Feuer verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/ISO_7010_P003_No_Open_Flame.svg/96px-ISO_7010_P003_No_Open_Flame.svg.png" },
     "P004": { "name": "Durchgang verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/ISO_7010_P004_No_thoroughfare.svg/96px-ISO_7010_P004_No_thoroughfare.svg.png" },
-    "P005": { "name": "Kein Trinkwasser", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/ISO_7010_P005_Not_drinking_water.svg/96px-ISO_7010_P005_Not_drinking_water.svg.png" },
+    "P005": { "name": "Kein Trinkwasser", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/ISO_7010_P005_Not_drinking_water.svg/96px-ISO_7010_P005_Not_drinking_water.svg.png" },
     "P006": { "name": "Kein Zugang für Flurförderzeuge", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/ISO_7010_P006_No_access_for_industrial_vehicles.svg/96px-ISO_7010_P006_No_access_for_industrial_vehicles.svg.png" },
     "P010": { "name": "Nicht berühren", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/ISO_7010_P010_Do_not_touch.svg/96px-ISO_7010_P010_Do_not_touch.svg.png" },
-    "P011": { "name": "Nicht mit Wasser löschen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/ISO_7010_P011_Do_not_extinguish_with_water.svg/96px-ISO_7010_P011_Do_not_extinguish_with_water.svg.png" },
-    "P022": { "name": "Nicht essen oder trinken", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ISO_7010_P022_No_eating_or_drinking.svg/96px-ISO_7010_P022_No_eating_or_drinking.svg.png" },
+    "P011": { "name": "Nicht mit Wasser löschen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/ISO_7010_P011_Do_not_extinguish_with_water.svg/96px-ISO_7010_P011_Do_not_extinguish_with_water.svg.png" },
+    "P012": { "name": "Keine schweren Lasten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/ISO_7010_P012_No_heavy_load.svg/96px-ISO_7010_P012_No_heavy_load.svg.png" },
+    "P013": { "name": "Keine aktivierten Mobiltelefone", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/ISO_7010_P013_No_activated_mobile_phones.svg/96px-ISO_7010_P013_No_activated_mobile_phones.svg.png" },
+    "P022": { "name": "Nicht essen oder trinken", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/ISO_7010_P022_No_eating_or_drinking.svg/96px-ISO_7010_P022_No_eating_or_drinking.svg.png" },
 
     "M001": { "name": "Allgemeines Gebot", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/ISO_7010_M001_general_mandatory_action.svg/96px-ISO_7010_M001_general_mandatory_action.svg.png" },
+    "M002": { "name": "Betriebsanleitung beachten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/ISO_7010_M002_Refer_to_instruction_manual_booklet.svg/96px-ISO_7010_M002_Refer_to_instruction_manual_booklet.svg.png" },
     "M003": { "name": "Gehörschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/ISO_7010_M003_-_Wear_ear_protection.svg/96px-ISO_7010_M003_-_Wear_ear_protection.svg.png" },
     "M004": { "name": "Augenschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/ISO_7010_M004_Wear_eye_protection.svg/96px-ISO_7010_M004_Wear_eye_protection.svg.png" },
-    "M008": { "name": "Sicherheitsschuhe tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/ISO_7010_M008.svg/96px-ISO_7010_M008.svg.png" },
+    "M005": { "name": "Erdung anschließen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/ISO_7010_M005_Connect_an_earth_terminal_to_the_ground.svg/96px-ISO_7010_M005_Connect_an_earth_terminal_to_the_ground.svg.png" },
+    "M006": { "name": "Netzstecker ziehen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/ISO_7010_M006_Disconnect_mains_plug_from_electrical_outlet.svg/96px-ISO_7010_M006_Disconnect_mains_plug_from_electrical_outlet.svg.png" },
     "M009": { "name": "Schutzhandschuhe tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/ISO_7010_M009_Wear_protective_gloves.svg/96px-ISO_7010_M009_Wear_protective_gloves.svg.png" },
     "M012": { "name": "Handlauf benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/ISO_7010_M012_Use_handrail.svg/96px-ISO_7010_M012_Use_handrail.svg.png" },
     "M018": { "name": "Sicherheitsgurt/-geschirr tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ISO_7010_M018_Wear_safety_harness.svg/96px-ISO_7010_M018_Wear_safety_harness.svg.png" },
     "M021": { "name": "Vor Wartung freischalten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ISO_7010_M021_Disconnect_before_maintenance_or_repair.svg/96px-ISO_7010_M021_Disconnect_before_maintenance_or_repair.svg.png" },
 
     "W001": { "name": "Allgemeine Warnung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/ISO_7010_W001_general_warning.svg/96px-ISO_7010_W001_general_warning.svg.png" },
-    "W007": { "name": "Rutschgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/ISO_7010_W007_-_Warning;_Slippery_surface.svg/96px-ISO_7010_W007_-_Warning;_Slippery_surface.svg.png" },
+    "W002": { "name": "Warnung vor Explosivstoff", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/ISO_7010_W002_-_Warning;_Explosive_material.svg/96px-ISO_7010_W002_-_Warning;_Explosive_material.svg.png" },
+    "W004": { "name": "Warnung vor Laserstrahl", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/ISO_7010_W004_-_Warning;_Laser_beam.svg/96px-ISO_7010_W004_-_Warning;_Laser_beam.svg.png" },
+    "W005": { "name": "Warnung vor nichtionisierender Strahlung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ISO_7010_W005_-_Warning;_Non-ionizing_radiation.svg/96px-ISO_7010_W005_-_Warning;_Non-ionizing_radiation.svg.png" },
+    "W007": { "name": "Rutschgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/ISO_7010_W007_-_Warning;_Slippery_surface.svg/96px-ISO_7010_W007_-_Warning;_Slippery_surface.svg.png" },
     "W012": { "name": "Warnung vor Elektrizität", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ISO_7010_W012_-_Warning;_Electricity.svg/96px-ISO_7010_W012_-_Warning;_Electricity.svg.png" },
     "W017": { "name": "Warnung vor Überkopfhindernis", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/ISO_7010_W017_-_Warning;_Overhead_obstacle.svg/96px-ISO_7010_W017_-_Warning;_Overhead_obstacle.svg.png" },
-    "W019": { "name": "Warnung vor heißer Oberfläche", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/ISO_7010_W017_-_Warning;_Hot_surface.svg/96px-ISO_7010_W017_-_Warning;_Hot_surface.svg.png" },
-    "W026": { "name": "Warnung vor korrosiven Stoffen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/ISO_7010_W026_-_Warning;_Corrosive_substance.svg/96px-ISO_7010_W026_-_Warning;_Corrosive_substance.svg.png" },
-    "W030": { "name": "Warnung vor oxidierenden Stoffen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/ISO_7010_W030_-_Warning;_Oxidizing_substance.svg/96px-ISO_7010_W030_-_Warning;_Oxidizing_substance.svg.png" }
+    "W019": { "name": "Warnung vor heißer Oberfläche", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/ISO_7010_W019_-_Warning;_Hot_surface.svg/96px-ISO_7010_W019_-_Warning;_Hot_surface.svg.png" },
+    "W026": { "name": "Warnung vor korrosiver Substanz", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/ISO_7010_W026_-_Warning;_Corrosive_substance.svg/96px-ISO_7010_W026_-_Warning;_Corrosive_substance.svg.png" },
+    "W030": { "name": "Warnung vor oxidierender Substanz", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/ISO_7010_W030_-_Warning;_Oxidizing_substance.svg/96px-ISO_7010_W030_-_Warning;_Oxidizing_substance.svg.png" }
   },
   "adr": {
     "ADR1_1": { "name": "Klasse 1.1 – Massenexplosionsgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/ADR_Class_1.1.svg/128px-ADR_Class_1.1.svg.png" },
@@ -113,17 +95,23 @@ Ayrıca UI’yi **2026** estetiğine taşıdım (modern tipografi, yumuşak göl
     "ADR1_4": { "name": "Klasse 1.4 – Keine erhebliche Gefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/ADR_Class_1.4.svg/128px-ADR_Class_1.4.svg.png" },
     "ADR1_5": { "name": "Klasse 1.5 – Sehr unempfindlich, Massexplosion", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/ADR_Class_1.5.svg/128px-ADR_Class_1.5.svg.png" },
     "ADR1_6": { "name": "Klasse 1.6 – Äußerst unempfindlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/ADR_Class_1.6.svg/128px-ADR_Class_1.6.svg.png" },
+
     "ADR2_1": { "name": "Klasse 2.1 – Entzündbare Gase", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/ADR_Class_2.1.svg/128px-ADR_Class_2.1.svg.png" },
     "ADR2_2": { "name": "Klasse 2.2 – Nicht entzündbar, nicht toxisch", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/ADR_Class_2.2.svg/128px-ADR_Class_2.2.svg.png" },
     "ADR2_3": { "name": "Klasse 2.3 – Giftige Gase", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/ADR_Class_2.3.svg/128px-ADR_Class_2.3.svg.png" },
+
     "ADR3":   { "name": "Klasse 3 – Entzündbare Flüssigkeiten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/ADR_Class_3_Flammable_liquids.svg/128px-ADR_Class_3_Flammable_liquids.svg.png" },
+
     "ADR4_1": { "name": "Klasse 4.1 – Entzündbare feste Stoffe", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ADR_Class_4.1_Flammable_solids.svg/128px-ADR_Class_4.1_Flammable_solids.svg.png" },
     "ADR4_2": { "name": "Klasse 4.2 – Selbstentzündlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/ADR_Class_4.2_Spontaneously_combustible.svg/128px-ADR_Class_4.2_Spontaneously_combustible.svg.png" },
-    "ADR4_3": { "name": "Klasse 4.3 – Mit Wasser brennbare Gase", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ADR_Class_4.3_Dangerous_when_wet.svg/128px-ADR_Class_4.3_Dangerous_when_wet.svg.png" },
+    "ADR4_3": { "name": "Klasse 4.3 – Entwickeln entzündbare Gase mit Wasser", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ADR_Class_4.3_Dangerous_when_wet.svg/128px-ADR_Class_4.3_Dangerous_when_wet.svg.png" },
+
     "ADR5_1": { "name": "Klasse 5.1 – Oxidierend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/ADR_Class_5.1_Oxidizing.svg/128px-ADR_Class_5.1_Oxidizing.svg.png" },
     "ADR5_2": { "name": "Klasse 5.2 – Organische Peroxide", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/ADR_Class_5.2_Organic_peroxides.svg/128px-ADR_Class_5.2_Organic_peroxides.svg.png" },
+
     "ADR6_1": { "name": "Klasse 6.1 – Giftige Stoffe", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/ADR_Class_6.1_Toxic_substances.svg/128px-ADR_Class_6.1_Toxic_substances.svg.png" },
-    "ADR6_2": { "name": "Klasse 6.2 – Ansteckungsgefährlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/ADR_Class_6.2_Infectious_substances.svg/128px-ADR_Class_6.2_Infectious_substances.svg.png" },
+    "ADR6_2": { "name": "Klasse 6.2 – Ansteckungsgefährliche Stoffe", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/ADR_Class_6.2_Infectious_substances.svg/128px-ADR_Class_6.2_Infectious_substances.svg.png" },
+
     "ADR7":   { "name": "Klasse 7 – Radioaktiv", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/ADR_Class_7_Radioactive_material.svg/128px-ADR_Class_7_Radioactive_material.svg.png" },
     "ADR8":   { "name": "Klasse 8 – Ätzend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/ADR_Class_8_Corrosive.svg/128px-ADR_Class_8_Corrosive.svg.png" },
     "ADR9":   { "name": "Klasse 9 – Verschiedene gefährliche Stoffe", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/ADR_Class_9_Miscellaneous.svg/128px-ADR_Class_9_Miscellaneous.svg.png" }
