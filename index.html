@@ -3,70 +3,107 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  /
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Betriebsanweisung – Auswahl</title>
-  /assets/style.css?v=20260105
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css?v=20260105">
 </head>
 <body class="page">
-  <header class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></header>
+  <header class="hero">
+    <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
+  </header>
 
-  <main class="wrapper t-Maschine" id="indexRoot">
+  <main class="wrapper" id="indexRoot">
     <section class="box">
-      <label>Typ wählen (optional):</label>
-      <div class="row" id="typeRow">
+      <div class="ba-band">Grunddaten</div>
+
+      <!-- Typwahl -->
+      <div id="typeRow" class="row">
         <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
         <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
         <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
         <label><input type="radio" name="type" value="PSA"> PSA</label>
       </div>
-      <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
-    </section>
+      <p class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</p>
 
-    <section class="box">
+      <!-- Kopfzeile -->
       <div class="grid2">
         <div>
-          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
-          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung" />
-          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name" />
-          <label>Datum (optional)</label><input id="date" type="date" />
+          <label>Unternehmen (optional)<br><input id="firm" type="text" placeholder="Unternehmen"></label>
         </div>
         <div>
-          <label>Logo‑URL oder Upload (optional)</label>
-          <input id="logoFile" type="file" accept="image/*" />
-          <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
-          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine URL genutzt werden.</small>
-          <div id="logoPreview" class="logo-preview"></div>
+          <label>Abteilung (optional)<br><input id="dept" type="text" placeholder="Abteilung"></label>
+        </div>
+        <div>
+          <label>Ersteller (optional)<br><input id="author" type="text" placeholder="Name"></label>
+        </div>
+        <div>
+          <label>Datum (optional)<br><input id="date" type="date"></label>
         </div>
       </div>
-    </section>
 
-    <section class="box">
-      <h3>Überschrift & Typografie (optional)</h3>
-      <div class="row">
-        <div style="flex:1">
-          <label>Name des Arbeitsmittels/Verfahrens</label>
-          <input id="assetName" type="text" placeholder="z. B. Trennschleifer" />
-          <label>Untertitel</label>
-          <input id="subtitleText" type="text" value="Betriebsanweisung" />
+      <!-- Logo -->
+      <div class="box" style="margin-top:12px;">
+        <div class="row">
+          <div style="flex:1;">
+            <label>Logo-URL (optional)<br>
+              <input id="logoUrl" type="url" placeholder="https://... (PNG/JPG)">
+            </label>
+            <p class="small">Wenn kein Upload möglich ist, kann eine Logo-URL verwendet werden.</p>
+          </div>
+          <div>
+            <label>Logo-Datei (optional)<br>
+              <input id="logoFile" type="file" accept="image/*">
+            </label>
+          </div>
         </div>
-        <div style="flex:1">
-          <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
-          <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
-          <label>Schriftart:
-            <select id="fontFamily"><option>Inter</option><option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option></select>
-          </label>
-          <label>Schriftgröße:
-            <input type="number" id="fontSize" min="14" max="26" value="18" />
-          </label>
-        </div>
+        <div id="logoPreview" class="logo-preview"></div>
       </div>
-      <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
-    </section>
 
-    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
+      <!-- Typografie -->
+      <div class="box">
+        <div class="ba-band">Überschrift & Typografie (optional)</div>
+        <div class="grid2">
+          <div>
+            <label>Name des Arbeitsmittels/Verfahrens<br>
+              <input id="assetName" type="text" placeholder="z. B. CNC-Fräse">
+            </label>
+          </div>
+          <div>
+            <label>Untertitel<br>
+              <input id="subtitleText" type="text" value="Betriebsanweisung">
+            </label>
+          </div>
+          <div class="row">
+            <label><input id="subtitleBold" type="checkbox"> Fett</label>
+            <label><input id="subtitleCenter" type="checkbox" checked> Zentriert</label>
+          </div>
+          <div class="row">
+            <label>Schriftart:
+              <select id="fontFamily">
+                <option>Inter</option>
+                <option>Arial</option>
+                <option>Calibri</option>
+                <option>Noto Sans</option>
+                <option>Times New Roman</option>
+              </select>
+            </label>
+            <label>Schriftgröße:
+              <input id="fontSize" type="number" min="10" max="30" value="18">
+            </label>
+          </div>
+        </div>
+        <p class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</p>
+      </div>
+
+      <div style="text-align:right;">
+        <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
+      </div>
+    </section>
   </main>
 
-  /assets/app.js?v=20260105</script>
+  <!-- App -->
+  <script src="/assets/app.js?v=20260105"></script>
 </body>
 </html>
