@@ -1,18 +1,23 @@
 
-:root { --theme:#005AA3; --bg:#f5f7fa; --ink:#111; --line:#d0d7de; --muted:#666; }
-.t-Gefahrstoff { --theme:#E53935; }   /* rot/orange für Gefahrstoff-BA */
-.t-Biostoff    { --theme:#2E7D32; }   /* grün */
-.t-Maschine    { --theme:#005AA3; }   /* blau */
-.t-PSA         { --theme:#2E7D32; }   /* PSA grün */
+/* Grundfarben & Variablen */
+:root { --theme:#005AA3; --ink:#111; --line:#d0d7de; --muted:#666; --bg-page:#e6f0ff; }
+/* Vollseiten-Themen (ganzer Bildschirm) */
+.theme-Maschine { --theme:#005AA3; --bg-page:#e6f0ff; }   /* blau */
+.theme-Gefahrstoff { --theme:#E53935; --bg-page:#ffebee; }/* rot/orange */
+.theme-PSA { --theme:#2E7D32; --bg-page:#eaf5ea; }        /* grün */
+.theme-Biostoff { --theme:#2E7D32; --bg-page:#eaf5ea; }   /* grün */
 
+/* Seite */
 html, body { height:100%; }
-body { font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+body.page { font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg-page); color:var(--ink); transition: background 0.3s ease; }
 .wrapper { max-width: 1200px; margin: 0 auto; padding: 12px; }
-.box { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; margin:12px 0; }
+.box { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; margin:12px 0; box-shadow:0 4px 10px rgba(0,0,0,.06); }
+
 .row { display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
 .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
 .grid3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
 
+/* Kopfband */
 .hero {
   background: linear-gradient(90deg, var(--theme), #0b1e3a);
   color:#fff; padding:18px 20px; margin:0;
@@ -20,24 +25,29 @@ body { font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg)
 }
 .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
 
+/* Kleines */
 .muted { font-size:12px; color:var(--muted); }
 .logo-preview { min-height:48px; border:1px dashed #cbd5e1; border-radius:8px; margin-top:8px; }
 
+/* Buttons */
 .btn-primary {
   background: var(--theme);
   color:#fff; border:0; border-radius:10px; padding:10px 16px; cursor:pointer; font-weight:700;
 }
 .btn-primary:hover { filter:brightness(1.05); }
 
+/* Abschnittsbänder */
 .ba-band {
   background: var(--theme);
   color:#fff; border-radius:8px; padding:12px; margin:14px 0;
   font-weight:900; letter-spacing:.5px; text-transform:uppercase; text-align:center;
 }
 
+/* Layout */
 .layout { display:grid; grid-template-columns: 380px 1fr; gap:16px; align-items:start; }
 .side { position:sticky; top:10px; }
 
+/* Filter & Liste */
 .filterbar { display:flex; flex-direction:column; gap:8px; margin:10px 0; }
 .filterbar input[type="search"] { width:100%; padding:8px 10px; border-radius:10px; border:1px solid var(--line); outline:none; }
 .filterbar .chips { display:flex; gap:8px; flex-wrap:wrap; font-size:12px; color:#333; }
@@ -48,11 +58,13 @@ body { font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg)
 .picrow img { width:56px; height:56px; object-fit:contain; border-radius:6px; background:#fff; }
 .picrow .code { font-size:12px; font-weight:700; color:#333; flex:1; }
 
+/* Zuordnung */
 .assignbar { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
 .assignbar .target { border:1px dashed #cbd5e1; border-radius:8px; padding:8px 12px; cursor:pointer; background:#f7fafc; font-weight:700; }
 .assignbar .target:hover { background:#eef2ff; }
 .assignbar .auto { margin-left:auto; display:flex; gap:8px; align-items:center; }
 
+/* Abschnitte */
 .section-icons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; justify-content:center; }
 .section-icons img { width:48px; height:48px; object-fit:contain; }
 
@@ -60,9 +72,11 @@ body { font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg)
 .small { font-size:12px; color:#555; }
 #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
 
+/* Freitext-Platz */
 .ft-row { display:flex; gap:8px; align-items:center; margin:8px 0; }
 .ft-row input { flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--line); }
 
+/* Druck */
 @media print {
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   @page { size: A4; margin: 10mm; }
