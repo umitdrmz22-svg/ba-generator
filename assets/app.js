@@ -1,4 +1,5 @@
 
+// assets/app.js
 const qs  = (s)=>document.querySelector(s);
 const qsa = (s)=>[...document.querySelectorAll(s)];
 let isIndex=false, isEditor=false;
@@ -10,15 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isEditor) initEditor();
 });
 
+// HEAD
 function getHEAD(){ try{ return JSON.parse(localStorage.getItem('BA_HEAD') || '{}'); }catch{ return {}; } }
 function setHEAD(head){ localStorage.setItem('BA_HEAD', JSON.stringify(head || {})); }
 
 // ---------- INDEX ----------
 function initIndex(){
-  const root    = qs('#indexRoot');
-  const btn     = qs('#continue');
-  const logoInp = qs('#logoFile'), logoPrev = qs('#logoPreview'), logoUrl = qs('#logoUrl');
+  const body   = qs('#bodyRoot');
+  const root   = qs('#indexRoot');
+  const btn    = qs('#continue');
+  const logoInp= qs('#logoFile'), logoPrev = qs('#logoPreview'), logoUrl = qs('#logoUrl');
   window.__uploadedLogoUrl = '';
+
+  // Typ-Theme auf ganze Seite anwenden
+  qs('#typeRow')?.addEventListener('change',(e)=>{
+    const val=e.target?.value; if(!val) return;
+    body.classList.remove('theme-Gefahrstoff','theme-Biostoff','theme-Maschine','theme-PSA');
+    body.classList.add('theme-' + val);
+  });
 
   logoInp?.addEventListener('change', ()=>{
     logoPrev.textContent='(Upload lokal – Cloud‑Upload nicht aktiv. Nutzen Sie ggf. eine Logo‑URL.)';
@@ -46,12 +56,6 @@ function initIndex(){
     setHEAD(head);
     window.location.href = '/editor.html';
   });
-
-  qs('#typeRow')?.addEventListener('change',(e)=>{
-    const val=e.target?.value; if(!val) return;
-    root.classList.remove('t-Gefahrstoff','t-Biostoff','t-Maschine','t-PSA');
-    root.classList.add('t-' + val);
-  });
 }
 
 // ---------- EDITOR ----------
@@ -71,7 +75,8 @@ function addFreeText(inpId, listId){
 
 async function initEditor(){
   HEAD = getHEAD();
-  document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
+  // ganze Seite nach Typ einfärben
+  document.body?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
 
   try { PICTO = await fetch('/assets/pictos_index.json?v=20260105',{cache:'no-store'}).then(r=>r.json()); } catch{}
   try { SUG   = await fetch('/assets/suggestions.json?v=20260105',{cache:'no-store'}).then(r=>r.json()); } catch{ SUG={}; }
@@ -93,58 +98,43 @@ async function initEditor(){
   });
 
   qs('#autoExport')?.addEventListener('change',(e)=>{ autoExport = !!e.target.checked; });
-
   qs('#saveDocx')?.addEventListener('click', ()=>exportDocx('manual'));
 
   enforceTwoPages();
 }
 
+// Kopfbereich
 function renderHead(){
-  HEAD = getHEAD();
-  const headDiv=qs('#head');
+  const headDiv=qs('#head'), H=getHEAD();
   const subStyle = `
-    font-family:${HEAD.title?.fontFamily || 'Arial'};
-    font-size:${(HEAD.title?.fontSize || 18)}px;
-    ${HEAD.title?.bold?'font-weight:900;':''}
-    ${HEAD.title?.center?'text-align:center;':''}
+    font-family:${H.title?.fontFamily || 'Arial'};
+    font-size:${(H.title?.fontSize || 18)}px;
+    ${H.title?.bold?'font-weight:900;':''}
+    ${H.title?.center?'text-align:center;':''}
     text-transform:uppercase; letter-spacing:.6px;
   `;
-  const logoHtml = HEAD.logoUrl ? `<img src="${HEAD.logoUrl}" alt="Logo" style="max-height:48px;max-width:160px;object-fit:contain;"/>` : '';
   headDiv.innerHTML = `
     <div style="display:flex;gap:12px;align-items:center">
       <div style="flex:1">
-        <div style="font-size:20px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;text-align:center">${HEAD.title?.assetName || ''}</div>
-        <div style="${subStyle}">${HEAD.title?.subtitleText || 'Betriebsanweisung'}</div>
+        <div style="font-size:20px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;text-align:center">${H.title?.assetName || ''}</div>
+        <div style="${subStyle}">${H.title?.subtitleText || 'Betriebsanweisung'}</div>
         <div class="small" style="text-align:center">
-          Typ: ${HEAD.type || '-'} • Unternehmen: ${HEAD.firm || '-'} • Abteilung: ${HEAD.dept || '-'} • Ersteller: ${HEAD.author || '-'} • Datum: ${HEAD.date || '-'}
+          Typ: ${H.type || '-'} • Unternehmen: ${H.firm || '-'} • Abteilung: ${H.dept || '-'} • Ersteller: ${H.author || '-'} • Datum: ${H.date || '-'}
         </div>
       </div>
-      ${logoHtml}
+      ${H.logoUrl ? `${H.logoUrl}` : ''}
     </div>
   `;
 }
 
-function allPicKeys(){
-  const groups = Object.keys(PICTO || {});
-  const out = [];
-  groups.forEach(g => Object.keys(PICTO[g] || {}).forEach(code => out.push({group:g, code})));
-  return out;
-}
-function findEntry(code){
-  for (const g of Object.keys(PICTO || {})) if (PICTO[g]?.[code]) return PICTO[g][code];
-  return null;
-}
+// Piktogramme
+function allPicKeys(){ const out=[]; Object.keys(PICTO||{}).forEach(g=>Object.keys(PICTO[g]||{}).forEach(code=>out.push({group:g,code}))); return out; }
+function findEntry(code){ for(const g of Object.keys(PICTO||{})){ if(PICTO[g]?.[code]) return PICTO[g][code]; } return null; }
 function wireFilters(){
   qsa('.grp').forEach(chk=>{
-    chk.addEventListener('change', ()=>{
-      if(chk.checked) FILTER.groups.add(chk.value); else FILTER.groups.delete(chk.value);
-      renderPicList();
-    });
+    chk.addEventListener('change', ()=>{ if(chk.checked) FILTER.groups.add(chk.value); else FILTER.groups.delete(chk.value); renderPicList(); });
   });
-  qs('#picSearch')?.addEventListener('input',(e)=>{
-    FILTER.term = (e.target.value || '').trim().toLowerCase();
-    renderPicList();
-  });
+  qs('#picSearch')?.addEventListener('input',(e)=>{ FILTER.term=(e.target.value||'').trim().toLowerCase(); renderPicList(); });
 }
 function renderPicList(){
   const list=qs('#picList'); if(!list) return; list.innerHTML='';
@@ -162,104 +152,41 @@ function renderPicList(){
     list.appendChild(row);
   });
 }
-function selectPic(el){
-  qsa('.picrow').forEach(x=>x.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedPic = { code: el.dataset.code, group: el.dataset.group };
-}
-
+function selectPic(el){ qsa('.picrow').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); selectedPic = { code: el.dataset.code, group: el.dataset.group }; }
 function renderSectionIcons(sec){
   const wrap = qs('#icons-' + sec); if(!wrap) return; wrap.innerHTML='';
-  iconsBySection[sec].forEach(code=>{
-    const entry = findEntry(code); if(!entry) return;
-    const img = document.createElement('img'); img.src = entry.img; img.alt = entry.name || code;
-    wrap.appendChild(img);
-  });
+  iconsBySection[sec].forEach(code=>{ const entry=findEntry(code); if(!entry) return; const img=document.createElement('img'); img.src=entry.img; img.alt=entry.name||code; wrap.appendChild(img); });
 }
 
-// ----- Vorschläge
+// Vorschläge
 function fillPool(divId, items){
   const div=qs('#' + divId); if(!div) return; div.innerHTML='';
-  (items || []).forEach(t=>{
+  (items||[]).forEach(t=>{
     const b=document.createElement('button');
     b.textContent='➕ ' + t; b.style.margin='4px';
-    b.addEventListener('click',()=>{
-      const listId=divId.replace('Pool','List');
-      const li=document.createElement('div'); li.textContent='• ' + t; li.style.margin='3px 0';
-      qs('#' + listId)?.appendChild(li);
-      enforceTwoPages();
-    });
+    b.addEventListener('click',()=>{ const listId=divId.replace('Pool','List'); const li=document.createElement('div'); li.textContent='• ' + t; li.style.margin='3px 0'; qs('#' + listId)?.appendChild(li); enforceTwoPages(); });
     div.appendChild(b);
   });
 }
-async function aiSuggest(section, pics, head){
-  try{
-    const url = `/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`;
-    const r = await fetch(url, {cache:'no-store'}); if(!r.ok) return [];
-    const data = await r.json(); return Array.isArray(data)?data:[];
-  }catch{ return []; }
-}
+async function aiSuggest(section, pics, head){ try{ const url=`/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`; const r=await fetch(url,{cache:'no-store'}); if(!r.ok) return []; const d=await r.json(); return Array.isArray(d)?d:[]; }catch{ return []; } }
 function localHeuristics(section, pics, head){
-  const out = new Set();
-  const name = (head?.title?.assetName || head?.asset || '').toLowerCase();
-  const has = (code)=>pics.includes(code);
-  const push = (arr)=>arr.forEach(s=>out.add(s));
-
-  if(section==='hazard'){
-    if(/schweiß|schweiss|weld/.test(name)) push([
-      'Schweißrauch, UV/IR-Strahlung und Funkenflug können Augen/Haut schädigen; Abschirmungen und Absaugung verwenden.',
-      'Brand-/Explosionsgefahr durch Funken und heiße Schlacke; brennbare Stoffe entfernen, Löschmittel bereithalten.'
-    ]);
-    if(/trennschleif|flex|grinder/.test(name)) push([
-      'Rotierende Scheibe: Rückschlag- und Bruchgefahr; nur freigegebene Scheiben, zulässige Drehzahl beachten.',
-      'Lärm und Staubexposition; geeigneten Gehör‑ und Atemschutz verwenden.'
-    ]);
-    if(has('W012')) push(['Elektrische Gefährdungen: Leitungen/Gehäuse prüfen, Beschädigungen sofort melden und Betrieb unterbinden.']);
-  }
-  if(section==='tech'){
-    push(['Schutzeinrichtungen (Hauben, Lichtschranken, Verriegelungen) funktionsgeprüft betreiben; Umgehungen sind verboten.']);
-    if(/weld|schweiß|schweiss/.test(name)) push(['Absaugung an der Quelle; vor Wartung Freischalten (LOTO); Nachlaufzeiten beachten.']);
-    if(has('GHS02')) push(['Zündquellen fernhalten; Erdung/Leitfähigkeit beim Umfüllen sicherstellen; Lüftung/Absaugung betreiben.']);
-  }
-  if(section==='org'){
-    push(['Arbeiten nur nach Unterweisung/Freigabe; Zuständigkeiten, Sperrbereiche und Kennzeichnungen (ISO 7010) festlegen.']);
-    push(['Prüf- und Wartungsintervalle dokumentieren; Mängel zeitnah beseitigen.']);
-  }
-  if(section==='ppe'){
-    push(['Sicherheitsschuhe mit Zehenschutz; bei Span-/Staubflug Augenschutz; bei Lärm Gehörschutz.']);
-    if(/weld|schweiß|schweiss/.test(name)) push(['Schweißschirm mit passender Schutzstufe, hitzebeständige Handschuhe und flammhemmende Kleidung.']);
-  }
-  if(section==='em'){
-    push(['Gefahr → Not‑Halt betätigen, Bereich sichern, Personen warnen; nur ohne Selbstgefährdung eingreifen.']);
-    if(has('GHS02')) push(['Brandfall: geeignete Löschmittel (Schaum/CO₂) einsetzen; Rückzündung beachten; Bereich räumen.']);
-  }
-  if(section==='eh'){
-    push(['Verletzungen versorgen; Augenkontakt mindestens 15 Minuten spülen; Notruf; Maßnahmen dokumentieren.']);
-  }
-  if(section==='dis'){
-    push(['Abfälle sortenrein erfassen; öl-/chemiehaltige Abfälle gekennzeichneten Behältern zuführen; Nachweise führen.']);
-  }
+  const out=new Set(), name=(head?.title?.assetName||'').toLowerCase(), has=(c)=>pics.includes(c), push=(arr)=>arr.forEach(s=>out.add(s));
+  if(section==='hazard'){ if(/schweiß|schweiss|weld/.test(name)) push(['Schweißrauch, UV/IR-Strahlung und Funkenflug können Augen/Haut schädigen; Abschirmungen und Absaugung verwenden.','Brand-/Explosionsgefahr durch Funken und heiße Schlacke; brennbare Stoffe entfernen, Löschmittel bereithalten.']); if(/trennschleif|flex|grinder/.test(name)) push(['Rotierende Scheibe: Rückschlag- und Bruchgefahr; nur freigegebene Scheiben, zulässige Drehzahl beachten.','Lärm und Staubexposition; geeigneten Gehör‑ und Atemschutz verwenden.']); if(has('W012')) push(['Elektrische Gefährdungen: Leitungen/Gehäuse prüfen, Beschädigungen sofort melden und Betrieb unterbinden.']); }
+  if(section==='tech'){ push(['Schutzeinrichtungen (Hauben, Lichtschranken, Verriegelungen) funktionsgeprüft betreiben; Umgehungen sind verboten.']); if(/weld|schweiß|schweiss/.test(name)) push(['Absaugung an der Quelle; vor Wartung Freischalten (LOTO); Nachlaufzeiten beachten.']); if(has('GHS02')) push(['Zündquellen fernhalten; Erdung/Leitfähigkeit beim Umfüllen sicherstellen; Lüftung/Absaugung betreiben.']); }
+  if(section==='org'){ push(['Arbeiten nur nach Unterweisung/Freigabe; Zuständigkeiten, Sperrbereiche und Kennzeichnungen (ISO 7010) festlegen.','Prüf- und Wartungsintervalle dokumentieren; Mängel zeitnah beseitigen.']); }
+  if(section==='ppe'){ push(['Sicherheitsschuhe mit Zehenschutz; bei Span-/Staubflug Augenschutz; bei Lärm Gehörschutz.']); if(/weld|schweiß|schweiss/.test(name)) push(['Schweißschirm mit passender Schutzstufe, hitzebeständige Handschuhe und flammhemmende Kleidung.']); }
+  if(section==='em'){ push(['Gefahr → Not‑Halt betätigen, Bereich sichern, Personen warnen; nur ohne Selbstgefährdung eingreifen.']); if(has('GHS02')) push(['Brandfall: geeignete Löschmittel (Schaum/CO₂) einsetzen; Rückzündung beachten; Bereich räumen.']); }
+  if(section==='eh'){ push(['Verletzungen versorgen; Augenkontakt mindestens 15 Minuten spülen; Notruf; Maßnahmen dokumentieren.']); }
+  if(section==='dis'){ push(['Abfälle sortenrein erfassen; öl-/chemiehaltige Abfälle gekennzeichneten Behältern zuführen; Nachweise führen.']); }
   return Array.from(out);
 }
-
 async function refreshPools(sectionChanged, withAI=false){
-  const type = HEAD.type || 'Maschine';
-  async function build(sec){
-    const pics = iconsBySection[sec];
-    const set = new Set();
-    pics.forEach(p => (SUG?.[type]?.[sec]?.[p] || []).forEach(x => set.add(x)));
-    localHeuristics(sec, pics, HEAD).forEach(x=>set.add(x));
-    if(withAI){
-      const ai = await aiSuggest(sec, pics, HEAD);
-      ai.forEach(x=>set.add(x));
-    }
-    return Array.from(set).slice(0,12);
-  }
-  const todo = sectionChanged ? [sectionChanged] : sections;
-  for(const s of todo){ fillPool(s+'Pool', await build(s)); }
+  const type = (getHEAD().type || 'Maschine');
+  async function build(sec){ const pics=iconsBySection[sec]; const set=new Set(); pics.forEach(p => (SUG?.[type]?.[sec]?.[p] || []).forEach(x => set.add(x))); localHeuristics(sec, pics, getHEAD()).forEach(x=>set.add(x)); if(withAI){ const ai=await aiSuggest(sec, pics, getHEAD()); ai.forEach(x=>set.add(x)); } return Array.from(set).slice(0,12); }
+  for(const s of (sectionChanged?[sectionChanged]:sections)){ fillPool(s+'Pool', await build(s)); }
 }
 
-// ---------- Layout/Export ----------
+// Seitenkontrolle
 const root=()=>qs('#baRoot'), fontHint=()=>qs('#fontHint');
 function enforceTwoPages(){
   const a4px=1123, margin=40;
@@ -270,59 +197,47 @@ function enforceTwoPages(){
   else { fontHint().style.display='none'; }
 }
 
+// Bilder/Export
 async function imageToPngBytes(url){
   const res = await fetch(url, {cache:'no-store'}); if (!res.ok) throw new Error('img fetch failed');
-  const ct  = res.headers.get('content-type') || '';
-  const blob = await res.blob();
-  if (/png|jpeg|jpg/i.test(ct)){ const ab = await blob.arrayBuffer(); return new Uint8Array(ab); }
-  const dataUrl = await (async ()=>{
-    if (/svg/i.test(ct)){ const svgText = await blob.text(); return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText); }
-    return URL.createObjectURL(blob);
-  })();
-  const img = new Image(); img.crossOrigin = 'anonymous';
-  const canvas = document.createElement('canvas'); canvas.width=96; canvas.height=96;
-  const ctx = canvas.getContext('2d');
+  const ct  = res.headers.get('content-type') || ''; const blob = await res.blob();
+  if (/png|jpeg|jpg/i.test(ct)){ const ab=await blob.arrayBuffer(); return new Uint8Array(ab); }
+  const dataUrl = await (async ()=>{ if(/svg/i.test(ct)){ const svgText=await blob.text(); return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svgText); } return URL.createObjectURL(blob); })();
+  const img = new Image(); img.crossOrigin='anonymous'; const canvas=document.createElement('canvas'); canvas.width=96; canvas.height=96; const ctx=canvas.getContext('2d');
   await new Promise((ok,err)=>{ img.onload=ok; img.onerror=err; img.src=dataUrl; });
   ctx.clearRect(0,0,96,96); ctx.drawImage(img,0,0,96,96);
-  const pngDataUrl = canvas.toDataURL('image/png');
-  const b64 = pngDataUrl.split(',')[1]; const bin = atob(b64);
-  const bytes = new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-  return bytes;
+  const pngDataUrl = canvas.toDataURL('image/png'); const b64=pngDataUrl.split(',')[1]; const bin=atob(b64); const bytes=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i); return bytes;
 }
 function fromList(id){ return qsa('#'+id+' div').map(x=>x.textContent.replace(/^[•\u2022]\s*/,'').trim()); }
-async function iconBytes(code){ const entry = findEntry(code); return await imageToPngBytes(entry.img); }
-async function logoBytes(){ if(!HEAD.logoUrl) return null; try{ return await imageToPngBytes(HEAD.logoUrl); }catch{ return null; } }
+async function iconBytes(code){ const entry=findEntry(code); return await imageToPngBytes(entry.img); }
+async function logoBytes(){ const H=getHEAD(); if(!H.logoUrl) return null; try{ return await imageToPngBytes(H.logoUrl); }catch{ return null; } }
 
 async function exportDocx(mode){
   const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, ShadingType, ImageRun, Footer, PageNumber } =
     await import('https://cdn.jsdelivr.net/npm/docx@9.1.1/+esm');
 
-  const barColor = (HEAD.type==='Gefahrstoff'?'E53935':(HEAD.type==='Biostoff'?'2E7D32':(HEAD.type==='PSA'?'2E7D32':'005AA3')));
-  const band = (t)=> new Table({
-    width:{ size:100, type:WidthType.PERCENTAGE },
-    rows:[ new TableRow({ children:[ new TableCell({
-      shading:{ type:ShadingType.SOLID, color:barColor, fill:barColor },
-      children:[ new Paragraph({ alignment:AlignmentType.CENTER, children:[ new TextRun({ text:t.toUpperCase(), bold:true, color:'FFFFFF' }) ] }) ]
-    }) ] }) ]
-  });
+  const H=getHEAD();
+  const barColor = (H.type==='Gefahrstoff'?'E53935':(H.type==='Biostoff'?'2E7D32':(H.type==='PSA'?'2E7D32':'005AA3')));
+  const band = (t)=> new Table({ width:{ size:100, type:WidthType.PERCENTAGE }, rows:[ new TableRow({ children:[ new TableCell({ shading:{ type:ShadingType.SOLID, color:barColor, fill:barColor }, children:[ new Paragraph({ alignment:AlignmentType.CENTER, children:[ new TextRun({ text:t.toUpperCase(), bold:true, color:'FFFFFF' }) ] }) ] }) ] }) ] });
 
+  // Kopfbereich mit Logo rechts
   const logo = await logoBytes();
   const headerRow = new TableRow({ children:[
     new TableCell({ children:[
-      new Paragraph({ children:[ new TextRun({ text:(HEAD.title?.assetName||'').toUpperCase(), bold:true, size:34 }) ], alignment:AlignmentType.LEFT }),
-      new Paragraph({ children:[ new TextRun({ text:(HEAD.title?.subtitleText||'Betriebsanweisung').toUpperCase(), bold:!!HEAD.title?.bold, size:(HEAD.title?.fontSize?HEAD.title.fontSize*2:32), font:(HEAD.title?.fontFamily||'Arial') }) ], alignment:(HEAD.title?.center?AlignmentType.CENTER:AlignmentType.LEFT) })
+      new Paragraph({ children:[ new TextRun({ text:(H.title?.assetName||'').toUpperCase(), bold:true, size:34 }) ], alignment:AlignmentType.LEFT }),
+      new Paragraph({ children:[ new TextRun({ text:(H.title?.subtitleText||'Betriebsanweisung').toUpperCase(), bold:!!H.title?.bold, size:(H.title?.fontSize?H.title.fontSize*2:32), font:(H.title?.fontFamily||'Arial') }) ], alignment:(H.title?.center?AlignmentType.CENTER:AlignmentType.LEFT) })
     ]}),
     new TableCell({ children:[ ...(logo ? [ new Paragraph({ children:[ new ImageRun({ data:logo, transformation:{ width:120, height:48 } }) ], alignment:AlignmentType.RIGHT }) ] : [ new Paragraph('') ]) ]})
   ]});
 
   const headerTable = new Table({
     width:{ size:100, type:WidthType.PERCENTAGE },
-    rows:[ headerRow,
+    rows:[
+      headerRow,
       new TableRow({ children:[
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Unternehmen: ${HEAD.firm||'-'}` }) ] }) ] }),
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Abteilung: ${HEAD.dept||'-'}` }) ] }) ] }),
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Datum: ${HEAD.date||'-'}` }) ] }) ] })
+        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Unternehmen: ${H.firm||'-'}` }) ] }) ] }),
+        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Abteilung: ${H.dept||'-'}` }) ] }) ] }),
+        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Datum: ${H.date||'-'}` }) ] }) ] })
       ]})
     ]
   });
@@ -336,15 +251,11 @@ async function exportDocx(mode){
       }catch{}
     }
     const bullets = fromList(listId).map(t=> new Paragraph({ text:t, bullet:{ level:0 } }));
-    return [
-      band(titleText),
-      new Table({
-        width:{ size:100, type:WidthType.PERCENTAGE },
-        rows:[ new TableRow({ children:[
-          new TableCell({ width:{ size:32, type:WidthType.PERCENTAGE }, children:(iconRuns.length?iconRuns:[ new Paragraph('') ]) }),
-          new TableCell({ width:{ size:68, type:WidthType.PERCENTAGE }, children:(bullets.length?bullets:[ new Paragraph('') ]) })
-        ]}) ]
-      })
+    return [ band(titleText),
+      new Table({ width:{ size:100, type:WidthType.PERCENTAGE }, rows:[ new TableRow({ children:[
+        new TableCell({ width:{ size:32, type:WidthType.PERCENTAGE }, children:(iconRuns.length?iconRuns:[ new Paragraph('') ]) }),
+        new TableCell({ width:{ size:68, type:WidthType.PERCENTAGE }, children:(bullets.length?bullets:[ new Paragraph('') ]) })
+      ]}) ] })
     ];
   }
 
@@ -352,9 +263,9 @@ async function exportDocx(mode){
     width:{ size:100, type:WidthType.PERCENTAGE },
     rows:[
       new TableRow({ children:[
-        new TableCell({ children:[ new Paragraph({ text:"Ersteller: "+(HEAD.author||'-') }) ] }),
+        new TableCell({ children:[ new Paragraph({ text:"Ersteller: "+(H.author||'-') }) ] }),
         new TableCell({ children:[ new Paragraph({ text:"Verantwortlich: "+(qs('#metaVer')?.value||'-') }) ] }),
-        new TableCell({ children:[ new Paragraph({ text:"Datum: "+(HEAD.date||'-') }) ] })
+        new TableCell({ children:[ new Paragraph({ text:"Datum: "+(H.date||'-') }) ] })
       ]}),
       new TableRow({ children:[
         new TableCell({ children:[ new Paragraph("Unterschrift / Kästchen: _____________________") ] }),
@@ -389,8 +300,6 @@ async function exportDocx(mode){
 
   const blob = await Packer.toBlob(doc);
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = (HEAD.title?.assetName?HEAD.title.assetName+'_BA':'Betriebsanweisung')+'.docx';
-  if (mode!=='silent') a.click();
-  URL.revokeObjectURL(a.href);
+  a.download = (getHEAD().title?.assetName?getHEAD().title.assetName+'_BA':'Betriebsanweisung')+'.docx';
+  a.click(); URL.revokeObjectURL(a.href);
 }
-``
