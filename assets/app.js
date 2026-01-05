@@ -11,18 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isEditor) initEditor();
 });
 
-// ---- Ortak: HEAD oku/yaz
 function getHEAD(){ try{ return JSON.parse(localStorage.getItem('BA_HEAD') || '{}'); }catch{ return {}; } }
 function setHEAD(head){ localStorage.setItem('BA_HEAD', JSON.stringify(head || {})); }
 
-// ---- INDEX
+// ---------- INDEX ----------
 function initIndex(){
   const root    = qs('#indexRoot');
   const btn     = qs('#continue');
-  const logoInp = qs('#logoFile'), logoPrev = qs('#logoPreview');
+  const logoInp = qs('#logoFile'), logoPrev = qs('#logoPreview'), logoUrl = qs('#logoUrl');
   window.__uploadedLogoUrl = '';
 
-  logoInp?.addEventListener('change', ()=>{ logoPrev.textContent='(Upload übersprungen: keine Cloud-Umgebung)'; });
+  logoInp?.addEventListener('change', ()=>{
+    logoPrev.textContent='(Upload lokal – Cloud‑Upload nicht aktiv. Nutzen Sie ggf. eine Logo‑URL.)';
+  });
 
   btn?.addEventListener('click', (e)=>{
     e.preventDefault();
@@ -33,7 +34,7 @@ function initIndex(){
       dept   : qs('#dept')?.value?.trim()   || '',
       author : qs('#author')?.value?.trim() || '',
       date   : qs('#date')?.value           || '',
-      logoUrl: window.__uploadedLogoUrl || '',
+      logoUrl: (logoUrl?.value?.trim() || window.__uploadedLogoUrl || ''),
       title  : {
         assetName   : qs('#assetName')?.value?.trim() || '',
         subtitleText: qs('#subtitleText')?.value?.trim() || 'Betriebsanweisung',
@@ -44,7 +45,6 @@ function initIndex(){
       }
     };
     setHEAD(head);
-    // Kökten yönlendirme: path sorununu kesin çözer
     window.location.href = '/editor.html';
   });
 
@@ -55,17 +55,25 @@ function initIndex(){
   });
 }
 
-// ---- EDITOR
+// ---------- EDITOR ----------
 let PICTO=null, SUG={}, FILTER={groups:new Set(['iso','ghs','adr']), term:''};
 const sections = ['hazard','tech','org','ppe','em','eh','dis'];
 const iconsBySection = { hazard:[], tech:[], org:[], ppe:[], em:[], eh:[], dis:[] };
 let selectedPic=null, autoExport=false, HEAD={};
 
+function addFreeText(inpId, listId){
+  const val = qs('#'+inpId)?.value?.trim();
+  if(!val) return;
+  const li = document.createElement('div'); li.textContent = '• ' + val; li.style.margin='3px 0';
+  qs('#'+listId)?.appendChild(li);
+  qs('#'+inpId).value='';
+  enforceTwoPages();
+}
+
 async function initEditor(){
   HEAD = getHEAD();
   document.getElementById('baBody')?.classList.add('theme-' + (HEAD?.type || 'Maschine'));
 
-  // Veri kaynakları
   try { PICTO = await fetch('/assets/pictos_index.json?v=20260105',{cache:'no-store'}).then(r=>r.json()); } catch{}
   try { SUG   = await fetch('/assets/suggestions.json?v=20260105',{cache:'no-store'}).then(r=>r.json()); } catch{ SUG={}; }
 
@@ -74,7 +82,6 @@ async function initEditor(){
   renderPicList();
   refreshPools(null, true);
 
-  // Atama barı
   qsa('.assignbar .target').forEach(t=>{
     t.addEventListener('click', async ()=>{
       if(!selectedPic){ alert('Bitte zuerst ein Piktogramm auswählen.'); return; }
@@ -88,13 +95,11 @@ async function initEditor(){
 
   qs('#autoExport')?.addEventListener('change',(e)=>{ autoExport = !!e.target.checked; });
 
-  // Kaydet Word
   qs('#saveDocx')?.addEventListener('click', ()=>exportDocx('manual'));
 
   enforceTwoPages();
 }
 
-// ---- Header render
 function renderHead(){
   HEAD = getHEAD();
   const headDiv=qs('#head');
@@ -105,9 +110,9 @@ function renderHead(){
     ${HEAD.title?.center?'text-align:center;':''}
     text-transform:uppercase; letter-spacing:.6px;
   `;
+  const logoHtml = HEAD.logoUrl ? `<img src="${HEAD.logoUrl}" alt="Logo" style="height:48px;object-fit:contain;margin-left:auto;border-radius:4px" />` : '';
   headDiv.innerHTML = `
     <div style="display:flex;gap:12px;align-items:center">
-      ${HEAD.logoUrl ? `${HEAD.logoUrl}` : ''}
       <div style="flex:1">
         <div style="font-size:20px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;text-align:center">${HEAD.title?.assetName || ''}</div>
         <div style="${subStyle}">${HEAD.title?.subtitleText || 'Betriebsanweisung'}</div>
@@ -115,11 +120,11 @@ function renderHead(){
           Typ: ${HEAD.type || '-'} • Unternehmen: ${HEAD.firm || '-'} • Abteilung: ${HEAD.dept || '-'} • Ersteller: ${HEAD.author || '-'} • Datum: ${HEAD.date || '-'}
         </div>
       </div>
+      ${logoHtml}
     </div>
   `;
 }
 
-// ---- Piktogram listesi (dinamik grup + arama)
 function allPicKeys(){
   const groups = Object.keys(PICTO || {});
   const out = [];
@@ -131,14 +136,12 @@ function findEntry(code){
   return null;
 }
 function wireFilters(){
-  // Grup checkleri
   qsa('.grp').forEach(chk=>{
     chk.addEventListener('change', ()=>{
       if(chk.checked) FILTER.groups.add(chk.value); else FILTER.groups.delete(chk.value);
       renderPicList();
     });
   });
-  // Arama
   qs('#picSearch')?.addEventListener('input',(e)=>{
     FILTER.term = (e.target.value || '').trim().toLowerCase();
     renderPicList();
@@ -166,7 +169,6 @@ function selectPic(el){
   selectedPic = { code: el.dataset.code, group: el.dataset.group };
 }
 
-// ---- Bölüm simgeleri
 function renderSectionIcons(sec){
   const wrap = qs('#icons-' + sec); if(!wrap) return; wrap.innerHTML='';
   iconsBySection[sec].forEach(code=>{
@@ -176,7 +178,7 @@ function renderSectionIcons(sec){
   });
 }
 
-// ---- Öneri havuzları
+// ----- Vorschläge
 function fillPool(divId, items){
   const div=qs('#' + divId); if(!div) return; div.innerHTML='';
   (items || []).forEach(t=>{
@@ -191,8 +193,6 @@ function fillPool(divId, items){
     div.appendChild(b);
   });
 }
-
-// Sunucu tarafı KI (varsa)
 async function aiSuggest(section, pics, head){
   try{
     const url = `/ai-suggest?section=${encodeURIComponent(section)}&type=${encodeURIComponent(head.type||'')}&asset=${encodeURIComponent(head.title?.assetName||'')}&pics=${encodeURIComponent(pics.join(','))}`;
@@ -200,81 +200,68 @@ async function aiSuggest(section, pics, head){
     const data = await r.json(); return Array.isArray(data)?data:[];
   }catch{ return []; }
 }
-
-// Yerel akıl yürütme (asset adı + simge kodları)
+// yerel Heuristik (Almanca)
 function localHeuristics(section, pics, head){
   const out = new Set();
   const name = (head?.title?.assetName || head?.asset || '').toLowerCase();
-
   const has = (code)=>pics.includes(code);
   const push = (arr)=>arr.forEach(s=>out.add(s));
 
-  // Örnek kurallar (Makine/Werkstatt)
   if(section==='hazard'){
     if(/schweiß|schweiss|weld/.test(name)) push([
       'Schweißrauch, UV/IR-Strahlung und Funkenflug können Augen/Haut schädigen; Abschirmungen und Absaugung verwenden.',
       'Brand-/Explosionsgefahr durch Funken und heiße Schlacke; brennbare Stoffe entfernen, Löschmittel bereithalten.'
     ]);
-    if(/flex|trennschleif|grinder/.test(name)) push([
+    if(/trennschleif|flex|grinder/.test(name)) push([
       'Rotierende Scheibe: Rückschlag- und Bruchgefahr; nur freigegebene Scheiben, zulässige Drehzahl beachten.',
-      'Hoher Lärm- und Staubanfall; geeigneten Gehör‑ und Atemschutz verwenden.'
+      'Lärm und Staubexposition; geeigneten Gehör‑ und Atemschutz verwenden.'
     ]);
+    if(has('W012')) push(['Elektrische Gefährdungen: Leitungen/Gehäuse prüfen, Beschädigungen sofort melden und Betrieb unterbinden.']);
   }
   if(section==='tech'){
-    if(has('W001')) push(['Gefahrenanalyse durchführen; Schutzhauben, Not‑Halt, Verriegelungen funktionsgeprüft betreiben.']);
-    if(/weld|schweiß|schweiss/.test(name)) push(['Absaugung an der Quelle betreiben; Schweißstromquelle spannungsfrei schalten (LOTO) vor Wartung.']);
+    push(['Schutzeinrichtungen (Hauben, Lichtschranken, Verriegelungen) funktionsgeprüft betreiben; Umgehungen sind verboten.']);
+    if(/weld|schweiß|schweiss/.test(name)) push(['Absaugung an der Quelle; vor Wartung Freischalten (LOTO); Nachlaufzeiten beachten.']);
     if(has('GHS02')) push(['Zündquellen fernhalten; Erdung/Leitfähigkeit beim Umfüllen sicherstellen; Lüftung/Absaugung betreiben.']);
   }
   if(section==='org'){
-    push(['Arbeiten nur nach Unterweisung und Freigabe; Zuständigkeiten und Sperrbereiche kennzeichnen.']);
-    if(/hubarbeitsbühne|leiter/.test(name)) push(['PSAgA-Einsatz planen; Rettungskonzept und Wettergrenzen festlegen.']);
+    push(['Arbeiten nur nach Unterweisung/Freigabe; Zuständigkeiten, Sperrbereiche und Kennzeichnungen (ISO 7010) festlegen.']);
+    push(['Prüf- und Wartungsintervalle dokumentieren; Mängel zeitnah beseitigen.']);
   }
   if(section==='ppe'){
-    if(/weld|schweiß|schweiss/.test(name)) push(['Schweißschirm/Brille mit passendem Schutzstufenfilter, hitzebeständige Handschuhe und Schutzkleidung tragen.']);
-    if(has('W021')) push(['Elektrische Gefährdung: isolierende Handschuhe/Schuhe, enganliegende Kleidung; Schmuck ablegen.']);
-    push(['Sicherheitsschuhe mit Zehenschutz; bei Lärmexposition Gehörschutz; bei Span-/Staubflug Augenschutz.']);
+    push(['Sicherheitsschuhe mit Zehenschutz; bei Span-/Staubflug Augenschutz; bei Lärm Gehörschutz.']);
+    if(/weld|schweiß|schweiss/.test(name)) push(['Schweißschirm mit passender Schutzstufe, hitzebeständige Handschuhe und flammhemmende Kleidung.']);
   }
   if(section==='em'){
-    push(['Gefahr → Not‑Halt betätigen, Bereich sichern und Personen warnen; nur ohne Selbstgefährdung eingreifen.']);
-    if(has('GHS02')) push(['Brandfall: passende Löschmittel (Schaum/CO₂) einsetzen; Rückzündung beachten.']);
+    push(['Gefahr → Not‑Halt betätigen, Bereich sichern, Personen warnen; nur ohne Selbstgefährdung eingreifen.']);
+    if(has('GHS02')) push(['Brandfall: geeignete Löschmittel (Schaum/CO₂) einsetzen; Rückzündung beachten; Bereich räumen.']);
   }
   if(section==='eh'){
-    push(['Verletzungen versorgen, Augenkontakt min. 15 min spülen; Notruf veranlassen und Maßnahmen dokumentieren.']);
+    push(['Verletzungen versorgen; Augenkontakt mindestens 15 Minuten spülen; Notruf; Maßnahmen dokumentieren.']);
   }
   if(section==='dis'){
-    push(['Abfälle getrennt sammeln; öl-/chemiehaltige Stoffe gekennzeichneten Behältern zuführen; Nachweise führen.']);
+    push(['Abfälle sortenrein erfassen; öl-/chemiehaltige Abfälle gekennzeichneten Behältern zuführen; Nachweise führen.']);
   }
   return Array.from(out);
 }
 
 async function refreshPools(sectionChanged, withAI=false){
   const type = HEAD.type || 'Maschine';
-
   async function build(sec){
     const pics = iconsBySection[sec];
     const set = new Set();
-
-    // Yerel eşleştirme: suggestions.json
     pics.forEach(p => (SUG?.[type]?.[sec]?.[p] || []).forEach(x => set.add(x)));
-
-    // Makine adı ve seçili piktolara göre heuristik eklemeler
     localHeuristics(sec, pics, HEAD).forEach(x=>set.add(x));
-
-    // Sunucu KI (varsa)
     if(withAI){
       const ai = await aiSuggest(sec, pics, HEAD);
       ai.forEach(x=>set.add(x));
     }
-
-    // En fazla 12 öneri göster
     return Array.from(set).slice(0,12);
   }
-
   const todo = sectionChanged ? [sectionChanged] : sections;
   for(const s of todo){ fillPool(s+'Pool', await build(s)); }
 }
 
-// ---- İki sayfa kontrolü
+// ---------- Layout/Export ----------
 const root=()=>qs('#baRoot'), fontHint=()=>qs('#fontHint');
 function enforceTwoPages(){
   const a4px=1123, margin=40;
@@ -285,7 +272,6 @@ function enforceTwoPages(){
   else { fontHint().style.display='none'; }
 }
 
-// ---- Word export: docx (başlık şeritleri + simgeler + madde işaretleri)
 async function imageToPngBytes(url){
   const res = await fetch(url, {cache:'no-store'}); if (!res.ok) throw new Error('img fetch failed');
   const ct  = res.headers.get('content-type') || '';
@@ -308,12 +294,13 @@ async function imageToPngBytes(url){
 }
 function fromList(id){ return qsa('#'+id+' div').map(x=>x.textContent.replace(/^[•\\u2022]\\s*/,'').trim()); }
 async function iconBytes(code){ const entry = findEntry(code); return await imageToPngBytes(entry.img); }
+async function logoBytes(){ if(!HEAD.logoUrl) return null; try{ return await imageToPngBytes(HEAD.logoUrl); }catch{ return null; } }
 
 async function exportDocx(mode){
-  const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, ShadingType, ImageRun, HeadingLevel } =
+  const { Document, Packer, Paragraph, TextRun, AlignmentType, Table, TableRow, TableCell, WidthType, ShadingType, ImageRun, Footer, PageNumber } =
     await import('https://cdn.jsdelivr.net/npm/docx@9.1.1/+esm');
 
-  const barColor = (HEAD.type==='Gefahrstoff'?'E53935':(HEAD.type==='Biostoff'?'2E7D32':(HEAD.type==='PSA'?'6A1B9A':'005AA3')));
+  const barColor = (HEAD.type==='Gefahrstoff'?'E53935':(HEAD.type==='Biostoff'?'2E7D32':(HEAD.type==='PSA'?'2E7D32':'005AA3')));
   const band = (t)=> new Table({
     width:{ size:100, type:WidthType.PERCENTAGE },
     rows:[ new TableRow({ children:[ new TableCell({
@@ -322,31 +309,28 @@ async function exportDocx(mode){
     }) ] }) ]
   });
 
+  // Kopfbereich mit Logo rechts
+  const logo = await logoBytes();
+  const headerRow = new TableRow({ children:[
+    new TableCell({ children:[
+      new Paragraph({ children:[ new TextRun({ text:(HEAD.title?.assetName||'').toUpperCase(), bold:true, size:34 }) ], alignment:AlignmentType.LEFT }),
+      new Paragraph({ children:[ new TextRun({ text:(HEAD.title?.subtitleText||'Betriebsanweisung').toUpperCase(), bold:!!HEAD.title?.bold, size:(HEAD.title?.fontSize?HEAD.title.fontSize*2:32), font:(HEAD.title?.fontFamily||'Arial') }) ], alignment:(HEAD.title?.center?AlignmentType.CENTER:AlignmentType.LEFT) })
+    ]}),
+    new TableCell({ children:[
+      ...(logo ? [ new Paragraph({ children:[ new ImageRun({ data:logo, transformation:{ width:120, height:48 } }) ], alignment:AlignmentType.RIGHT }) ] : [ new Paragraph('') ])
+    ]})
+  ]});
+
   const headerTable = new Table({
     width:{ size:100, type:WidthType.PERCENTAGE },
-    rows:[
+    rows:[ headerRow,
       new TableRow({ children:[
         new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Unternehmen: ${HEAD.firm||'-'}` }) ] }) ] }),
         new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Abteilung: ${HEAD.dept||'-'}` }) ] }) ] }),
         new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Datum: ${HEAD.date||'-'}` }) ] }) ] })
-      ]}),
-      new TableRow({ children:[
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Verantwortlich: ${qs('#metaVer')?.value||'-'}` }) ] }) ] }),
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Bereich/Platz: ${qs('#metaArb')?.value||'-'}` }) ] }) ] }),
-        new TableCell({ children:[ new Paragraph({ children:[ new TextRun({ text:`Nr.: ${qs('#metaNr')?.value||'-'}` }) ] }) ] })
       ]})
     ]
   });
-
-  const title = [];
-  if(HEAD.title?.assetName){
-    title.push(new Paragraph({ alignment:AlignmentType.CENTER, heading:HeadingLevel.HEADING_1,
-      children:[ new TextRun({ text:HEAD.title.assetName.toUpperCase(), bold:true, size:34 }) ] }));
-  }
-  title.push(new Paragraph({
-    alignment:(HEAD.title?.center?AlignmentType.CENTER:AlignmentType.LEFT),
-    children:[ new TextRun({ text:(HEAD.title?.subtitleText||'Betriebsanweisung').toUpperCase(), bold:!!HEAD.title?.bold, size:(HEAD.title?.fontSize?HEAD.title.fontSize*2:32), font:(HEAD.title?.fontFamily||'Arial') }) ]
-  }));
 
   async function sectionBlock(titleText, secKey, listId){
     const icons = iconsBySection[secKey];
@@ -369,11 +353,36 @@ async function exportDocx(mode){
     ];
   }
 
+  // Unterschrift/Kästchen
+  const approvalTable = new Table({
+    width:{ size:100, type:WidthType.PERCENTAGE },
+    rows:[
+      new TableRow({ children:[
+        new TableCell({ children:[ new Paragraph({ text:"Ersteller: "+(HEAD.author||'-') }) ] }),
+        new TableCell({ children:[ new Paragraph({ text:"Verantwortlich: "+(qs('#metaVer')?.value||'-') }) ] }),
+        new TableCell({ children:[ new Paragraph({ text:"Datum: "+(HEAD.date||'-') }) ] })
+      ]}),
+      new TableRow({ children:[
+        new TableCell({ children:[ new Paragraph("Unterschrift / Kästchen: _____________________") ] }),
+        new TableCell({ children:[ new Paragraph("Unterschrift / Kästchen: _____________________") ] }),
+        new TableCell({ children:[ new Paragraph("Unterschrift / Kästchen: _____________________") ] })
+      ]})
+    ]
+  });
+
+  const footer = new Footer({
+    children: [
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [ new TextRun("Seite "), PageNumber.CURRENT, new TextRun(" / "), PageNumber.TOTAL ]
+      })
+    ]
+  });
+
   const doc = new Document({
     sections:[{
-      properties:{ page:{ margin:{ top:720, right:720, bottom:720, left:720 } } },
+      properties:{ page:{ margin:{ top:720, right:720, bottom:720, left:720 } }, footer },
       children:[
-        ...title,
         headerTable,
         band('Anwendungsbereich'),
         new Paragraph({ text:(qs('#scope')?.value||'').trim() || '-' }),
@@ -383,7 +392,8 @@ async function exportDocx(mode){
         ...(await sectionBlock('Persönliche Schutzausrüstung (P)','ppe','ppeList')),
         ...(await sectionBlock('Verhalten im Gefahrfall','em','emList')),
         ...(await sectionBlock('Erste Hilfe','eh','ehList')),
-        ...(await sectionBlock('Sachgerechte Entsorgung / Inaktivierung','dis','disList'))
+        ...(await sectionBlock('Sachgerechte Entsorgung / Inaktivierung','dis','disList')),
+        approvalTable
       ]
     }]
   });
