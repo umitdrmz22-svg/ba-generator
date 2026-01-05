@@ -7,7 +7,7 @@
   <title>Betriebsanweisung – Vorlage</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css?v=20260105">
+  <link rel="stylesheet" href="/assets/style.css?v=20260106">
 </head>
 <body class="page" id="baBody">
   <header class="hero">
@@ -17,34 +17,38 @@
   <main class="wrapper layout" id="baRoot">
     <!-- Seitenleiste -->
     <aside class="side box">
-      <div id="head"></div>
+      <div class="side-scroll">
+        <div id="head"></div>
 
-      <div class="ba-band">Piktogramm‑Liste</div>
-      <div class="filterbar">
-        <div class="chips">
-          <label><input type="checkbox" class="grp" value="iso" checked> ISO</label>
-          <label><input type="checkbox" class="grp" value="ghs" checked> GHS</label>
-          <label><input type="checkbox" class="grp" value="adr" checked> ADR</label>
+        <!-- ZUORDNEN – ÜSTE ALINDI -->
+        <div class="ba-band">ZUORDNEN</div>
+        <div class="assignbar">
+          <button class="target" data-target="hazard">Gefährdungen</button>
+          <button class="target" data-target="tech">Technisch (S)</button>
+          <button class="target" data-target="org">Organisatorisch (O)</button>
+          <button class="target" data-target="ppe">PSA (P)</button>
+          <button class="target" data-target="em">Gefahrfall</button>
+          <button class="target" data-target="eh">Erste Hilfe</button>
+          <button class="target" data-target="dis">Entsorgung</button>
+          <div class="auto">
+            <button id="exportDocx" class="btn-primary">Als Word (.docx) speichern</button>
+            <button id="exportPdf" class="btn-primary" disabled>PDF (coming soon)</button>
+          </div>
         </div>
-        <input type="search" id="picSearch" placeholder="Suche nach Code oder Bezeichnung …">
-      </div>
 
-      <div class="piclist" id="picList"></div>
-      <div id="fontHint">Hinweis: Verwende eine moderne Schrift (Inter), um die Darstellung zu verbessern.</div>
-
-      <div class="ba-band">Zuordnen</div>
-      <div class="assignbar">
-        <button class="target" data-target="hazard">Gefährdungen</button>
-        <button class="target" data-target="tech">Technisch (S)</button>
-        <button class="target" data-target="org">Organisatorisch (O)</button>
-        <button class="target" data-target="ppe">PSA (P)</button>
-        <button class="target" data-target="em">Gefahrfall</button>
-        <button class="target" data-target="eh">Erste Hilfe</button>
-        <button class="target" data-target="dis">Entsorgung</button>
-        <div class="auto">
-          <button id="exportDocx" class="btn-primary">Als Word (.docx) speichern</button>
-          <button id="exportPdf" class="btn-primary" disabled>PDF (coming soon)</button>
+        <!-- Piktogramm-Liste -->
+        <div class="ba-band">PIKTOGRAMM‑LISTE</div>
+        <div class="filterbar">
+          <div class="chips">
+            <label><input type="checkbox" class="grp" value="iso" checked> ISO</label>
+            <label><input type="checkbox" class="grp" value="ghs" checked> GHS</label>
+            <label><input type="checkbox" class="grp" value="adr" checked> ADR</label>
+          </div>
+          <input type="search" id="picSearch" placeholder="Suche nach Code oder Bezeichnung …">
         </div>
+        <div class="piclist compact" id="picList"></div>
+
+        <p id="fontHint">Hinweis: Verwende eine moderne Schrift (Inter), um die Darstellung zu verbessern.</p>
       </div>
     </aside>
 
@@ -121,26 +125,3 @@
         <input id="disFree" type="text" placeholder="Freitext hinzufügen …">
         <button class="btn-primary" onclick="addFreeText('disFree','disList')">➕ Hinzufügen</button>
       </div>
-      <div id="disSug" class="sug"></div>
-
-      <p class="small">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße wird automatisch reduziert (min. 10 pt).</p>
-    </section>
-  </main>
-
-  <!-- Piktogramm‑Explorer (Modal) -->
-  <div class="modal" id="picModal" hidden>
-    <div class="modal-inner">
-      <div class="modal-head">
-        <strong>Piktogramm‑Explorer</strong>
-        <button id="modalClose" class="btn-primary">Schließen</button>
-      </div>
-      <div class="modal-body">
-        <div id="modalPicList" class="picgrid"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- App -->
-  <script src="/assets/app.js?v=20260105"></script>
-</body>
-</html>
