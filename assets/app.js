@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!-- saved from url=(0070)https://github.com/umitdrmz22-svg/ba-generator/blob/main/assets/app.js -->
 <html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark" data-a11y-animated-images="system" data-a11y-link-underlines="true" data-js-focus-visible="" data-turbo-loaded=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.turbo-progress-bar {
   position: fixed;
