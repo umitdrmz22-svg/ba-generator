@@ -1,56 +1,70 @@
 
-:root { --theme-color:#005AA3; }
+:root { --theme-color:#005AA3; --bg:#f5f7fa; --ink:#111; --line:#d0d7de; --muted:#666; }
 .t-Gefahrstoff { --theme-color:#E53935; }
 .t-Biostoff    { --theme-color:#2E7D32; }
 .t-Maschine    { --theme-color:#005AA3; }
 .t-PSA         { --theme-color:#6A1B9A; }
 
-body, .page { font-family: Arial, Helvetica, sans-serif; margin:0; background:#f5f7fa; color:#111; }
-.wrapper { max-width: 1100px; margin: 0 auto; padding: 12px; }
-.box { background:#fff; border:1px solid #d0d7de; border-radius:12px; padding:12px; margin:12px 0; }
+body, .page { font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:var(--ink); }
+.wrapper { max-width: 1120px; margin: 0 auto; padding: 12px; }
+.box { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; margin:12px 0; }
 .row { display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
 .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+.grid3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
 
 .hero {
   background: linear-gradient(90deg, var(--theme-color), #111);
   color:#fff; padding:18px 20px; margin:0;
-  text-transform:uppercase; border-radius:0; box-shadow:0 8px 24px rgba(0,0,0,.12);
+  text-transform:uppercase; box-shadow:0 8px 24px rgba(0,0,0,.12);
 }
 .hero h1 { margin:0; font-size:24px; letter-spacing:.8px; text-align:center; }
 
-.muted { font-size:12px; color:#666; }
+.muted { font-size:12px; color:var(--muted); }
 .logo-preview { min-height:48px; border:1px dashed #cbd5e1; border-radius:8px; margin-top:8px; }
 
 .btn-primary {
   background: var(--theme-color);
-  color:#fff; border:0; border-radius:8px; padding:10px 16px; cursor:pointer; font-weight:700;
+  color:#fff; border:0; border-radius:10px; padding:10px 16px; cursor:pointer; font-weight:700;
 }
 .btn-primary:hover { filter:brightness(1.05); }
 
-/* Editor sayfasında da kullanılan sınıflar */
 .ba-band {
   background: var(--theme-color);
   color:#fff; border-radius:8px; padding:12px; margin:14px 0;
   font-weight:900; letter-spacing:.5px; text-transform:uppercase; text-align:center;
 }
+
 .layout { display:grid; grid-template-columns: 360px 1fr; gap:16px; align-items:start; }
 .side { position:sticky; top:10px; }
-.piclist { display:grid; grid-template-columns: 1fr; gap:10px; max-height:64vh; overflow:auto; }
-.picrow { display:flex; gap:10px; align-items:center; border:1px solid #d0d7de; border-radius:10px; background:#fff; padding:8px; }
-.picrow img { width:56px; height:56px; object-fit:contain; border-radius:6px; }
-.picrow .code { font-size:12px; font-weight:700; color:#333; }
+
+.filterbar { display:flex; flex-direction:column; gap:8px; margin:10px 0; }
+.filterbar input[type="search"] {
+  width:100%; padding:8px 10px; border-radius:10px; border:1px solid var(--line); outline:none;
+}
+.filterbar .chips { display:flex; gap:8px; flex-wrap:wrap; font-size:12px; color:#333; }
+
+.piclist { display:grid; grid-template-columns: 1fr; gap:10px; max-height:62vh; overflow:auto; }
+.picrow { display:flex; gap:10px; align-items:center; border:1px solid #e2e8f0; border-radius:10px; background:#fff; padding:8px; cursor:pointer; }
+.picrow.selected { outline:2px solid var(--theme-color); }
+.picrow img { width:56px; height:56px; object-fit:contain; border-radius:6px; background:#fff; }
+.picrow .code { font-size:12px; font-weight:700; color:#333; flex:1; }
+
 .assignbar { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
 .assignbar .target { border:1px dashed #cbd5e1; border-radius:8px; padding:8px 12px; cursor:pointer; background:#f7fafc; font-weight:700; }
 .assignbar .target:hover { background:#eef2ff; }
 .assignbar .auto { margin-left:auto; display:flex; gap:8px; align-items:center; }
+
 .section-icons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; justify-content:center; }
 .section-icons img { width:48px; height:48px; object-fit:contain; }
+
 .list { border:1px solid #ddd; border-radius:6px; padding:10px; background:#f9fafb; min-height:80px; }
 .small { font-size:12px; color:#555; }
 #fontHint { color:#b40000; font-weight:bold; display:none; margin-top:8px; }
 
 @media print {
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4; margin: 10mm; }
   .hero, .ba-band { break-inside: avoid; }
+  .side { position:static; }
 }
 ``
