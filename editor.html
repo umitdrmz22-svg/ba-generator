@@ -10,21 +10,33 @@
 </head>
 <body class="page" id="baBody">
   <header class="hero">
-    <h1>BETRIEBSANWEISUNG – VORLAGE</h1>
+    <div class="brand">
+      <h1>BETRIEBSANWEISUNG – VORLAGE</h1>
+      <img id="headerLogo" class="logo" alt="Logo" />
+    </div>
   </header>
 
   <div class="wrapper" id="baRoot" style="font-size:14px">
-    <!-- Kopf -->
     <section class="card" id="head"></section>
 
-    <section class="paper">
-      <aside class="side">
-        <div class="band">PIKTOGRAMM‑LISTE</div>
-        <button id="openModal" class="btn-primary">Piktogramme auswählen</button>
-        <div class="muted">Açılır listeden piktogram ve anlamını görebilir, seçip sağdaki bölüme ekleyebilirsiniz.</div>
+    <section class="grid layout">
+      <aside class="side card">
+        <div class="ba-band">PIKTOGRAMM‑LISTE</div>
+
+        <div class="toolrow">
+          <button id="openExplorer" class="btn-secondary">Piktogramm‑Explorer öffnen</button>
+          <div class="chipset">
+            <label><input type="checkbox" class="grp" value="iso" checked> ISO</label>
+            <label><input type="checkbox" class="grp" value="ghs" checked> GHS</label>
+            <label><input type="checkbox" class="grp" value="adr" checked> ADR</label>
+          </div>
+        </div>
+
+        <input id="picSearch" type="search" placeholder="Code/Bezeichnung suchen…" />
+        <div id="picList" class="piclist"></div>
 
         <div class="assignbar">
-          <span class="small">Zuordnen an:</span>
+          <span class="small">Ausgewähltes Piktogramm zuordnen:</span>
           <div class="target" data-target="hazard">Gefährdungen</div>
           <div class="target" data-target="tech">Technisch (S)</div>
           <div class="target" data-target="org">Organisatorisch (O)</div>
@@ -32,112 +44,152 @@
           <div class="target" data-target="em">Gefahrfall</div>
           <div class="target" data-target="eh">Erste Hilfe</div>
           <div class="target" data-target="dis">Entsorgung</div>
+          <div class="auto"><label><input type="checkbox" id="autoExport" /> Automatisch in Word übernehmen</label></div>
         </div>
       </aside>
 
-      <main>
-        <div class="card">
+      <main class="content">
+        <!-- Meta -->
+        <section class="card">
           <div class="grid3">
-            <div><label>Nr.</label><input id="metaNr" type="text" /></div>
-            <div><label>Datum</label><input id="metaDate" type="date" /></div>
-            <div><label>Firma</label><input id="metaFirma" type="text" /></div>
-            <div><label>Tätigkeit</label><input id="metaTaet" type="text" /></div>
-            <div><label>Arbeitsbereich/-platz</label><input id="metaArb" type="text" /></div>
-            <div><label>Verantwortlich</label><input id="metaVer" type="text" /></div>
+            <div><label>Nr. (optional)</label><input id="metaNr" type="text" /></div>
+            <div><label>Datum (optional)</label><input id="metaDate" type="date" /></div>
+            <div><label>Firma (optional)</label><input id="metaFirma" type="text" /></div>
+            <div><label>Tätigkeit (optional)</label><input id="metaTaet" type="text" /></div>
+            <div><label>Arbeitsbereich/-platz (optional)</label><input id="metaArb" type="text" /></div>
+            <div><label>Verantwortlich (optional)</label><input id="metaVer" type="text" /></div>
           </div>
-        </div>
+        </section>
 
-        <!-- Bölümler -->
-        <div class="band">ANWENDUNGSBEREICH</div>
-        <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
+        <!-- Bereiche -->
+        <section class="card">
+          <div class="ba-band">ANWENDUNGSBEREICH</div>
+          <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
+        </section>
 
-        <div class="band">GEFÄHRDUNGEN FÜR MENSCH UND UMWELT</div>
-        <div id="icons-hazard" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="hazardPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="hazardList" class="list"></div>
-        <div class="ft-row"><input id="hazardFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('hazardFT','hazardList')">➕ Hinzufügen</button></div>
+        <!-- Hazard -->
+        <section class="card">
+          <div class="ba-band">GEFÄHRDUNGEN FÜR MENSCH UND UMWELT</div>
+          <div id="icons-hazard" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge (mind. 5 Sätze, einzeln wählbar):</h4>
+          <div id="hazardPool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="hazardList" class="list"></div>
+          <div class="ft-row"><input id="hazardFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('hazardFT','hazardList')">➕ Hinzufügen</button></div>
+        </section>
 
-        <div class="band">SCHUTZMASSNAHMEN – TECHNISCH (S)</div>
-        <div id="icons-tech" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="techPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="techList" class="list"></div>
-        <div class="ft-row"><input id="techFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('techFT','techList')">➕ Hinzufügen</button></div>
+        <!-- Tech -->
+        <section class="card">
+          <div class="ba-band">SCHUTZMASSNAHMEN UND VERHALTENSREGELN – TECHNISCH (S)</div>
+          <div id="icons-tech" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge:</h4>
+          <div id="techPool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="techList" class="list"></div>
+          <div class="ft-row"><input id="techFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('techFT','techList')">➕ Hinzufügen</button></div>
+        </section>
 
-        <div class="band">SCHUTZMASSNAHMEN – ORGANISATORISCH (O)</div>
-        <div id="icons-org" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="orgPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="orgList" class="list"></div>
-        <div class="ft-row"><input id="orgFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('orgFT','orgList')">➕ Hinzufügen</button></div>
+        <!-- Org -->
+        <section class="card">
+          <div class="ba-band">SCHUTZMASSNAHMEN UND VERHALTENSREGELN – ORGANISATORISCH (O)</div>
+          <div id="icons-org" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge:</h4>
+          <div id="orgPool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="orgList" class="list"></div>
+          <div class="ft-row"><input id="orgFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('orgFT','orgList')">➕ Hinzufügen</button></div>
+        </section>
 
-        <div class="band">PERSÖNLICHE SCHUTZAUSRÜSTUNG (P)</div>
-        <div id="icons-ppe" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="ppePool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="ppeList" class="list"></div>
-        <div class="ft-row"><input id="ppeFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('ppeFT','ppeList')">➕ Hinzufügen</button></div>
+        <!-- PSA -->
+        <section class="card">
+          <div class="ba-band">PERSÖNLICHE SCHUTZAUSRÜSTUNG (P)</div>
+          <div id="icons-ppe" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge:</h4>
+          <div id="ppePool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="ppeList" class="list"></div>
+          <div class="ft-row"><input id="ppeFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('ppeFT','ppeList')">➕ Hinzufügen</button></div>
+        </section>
 
-        <div class="band">VERHALTEN IM GEFAHRFALL</div>
-        <div id="icons-em" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="emPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="emList" class="list"></div>
-        <div class="ft-row"><input id="emFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('emFT','emList')">➕ Hinzufügen</button></div>
+        <!-- Gefahrfall -->
+        <section class="card">
+          <div class="ba-band">VERHALTEN IM GEFAHRFALL</div>
+          <div id="icons-em" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge:</h4>
+          <div id="emPool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="emList" class="list"></div>
+          <div class="ft-row"><input id="emFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('emFT','emList')">➕ Hinzufügen</button></div>
+        </section>
 
-        <div class="band">ERSTE HILFE</div>
-        <div id="icons-eh" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="ehPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="ehList" class="list"></div>
-        <div class="ft-row"><input id="ehFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('ehFT','ehList')">➕ Hinzufügen</button></div>
+        <!-- Erste Hilfe -->
+        <section class="card">
+          <div class="ba-band">ERSTE HILFE</div>
+          <div id="icons-eh" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge:</h4>
+          <div id="ehPool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="ehList" class="list"></div>
+          <div class="ft-row"><input id="ehFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('ehFT','ehList')">➕ Hinzufügen</button></div>
+        </section>
 
-        <div class="band">ENTSORGUNG / INAKTIVIERUNG</div>
-        <div id="icons-dis" class="icons"></div>
-        <div class="small">Vorschläge:</div>
-        <div id="disPool" class="list"></div>
-        <div class="small">Ihre Auswahl:</div>
-        <div id="disList" class="list"></div>
-        <div class="ft-row"><input id="disFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('disFT','disList')">➕ Hinzufügen</button></div>
+        <!-- Entsorgung -->
+        <section class="card">
+          <div class="ba-band">SACHGERECHTE ENTSORGUNG / INAKTIVIERUNG</div>
+          <div id="icons-dis" class="section-icons"></div>
+          <h4 class="section-sub">Vorschläge:</h4>
+          <div id="disPool" class="list"></div>
+          <h4 class="section-sub">Ihre Auswahl:</h4>
+          <div id="disList" class="list"></div>
+          <div class="ft-row"><input id="disFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('disFT','disList')">➕ Hinzufügen</button></div>
+        </section>
 
         <div id="fontHint" class="small" style="display:none;">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße automatisch reduziert (min. 10 pt).</div>
-        <div class="actions"><button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button><button class="btn-primary" onclick="window.print()">PDF</button></div>
+        <div class="actions">
+          <button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button>
+          <button class="btn-secondary" onclick="window.print()">PDF</button>
+        </div>
       </main>
     </section>
   </div>
 
-  <!-- Modal (açılır pencere) -->
-  <div id="picModal" class="modal" aria-hidden="true">
-    <div class="modal-inner">
-      <div class="modal-head">
-        <h3>Piktogramme auswählen</h3>
-        <button id="closeModal" class="icon-btn">✕</button>
+  <!-- Modal Explorer -->
+  <div id="explorer" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Piktogramm‑Explorer</h3>
+        <button id="closeExplorer" class="btn-icon">✕</button>
       </div>
       <div class="modal-body">
-        <div class="filterbar">
-          <input id="modalSearch" type="search" placeholder="Code oder Bezeichnung …" />
-          <div class="chips">
-            <label><input type="checkbox" class="grp2" value="iso" checked> ISO</label>
-            <label><input type="checkbox" class="grp2" value="ghs" checked> GHS</label>
-            <label><input type="checkbox" class="grp2" value="adr" checked> ADR</label>
+        <div class="grid2">
+          <div>
+            <input id="exploreSearch" type="search" placeholder="ISO/GHS/ADR suchen…" />
+            <div class="chipset">
+              <label><input type="checkbox" class="exp-grp" value="iso" checked> ISO</label>
+              <label><input type="checkbox" class="exp-grp" value="ghs" checked> GHS</label>
+              <label><input type="checkbox" class="exp-grp" value="adr" checked> ADR</label>
+            </div>
+            <div id="exploreList" class="piclist"></div>
+          </div>
+          <div id="exploreDetails" class="details-pane">
+            <h4>Details</h4>
+            <div id="detailImg"></div>
+            <div id="detailText" class="muted"></div>
+            <div class="assignbar">
+              <div class="target" data-target="hazard">Gefährdungen</div>
+              <div class="target" data-target="tech">Technisch (S)</div>
+              <div class="target" data-target="org">Organisatorisch (O)</div>
+              <div class="target" data-target="ppe">PSA (P)</div>
+              <div class="target" data-target="em">Gefahrfall</div>
+              <div class="target" data-target="eh">Erste Hilfe</div>
+              <div class="target" data-target="dis">Entsorgung</div>
+            </div>
           </div>
         </div>
-        <div id="modalList" class="gridModal"></div>
-      </div>
-      <div class="modal-foot">
-        <div class="muted">Piktogramm kartına tıklayın → sol panelden hedef bölümü seçin.</div>
       </div>
     </div>
   </div>
 
   /assets/app.js?v=20260105</script>
-  <script>try{const H=JSON.parse(localStorage.getItem('BA_HEAD')||'{}');document.getElementById('baBody')?.classList.add('theme-'+(H?.type||'Maschine'));}catch{}</script>
 </body>
 </html>
