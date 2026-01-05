@@ -1,587 +1,314 @@
 
 {
-  "Maschine": {
-    "hazard": {
-      "W001": [
-        "Vor Arbeitsbeginn Sichtprüfung durchführen; fehlende/defekte Schutzeinrichtungen melden und Betrieb unterbinden.",
-        "Gefährliche Bewegungen, Quetsch- und Schnittstellen kennzeichnen; Eingriffsbereiche absperren.",
-        "Rotierende Teile und Einzugsstellen beachten; Eingriffe nur bei Stillstand und Freigabe.",
-        "Lärm- und Staubexposition bewerten; Gefährdungen in der Gefährdungsbeurteilung dokumentieren.",
-        "Zündquellen und heiße Oberflächen klar kennzeichnen; Brandlasten minimieren."
-      ],
-      "W012": [
-        "Elektrische Gefährdungen: Leitungen/Gehäuse prüfen, Beschädigungen sofort melden.",
-        "Arbeiten an elektrischen Anlagen nur durch Elektrofachkräfte oder unter deren Leitung.",
-        "Vor Eingriffen Spannungsfreiheit feststellen; gegen Wiedereinschalten sichern.",
-        "Fehlerstromschutz (FI) und Not‑Halt regelmäßig prüfen.",
-        "Kabel-/Steckverbindungen trocken/sauber halten; provisorische Reparaturen untersagen."
-      ],
-      "GHS02": [
-        "Brand-/Explosionsgefahr: Zündquellen fernhalten; Lüftung/Absaugung betreiben.",
-        "Beim Umfüllen Erdung/Leitfähigkeit sicherstellen; elektrostatische Aufladung vermeiden.",
-        "Zündtemperaturen und ATEX‑Zonen beachten; nur zugelassene Geräte einsetzen.",
-        "Dämpfe nicht einatmen; Leckagen sofort beseitigen; Bereich lüften.",
-        "Geeignete Löschmittel bereithalten (Schaum/CO₂); Rückzündung berücksichtigen."
-      ]
-    },
-    "tech": {
-      "W001": [
-        "Schutzeinrichtungen (Hauben, Lichtschranken, Verriegelungen) funktionsgeprüft betreiben; Umgehungen sind verboten.",
-        "Lockout/Tagout (LOTO) anwenden; gespeicherte Energien abbauen; Nachlaufzeiten beachten.",
-        "Risikominderung gemäß Maschinenrichtlinie (EN ISO 12100) umsetzen.",
-        "Sicherheitsgestützte Steuerungen regelmäßig prüfen (z. B. Performance Level).",
-        "Not‑Halt, Zweihandbedienung, Schutzabstände und Fluchtwege sicherstellen."
-      ],
-      "GHS02": [
-        "Explosionsschutz: leitfähige Verbindungen, Potenzialausgleich, Funkenarme Werkzeuge.",
-        "Lüftung/Absaugung an der Quelle; Konzentrationen unter Grenzwerten halten.",
-        "Zündquellenvermeidung: heiße Oberflächen, Funken, offene Flammen ausschließen.",
-        "Behälter dicht schließen; Übergabepunkte mit Tropfwanne/Bindemittel sichern.",
-        "Gaswarn-/Detektionssysteme (falls vorhanden) regelmäßig warten."
-      ]
-    },
-    "org": {
-      "W001": [
-        "Arbeiten nur nach Unterweisung/Freigabe; Zuständigkeiten und Sperrbereiche kennzeichnen.",
-        "Warn‑ und Hinweiszeichen nach ISO 7010 anbringen; Sichtbarkeit sicherstellen.",
-        "Wartungs-/Prüfintervalle dokumentieren; Mängel zeitnah beseitigen.",
-        "Störungsmanagement mit Eskalationswegen; Meldepflicht für Beinahe‑Ereignisse.",
-        "Arbeitsmittelverzeichnis und Freigaben aktuell halten; Audits durchführen."
-      ]
-    },
-    "ppe": {
-      "M004": [
-        "Augenschutz mit Seitenschutz; bei Funkenflug Gesichtsschutz ergänzen.",
-        "Bei Schleif-/Spanflug klare Visiere verwenden; regelmäßige Kratzprüfung.",
-        "Kontaktlinsenverbot, wenn Gefahr durch umherfliegende Partikel besteht.",
-        "Reinigungs-/Desinfektionsregeln für Brillen einhalten.",
-        "Beschädigte PSA umgehend ersetzen; PSA‑Lagerung staubfrei."
-      ],
-      "M003": [
-        "Gehörschutz bei Lärmexposition über Auslösewert tragen; Wirksamkeit regelmäßig prüfen.",
-        "Gehörschutztypen (Stöpsel/Kapsel) tätigkeitsabhängig auswählen.",
-        "Lärmquellen technisch minimieren; organisatorische Pausen einplanlamak.",
-        "Audiometrie (falls erforderlich) koordinieren.",
-        "Ersatzgehörschutz am Arbeitsplatz verfügbar tutmak."
-      ],
-      "M009": [
-        "Schutzhandschuhe dem Medium/Arbeitsgang entsprechend auswählen.",
-        "Einzugsstellen beachten; enganliegende Kleidung wählen.",
-        "Durchstich-/Schnittschutz bei entsprechendem Risiko berücksichtigen.",
-        "Tragezeitbegrenzungen bei Chemikalien beachten.",
-        "Pflege-/Wechselintervalle dokumentieren."
-      ],
-      "M018": [
-        "PSAgA mit Anschlaghilfe; Anschlagpunkte prüfen/kennzeichnen.",
-        "Rettungskonzept vorhalten; Hängetrauma vermeiden.",
-        "Gurt/Seil auf Beschädigung kontrollieren; Ablegereife beachten.",
-        "Einweisanweisung dokumentieren; Übungsrettung durchführen.",
-        "Wetter-/Windgrenzen festlegen (Hubarbeitsbühne/Leiterarbeit)."
-      ]
-    },
-    "em": {
-      "W001": [
-        "Gefahr → Not‑Halt betätigen, Bereich sichern, Personen warnen.",
-        "Nur ohne Selbstgefährdung eingreifen; Evakuierung einleiten.",
-        "Vorgesetzte informieren; Störung dokumentieren.",
-        "Brandfall: passende Löschmittel einsetzen; Rückzündung beachten.",
-        "Bei Personenschäden: Ersthelfer alarmieren; Rettungswege freihalten."
-      ]
-    },
-    "eh": {
-      "E003": [
-        "Wunden blutungsstillend versorgen; kontaminierte Bereiche spülen.",
-        "Notruf absetzen; Verletzte beruhigen; Unterkühlung vermeiden.",
-        "Unfall dokumentieren; ggf. Betriebsarzt informieren.",
-        "Verbandsmaterial hygienisch anwenden; Nachversorgung sicherstellen.",
-        "Augenverletzungen/Einatım durumlarında prosedüre göre hareket etmek."
-      ],
-      "E011": [
-        "Augenkontakt: mindestens 15 Min spülen; Kontaklinsen entfernen.",
-        "SDS (Sicherheitsdatenblatt) beachten; Arzt konsultieren.",
-        "Weitere Kontamination vermeiden; Schutzbrille/Visier kontrollieren.",
-        "Spüllösung/Pipeline funktionsfähig halten; regelmäßige Wartung.",
-        "Ereignis dokumentieren; Ursachenanalyse durchführen."
-      ]
-    },
-    "dis": {
-      "W001": [
-        "Abfälle sortenrein erfassen; öl-/chemiehaltige Abfälle gekennzeichneten Behältern zuführen.",
-        "Auffangwannen/Abscheider regelmäßig prüfen; Leckagen beseitigen.",
-        "Reinigungs‑/Pflegepläne einhalten; Rutschgefahr beseitigen.",
-        "Entsorgungsnachweise führen; Dienstleister qualifiziert seçmek.",
-        "Gefahrstoffreste gemäß TRGS/CLP entsorgen."
-      ]
-    }
+  "Allgemein": {
+    "hazard": [
+      "Vor Arbeitsbeginn Sichtprüfung durchführen; fehlende oder defekte Schutzeinrichtungen melden und Betrieb bis zur Beseitigung unterbinden.",
+      "Rotierende Teile, Einzugs- und Quetschstellen kennzeichnen; Eingriffe nur im Stillstand und nach Freigabe.",
+      "Elektrische Gefährdungen beurteilen; beschädigte Leitungen/Gehäuse sofort melden und außer Betrieb nehmen.",
+      "Lärm- und Staubexposition bewerten; Maßnahmen nach Gefährdungsbeurteilung festlegen und dokumentieren.",
+      "Zündquellen und heiße Oberflächen kennzeichnen; Brandlasten im Arbeitsbereich minimieren."
+    ],
+    "tech": [
+      "Schutzeinrichtungen (Hauben, Lichtschranken, Verriegelungen) funktionsgeprüft betreiben; Umgehungen sind verboten.",
+      "Lockout/Tagout konsequent anwenden; gespeicherte Energien abbauen und Nachlaufzeiten beachten.",
+      "Absaugung/Lüftung an der Quelle betreiben; Emissionen unter Grenzwerten halten.",
+      "Elektrische Sicherheit: FI/RCD regelmäßig prüfen; Not-Halt im Zugriffsbereich vorhalten.",
+      "Prozessparameter, Wartungs- und Prüfintervalle systematisch dokumentieren."
+    ],
+    "org": [
+      "Arbeiten nur nach Unterweisung und schriftlicher Freigabe; Zuständigkeiten und Sperrbereiche klar kennzeichnen.",
+      "Warn- und Hinweiszeichen nach ISO 7010 anbringen und regelmäßig kontrollieren.",
+      "Störungsmanagement etablieren; Meldepflicht für Beinahe-Ereignisse und Abweichungen.",
+      "Arbeitsmittelverzeichnis und Freigaben aktuell halten; interne Audits termingerecht durchführen.",
+      "Kommunikation im Team sicherstellen; Schichtübergaben dokumentieren."
+    ],
+    "ppe": [
+      "Augenschutz mit Seitenschutz; bei Funkenflug Gesichtsschutz ergänzen.",
+      "Gehörschutz oberhalb des Auslösewerts tragen; Wirksamkeit regelmäßig prüfen.",
+      "Schutzhandschuhe entsprechend Medium und Tätigkeit auswählen; Tragezeitbegrenzungen beachten.",
+      "Sicherheitsschuhe mit rutschhemmender Sohle; enganliegende Kleidung ohne lose Teile.",
+      "Warnkleidung und ggf. Atemschutz entsprechend Gefährdungssituation bereitstellen."
+    ],
+    "em": [
+      "Gefahr erkannt → Not-Halt betätigen, Bereich sichern und Personen warnen.",
+      "Nur ohne Selbstgefährdung eingreifen; Evakuierung nach Plan einleiten.",
+      "Brandfall: passende Löschmittel einsetzen (Schaum/CO₂); Rückzündung beachten.",
+      "Störungsereignis dokumentieren und Führungskraft informieren; Ursachenanalyse starten.",
+      "Bei Personenschäden: Ersthelfer alarmieren; Rettungswege freihalten."
+    ],
+    "eh": [
+      "Blutungen stillen; Wunden hygienisch versorgen; kontaminierte Bereiche mit Wasser spülen.",
+      "Notruf absetzen und Verletzte beruhigen; Unterkühlung vermeiden.",
+      "Augenkontakt mit Gefahrstoffen: mindestens 15 Minuten spülen; Kontaklinsen entfernen.",
+      "Sicherheitsdatenblatt (SDS) beachten; ärztliche Abklärung veranlassen.",
+      "Ereignis dokumentieren; Nachsorge und ggf. Betriebsarzt einbinden."
+    ],
+    "dis": [
+      "Abfälle sortenrein erfassen; öl- und chemiehaltige Abfälle in gekennzeichnete Behälter geben.",
+      "Auffangwannen/Abscheider regelmäßig prüfen; Leckagen unverzüglich beseitigen.",
+      "Reinigungs- und Pflegepläne einhalten; Rutschgefahr durch Verschmutzungen beseitigen.",
+      "Entsorgungsnachweise führen; nur qualifizierte Dienstleister beauftragen.",
+      "Gefahrstoffreste gemäß TRGS/CLP entsorgen; Dokumentation aktualisieren."
+    ]
   },
 
-  "Prozesse": {
-    "Schweißen": {
-      "hazard": [
-        "UV/IR‑Strahlung, Funkenflug, Schweißrauch; Abschirmungen und Absaugung einsetzen.",
-        "Brandgefahr im Umfeld; brennbare Materialien entfernen; Löschmittel bereitstellen.",
-        "Lärm/Hitze; Pausen und Hydration einplanlamak.",
-        "Augen/Hautschäden vermeiden; geeignete Filterstufe nutzen.",
-        "Schweißzusätze/Schlacke ordnungsgemäß handhaben."
-      ],
-      "tech": [
-        "Absaugung direkt am Lichtbogen; Parameter/Zusatzwerkstoffe dokumentieren.",
-        "Stromquelle vor Wartung freischalten (LOTO); Nachlaufzeiten beachten.",
-        "Werkstücke erden; Kabel/Stecker prüfen; Gas‑/Druckführung dicht halten.",
-        "Heißarbeiten‑Schein; Brandwache; Nachkontrolle auf Glimmnester.",
-        "Perspektifsel bariyer/örtü kullanımı (çevre koruması)."
-      ],
-      "org": [
-        "Arbeitsplatzfreigabe; Sperrbereich; Kennzeichnung.",
-        "Unterweisung; PSA‑Kontrolle; Prüfprotokolle.",
-        "Materialbereitstellung; Gasflaschen sicher fixieren.",
-        "Werkbank/Schutzwände so konumlandırmak ki üçüncü kişiler etkilenmesin.",
-        "İş akışında adım adım kontrol listesi kullanmak."
-      ],
-      "ppe": [
-        "Schweißschirm mit passender Schutzstufe; hitzebeständige Handschuhe.",
-        "Flammhemmende Schutzkleidung; Sicherheitsschuhe.",
-        "Gehörschutz; ggf. Atemschutz (Fume).",
-        "Kişiye özel yüz/baş koruması; gözlük uyumu.",
-        "PSA bakımı ve değişimi kayıt altına almak."
-      ],
-      "em": [
-        "Brandfall: CO₂/Schaum; Rückzündung beachten; Bereich räumen.",
-        "Verbrenme/yaralanma: Ersthelfer; Notruf; dokümantasyon.",
-        "Gas sızıntısı: kaynak kapat; havalandır; risk alanını boşalt.",
-        "Elektrik kaynaklı tehlike: önce freischalten; güvenli yaklaş.",
-        "Kazadan sonra kök neden analizi yap."
-      ],
-      "eh": [
-        "Augenverletmelerde uzun süreli durulama; doktor kontrolü.",
-        "Schweißbrand: soğut; steril kapat; sağlık birimi.",
-        "Duman inhalasyonu: temiz hava; gerekirse tıbbi yardım.",
-        "Kesik/yanık: uygun ilk yardım ve kayıt.",
-        "İş kazası raporlaması."
-      ],
-      "dis": [
-        "Schlacke/ek malzemeleri ayrı topla; uygun bertaraf.",
-        "Kontamine bez/filtreleri tehlikeli atık olarak ver.",
-        "Gaz tüpleri boşsa prosedüre uygun geri ver.",
-        "Çalışma alanını temizle; kayma riskini kaldır.",
-        "Kayıt/izleme ve rapor hazırlama."
-      ]
-    },
+  "Schweißen": {
+    "hazard": [
+      "UV/IR-Strahlung, Funkenflug und Schweißrauch berücksichtigen; Abschirmungen sowie Absaugung einsetzen.",
+      "Brandgefahr im Umfeld minimieren; brennbare Materialien entfernen und Löschmittel bereitstellen.",
+      "Lärm- und Hitzeexposition beurteilen; Pausen und Hydration sicherstellen.",
+      "Augen- und Hautschäden vermeiden; geeignete Filterstufe des Schweißschutzes wählen.",
+      "Gasversorgung und Druckführung dicht halten; Leckagen sofort beheben."
+    ],
+    "tech": [
+      "Absaugung direkt am Lichtbogen betreiben; Parameter und Zusatzwerkstoffe dokumentieren.",
+      "Stromquelle vor Wartung freischalten (LOTO); Nachlaufzeiten beachten.",
+      "Werkstücke erden; Kabel/Stecker regelmäßig prüfen; Gasdruck gemäß Herstellerangaben einstellen.",
+      "Bewilligungen für Heißarbeiten einholen; Brandwache und Nachkontrolle auf Glimmnester sicherstellen.",
+      "Abschirmungen und Sichtschutz so positionieren, dass Dritte nicht exponiert werden."
+    ],
+    "org": [
+      "Arbeitsplatzfreigabe vor Beginn; Sperrbereich und Kennzeichnung einrichten.",
+      "Unterweisung dokumentieren; PSA-Checks vor Beginn durchführen.",
+      "Materialbereitstellung und sichere Fixierung von Gasflaschen organisieren.",
+      "Checkliste im Arbeitsablauf nutzen; Abweichungen unmittelbar melden.",
+      "Werkbank und Schutzwände so platzieren, dass Fluchtwege frei bleiben."
+    ],
+    "ppe": [
+      "Schweißschirm mit passender Schutzstufe; hitzebeständige Handschuhe tragen.",
+      "Flammhemmende Schutzkleidung und Sicherheitsschuhe mit Zehenschutz verwenden.",
+      "Gehörschutz; ggf. Atemschutz bei Rauchbelastung.",
+      "Gesichtsschutz und passende Passform der Schutzbrille sicherstellen.",
+      "PSA-Pflege und Wechselintervalle dokumentieren."
+    ],
+    "em": [
+      "Brandfall: CO₂/Schaum einsetzen; Rückzündung beachten; Bereich räumen.",
+      "Verbrennungen/Verletzungen: Ersthelfer alarmieren; Notruf absetzen; Dokumentation.",
+      "Gasleck: Zufuhr schließen; lüften; Bereich sichern.",
+      "Elektrische Gefahr: erst freischalten; Annäherung mit isolierten Hilfsmitteln.",
+      "Nach Ereignis: Ursachenanalyse und Maßnahmen zur Wiederholungsprävention."
+    ],
+    "eh": [
+      "Augenverletzungen durch Strahlung: medizinische Abklärung; Kühlung nach Vorgabe.",
+      "Schweißbrand: kühlen; steril abdecken; Gesundheitsdienst informieren.",
+      "Rauchinhalation: frische Luft und ggf. ärztliche Unterstützung.",
+      "Schnitt-/Brandverletzungen: geeignete Erstversorgung und Dokumentation.",
+      "Unfallmeldung gemäß betrieblichen Vorgaben."
+    ],
+    "dis": [
+      "Schlacke und Zusatzmaterialien getrennt sammeln; geeignete Entsorgung beauftragen.",
+      "Kontaminierte Tücher/Filter als gefährlichen Abfall entsorgen.",
+      "Leere Gasflaschen nach Verfahren zurückführen; Restdruck prüfen.",
+      "Arbeitsbereich reinigen; Rutschrisiken entfernen.",
+      "Entsorgungs- und Nachweisführung aktualisieren."
+    ]
+  },
 
-    "CNC": {
-      "hazard": [
-        "Einzugs-/Quetschstellen; müdahale sadece duruş ve freigabe ile.",
-        "Dönüş parçaları; koruma kapakları kapalı.",
-        "KSS sıçrama/deri teması; göz/deri koruma.",
-        "Elektrik ve kalıp bağı kesintileri riskli olabilir.",
-        "Lazer prob/ışın gibi yardımcı sistemlere dikkat."
-      ],
-      "tech": [
-        "Kapak, ışık bariyeri, kapı kilidi kontrolü.",
-        "Takım kırılma izleme; hizalama ve sıkma doğru yapılmış olmalı.",
-        "KSS sızıntılarını önle; uygun havalandırma.",
-        "Not‑Halt ve acil durum planı aktif.",
-        "İzlenebilirlik: program ve ayar dokümantasyonu."
-      ],
-      "org": [
-        "Program/Einricht‑Freigabe; değişiklik yönetimi.",
-        "Arıza bildirimi ve eskalasyon.",
-        "Teknik temizlik ve bakım takvimi.",
-        "Malzeme akışı ve lojistik güvenliği.",
-        "Operatör rotasyonu ve yetkinlik kayıtları."
-      ],
-      "ppe": [
-        "Sicherheitsschuhe; dar kıyafet; takı yok.",
-        "KSS ile temas varsa kimyasal eldiven/koruyucu gözlük.",
-        "Gerektiğinde kulak koruması.",
-        "Kaygan zeminde anti‑slip ayakkabı.",
-        "Eldiven kullanımı parça çekiş bölgelerinde dikkat."
-      ],
-      "em": [
-        "Not‑Halt; enerji kes; alanı güvene al.",
-        "Yöneticiye bilgi ver; olay kaydı.",
-        "Sebep analizi ve tekrar riskini azaltma.",
-        "KSS dökülmesi: bağlayıcı ve uygun bertaraf.",
-        "Elektrik kokusu/ses: derhal enerji kes; uzman çağır."
-      ],
-      "eh": [
-        "Kesiklerde steril pansuman; sağlık birimi.",
-        "KSS göz temasında yıkama; doktor.",
-        "Şok belirtilerinde destek.",
-        "İlk yardım materyal kontrolü.",
-        "Kaza raporlaması."
-      ],
-      "dis": [
-        "KSS değişimini prosedüre göre yap; atık yönetimi.",
-        "Yağlı artıklar ayrı topla; kayıt tut.",
-        "Filtre ve bezler tehlikeli atık.",
-        "Zemin temizliği ve kayma önlemleri.",
-        "Dokümantasyon ve denetim."
-      ]
-    },
+  "CNC": {
+    "hazard": [
+      "Einzugs- und Quetschstellen beachten; Eingriffe ausschließlich im Stillstand und nach Freigabe.",
+      "Rotierende Werkzeuge nur mit geschlossenen Schutzabdeckungen betreiben.",
+      "Kühlschmierstoff (KSS)‑Kontakt vermeiden; Spritzer und Aerosole minimieren.",
+      "Elektrische Gefährdungen bewerten; Not-Halt jederzeit erreichbar halten.",
+      "Laser-/Messsysteme nur autorisiert bedienen; Warnhinweise beachten."
+    ],
+    "tech": [
+      "Schutzhauben, Lichtschranken und Türverriegelungen regelmäßig prüfen.",
+      "Werkzeugbrucherkennung aktivieren; Spannen und Ausrichtung gemäß Vorgabe.",
+      "KSS‑Leckagen verhindern; geeignete Absaugung und Belüftung nutzen.",
+      "Prozess- und Programmparameter revisionssicher dokumentieren.",
+      "Not-Halt und Notfallplan testen; Wartungstermine einhalten."
+    ],
+    "org": [
+      "Programm- und Einrichtfreigaben vor Serienstart einholen.",
+      "Änderungsmanagement anwenden; Versionierung und Freigabekette dokumentieren.",
+      "Störungs- und Eskalationsprozess klar kommunizieren.",
+      "Technische Reinigung und vorbeugende Wartung terminieren.",
+      "Materialfluss und Logistikwege frei von Hindernissen halten."
+    ],
+    "ppe": [
+      "Sicherheitsschuhe; enganliegende Kleidung ohne Schmuck.",
+      "Bei KSS‑Kontakt: chemikalienbeständige Handschuhe und Augenschutz.",
+      "Gehörschutz bei Überschreitung der Auslösewerte.",
+      "Antirutsch‑Schuhe bei feuchten Böden.",
+      "Handschuhe in Einzugsbereichen nur nach Gefährdungsbeurteilung."
+    ],
+    "em": [
+      "Not-Halt betätigen; Energiezufuhr trennen; Bereich sichern.",
+      "Vorgesetzte informieren; Ereignis dokumentieren.",
+      "KSS‑Verschüttung: Bindemittel einsetzen; fachgerechte Entsorgung.",
+      "Elektrischer Geruch/Knistergeräusch: sofort freischalten; Fachpersonal anfordern.",
+      "Nach Ereignis: Ursachenanalyse und Maßnahmen definieren."
+    ],
+    "eh": [
+      "Schnittverletzungen steril versorgen; Gesundheitsdienst informieren.",
+      "KSS‑Augenkontakt: gründlich spülen; ärztliche Abklärung.",
+      "Schockzeichen beachten; Ruhe und Wärmeerhalt.",
+      "Erste‑Hilfe‑Material prüfen und nachfüllen.",
+      "Unfallmeldung gemäß Vorgabe erstellen."
+    ],
+    "dis": [
+      "KSS‑Wechsel nach Verfahren; Altflüssigkeit als Gefahrstoff entsorgen.",
+      "Ölige Reststoffe getrennt sammeln und dokumentieren.",
+      "Filter/Putztücher als gefährlichen Abfall führen.",
+      "Bodenreinigung und Rutschprävention umsetzen.",
+      "Entsorgungsdokumentation und Auditnachweise pflegen."
+    ]
+  },
 
-    "Gefahrstoffschrank": {
-      "hazard": [
-        "Yanıcı/reaktif karışımlar; yanlış depolama reaksiyon doğurabilir.",
-        "Gaz çıkışı; koku; riskli atmosfer.",
-        "Sızıntı/akma; çevresel risk.",
-        "Aşındırıcı etkiler; yüzey zararları.",
-        "Yanlış etiket alarmı."
-      ],
-      "tech": [
-        "Teknik havalandırma/filtre; topraklama; damlama tepsisi.",
-        "Sızıntı sensörleri varsa bakım.",
-        "Buhar yoğunluğu için uygun exhaust.",
-        "Raf ve kapı kilit kontrolü.",
-        "Sıcaklık/ateş kaynaklarını uzak tut."
-      ],
-      "org": [
-        "Depolama gruplama TRGS/CLP; erişim yetkisi.",
-        "Etiketleme ve SDS erişimi.",
-        "Stok/inventar güncel.",
-        "İş akışı ve taşımada güvenlik.",
-        "Düzenli audit."
-      ],
-      "ppe": [
-        "Kimyasal eldiven, gözlük/visör, önlük.",
-        "Gerekirse uygun maske.",
-        "Kaymaz tabanlı ayakkabı.",
-        "Cilt koruma ve temizlik.",
-        "PSA bakım/yenileme."
-      ],
-      "em": [
-        "Kaçak: bölgeyi boşalt; havalandır; bağlayıcı.",
-        "Yangın: uygun söndürücü; geri alevlenme.",
-        "Alarm ve yönetici bilgisi.",
-        "Acil yıkama/douche yakın; kullanıma hazır.",
-        "Raporlama ve izolasyon."
-      ],
-      "eh": [
-        "Cilt teması: su ile yıkama; giysi çıkar.",
-        "Göz temasında uzun durulama; doktor.",
-        "İnhalasyon: temiz hava; gerekirse sağlık.",
-        "Zehirlenme belirtilerinde acil.",
-        "Dokümantasyon."
-      ],
-      "dis": [
-        "Kontamine bez/bağlayıcı tehlikeli atık.",
-        "Ambalajları uygun bertaraf.",
-        "Dökülen malı kayıt.",
-        "Çevreye sızmayı önle.",
-        "Uygun konteyner."
-      ]
-    },
+  "Gefahrstoffschrank": {
+    "hazard": [
+      "Unverträgliche Stoffe nicht gemeinsam lagern; Reaktionsgefahr beachten.",
+      "Dämpfe und austretende Gase frühzeitig erkennen; Lüftung sicherstellen.",
+      "Leckagen vermeiden; Tropfstellen sofort beseitigen.",
+      "Ätzende Wirkungen berücksichtigen; Oberflächenschutz wahren.",
+      "Falsche oder fehlende Kennzeichnung vermeiden; Etiketten aktuell halten."
+    ],
+    "tech": [
+      "Technische Lüftung/Filter betreiben; Erdung/Potenzialausgleich sicherstellen.",
+      "Leckagesensorik, falls vorhanden, regelmäßig warten.",
+      "Behälter dicht schließen; Tropfwannen nutzen.",
+      "Temperatur- und Zündquellen fernhalten; geeignete Materialien verwenden.",
+      "Regale und Türverriegelungen prüfen; Schließmechanismen warten."
+    ],
+    "org": [
+      "Lagergruppen gemäß TRGS/CLP; Zugriffsrechte beschränken.",
+      "Etikettierung und SDS‑Zugang sicherstellen.",
+      "Bestandsführung aktuell halten; Inventur dokumentieren.",
+      "Wareneingang und Transport mit geeigneten Hilfsmitteln durchführen.",
+      "Regelmäßige Audits des Lagersystems."
+    ],
+    "ppe": [
+      "Chemikalienbeständige Handschuhe, Schutzbrille/Visier und Schürze tragen.",
+      "Bei Dampfexposition geeigneten Atemschutz verwenden.",
+      "Rutschhemmende Sicherheitsschuhe einsetzen.",
+      "Hautschutzplan beachten; Hände reinigen/pflegen.",
+      "PSA-Lagerung trocken und sauber; beschädigte Teile ersetzen."
+    ],
+    "em": [
+      "Leckage: Bereich räumen; lüften; Bindemittel einsetzen; Notruf gemäß Plan.",
+      "Brand: geeignetes Löschmittel; Rückzündung berücksichtigen.",
+      "Alarmierungskette und Führung informieren; Bereich absperren.",
+      "Augendusche/Sicherheitsdusche in der Nähe funktionsfähig halten.",
+      "Ereignis dokumentieren und Stoff isolieren."
+    ],
+    "eh": [
+      "Hautkontakt: mit Wasser spülen; kontaminierte Kleidung entfernen.",
+      "Augenkontakt: mindestens 15 Minuten spülen; medizinische Abklärung.",
+      "Inhalation: frische Luft; ggf. ärztliche Hilfe.",
+      "Vergiftungszeichen beachten; Rettungsdienst alarmieren.",
+      "Dokumentation und Nachsorge sicherstellen."
+    ],
+    "dis": [
+      "Kontaminierte Tücher/Bindemittel als gefährlichen Abfall entsorgen.",
+      "Verpackungen gemäß Vorgabe führen; Restinhalte deklarieren.",
+      "Verschüttete Stoffe dokumentieren; Ursachenanalyse.",
+      "Einleitung in Umwelt verhindern; geeignete Container nutzen.",
+      "Entsorgungsdienst beauftragen und Nachweise ablegen."
+    ]
+  },
 
-    "Spraydosen": {
-      "hazard": [
-        "Aerosol yanıcı; basınçlı kap; ısınmada patlama.",
-        "Solvent buharı; inhalasyon riski.",
-        "Elektrik kıvılcımı ile alevlenme.",
-        "Sızıntıda kayma/deri teması.",
-        "Yanıcı atmosfer oluşumu."
-      ],
-      "tech": [
-        "Havalandırma/absaugung; kıvılcım kaynaklarını uzak tut.",
-        "Büyük aktarımda topraklama.",
-        "Sıcaklık limitlerine uy.",
-        "Statik yük birikimini önle.",
-        "Tetik/valf temizliği."
-      ],
-      "org": [
-        "Sevkiyat/depoda miktar sınırı.",
-        "Etiket kontrolü ve eğitim.",
-        "Kullanım alanı sınırlaması.",
-        "Acil kit yakın.",
-        "İzleme ve rapor."
-      ],
-      "ppe": [
-        "Göz‑/solunum koruması; kimyasal eldiven.",
-        "Koruyucu giysi; saç kapağı.",
-        "Kaymaz ayakkabı.",
-        "Cilt bariyer krem.",
-        "PSA uygunluğu kontrol."
-      ],
-      "em": [
-        "Yangın: uygun söndürme; alanı boşalt.",
-        "Basınçlı kutu ısıtma: durdur; soğut.",
-        "Sızıntı: havalandır; bağlayıcı.",
-        "İnhalasyon: temiz hava.",
-        "Acil arama ve kayıt."
-      ],
-      "eh": [
-        "Göz teması: durula; doktor.",
-        "Cilt: yıka; tahrişte sağlık.",
-        "Solunum: şikayette sağlık birimi.",
-        "İlk yardım kiti kontrol.",
-        "Kayıt ve bildirim."
-      ],
-      "dis": [
-        "Boş/kalıntılı kutuları tehlikeli atık olarak ver.",
-        "Etiketli konteyner kullan.",
-        "Atık kayıt sistemi.",
-        "Depo temizliği.",
-        "Denetim."
-      ]
-    },
+  "Spraydosen": {
+    "hazard": [
+      "Aerosole entzündbar; Druckbehälter können bei Erhitzung bersten.",
+      "Lösemittel-Dämpfe: Inhalationsrisiko; Zündquellen fernhalten.",
+      "Bei Leckage Rutsch- und Hautkontaktgefahr.",
+      "Bildung brennbarer Atmosphäre möglich; Lüftung erforderlich.",
+      "Elektrische Funken können Zündung auslösen; Erdung beachten bei Massenhandhabung."
+    ],
+    "tech": [
+      "Absaugung/Lüftung betreiben; Zündquellen vermeiden.",
+      "Großmengen erden; elektrostatische Aufladung minimieren.",
+      "Temperaturlimits einhalten; Lagerbedingungen überwachen.",
+      "Ventile/Taste sauber halten; Dichtheit prüfen.",
+      "Kennzeichnung und Prüfintervalle dokumentieren."
+    ],
+    "org": [
+      "Mengenbegrenzungen für Lager/Versand einhalten.",
+      "Etikett-/Kennzeichnungsprüfung; Mitarbeiterschulung.",
+      "Verwendungsbereich begrenzen; Freigabe dokumentieren.",
+      "Notfallkit bereitstellen; Erreichbarkeit prüfen.",
+      "Monitoring und Berichterstattung etablieren."
+    ],
+    "ppe": [
+      "Augen-/Atemschutz je nach Produkt; chemikalienbeständige Handschuhe.",
+      "Schutzkleidung; Haar- und Kopfschutz wenn erforderlich.",
+      "Rutschhemmende Sicherheitsschuhe.",
+      "Hautschutzbarriere anwenden; Hygieneregeln einhalten.",
+      "PSA auf Passform und Unversehrtheit prüfen."
+    ],
+    "em": [
+      "Brand: geeignet löschen; Bereich räumen; Druckbehälter kühlen.",
+      "Erhitzung: zu warme Gebinde entfernen/kühlen; Gefahrenbereich sichern.",
+      "Leckage: lüften; Bindemittel einsetzen; Entsorgung vorbereiten.",
+      "Inhalation: an die frische Luft; Symptome überwachen.",
+      "Ereignis melden und dokumentieren; Wiederholungsrisiken minimieren."
+    ],
+    "eh": [
+      "Augenkontakt: ausgiebig spülen; medizinische Abklärung.",
+      "Hautkontakt: mit Wasser und Seife reinigen; bei Reizung Arzt.",
+      "Atembeschwerden: ruhige Lagerung; ärztliche Hilfe bei Persistenz.",
+      "Erste‑Hilfe‑Ausrüstung prüfen und auffüllen.",
+      "Meldung gemäß interner Vorgabe."
+    ],
+    "dis": [
+      "Leere/Restgebinde als gefährlichen Abfall behandeln.",
+      "Nur gekennzeichnete Container verwenden; getrennte Sammlung.",
+      "Abfallregister führen; Entsorgungsdienst beauftragen.",
+      "Lagerflächen reinigen; Rutschrisiken beseitigen.",
+      "Interne Audits der Entsorgungskette."
+    ]
+  },
 
-    "Hubarbeitsbühne": {
-      "hazard": [
-        "Düşme/yan yatma; ezilme; elektrik hattı teması.",
-        "Rüzgar ve zemin riski.",
-        "Yanlış ankraj.",
-        "Operatör hatası.",
-        "Kurtarma güçlüğü."
-      ],
-      "tech": [
-        "Stabilite; notablass; ankraj noktaları.",
-        "Kurtarma planı; alarm.",
-        "Kontrol listesi ve işlev testi.",
-        "Sensör/fren kontrolü.",
-        "Yük limitleri ve platform iletişimi."
-      ],
-      "org": [
-        "Yetkilendirme ve eğitim.",
-        "Alan çitleme/uyarılar.",
-        "Hava koşulu limitleri.",
-        "Gözetim ve freigabe.",
-        "İş planı."
-      ],
-      "ppe": [
-        "PSAgA (gurt/geschirr) ve ankraj; kask.",
-        "Eldiven/gözlük gerektikçe.",
-        "Rüzgar/kayma için uygun ayakkabı.",
-        "Giysi/ek ekipman kontrol.",
-        "PSA kayıt."
-      ],
-      "em": [
-        "Notablass; alanı güvene al.",
-        "İlk yardım çağır; acil numara.",
-        "Platform kilitlenirse prosedür.",
-        "Elektrik tehlikesinde yaklaşma yasağı.",
-        "Dokümantasyon ve analiz."
-      ],
-      "eh": [
-        "Düşme sonrası ilk yardım; şok.",
-        "Kafa travmasında doktor.",
-        "Kesik/çizik müdahalesi.",
-        "Gerekirse evakuasyon.",
-        "Kayıt."
-      ],
-      "dis": [
-        "Sızıntı yağları bağlayıcı ile al; tehlikeli atık.",
-        "Araç/akü atıkları prosedüre göre.",
-        "Alan temizliği.",
-        "Kayıt ve denetim.",
-        "Rutin bakım atıkları."
-      ]
-    },
-
-    "Arbeiten_an_der_Elektrik": {
-      "hazard": [
-        "Elektrik çarpması/yanık; ark; yangın.",
-        "Metal dar alan riskleri.",
-        "Yan temas ve kaçak akım.",
-        "Yanıcı atmosfer ile etkileşim.",
-        "Yanlış ekipman kullanımı."
-      ],
-      "tech": [
-        "Beş kural: Freischalten, Wieder einschalten önleme, Spannungsfreiheit, Erden/Kurzschließen, Schützen.",
-        "LOTO uygulaması.",
-        "Test cihazı ve PPE kontrol.",
-        "Kısa devre riskine karşı prosedür.",
-        "İş sonrası test ve kayıt."
-      ],
-      "org": [
-        "Sadece Elektrofachkräfte veya deren Leitung.",
-        "Freigabe ve bildirim.",
-        "Olay/basıt hata kaydı.",
-        "Saha güvenliği.",
-        "Denetim ve audit."
-      ],
-      "ppe": [
-        "İzole eldiven/ayakkabı; göz koruması.",
-        "Dar kıyafet; takı yok.",
-        "Arc‑flash PPE gerekiyorsa.",
-        "Yalıtım altlık/kıyafet.",
-        "Bakım ve değişim."
-      ],
-      "em": [
-        "Stromunfall: önce freischalten; temel yaşam desteği.",
-        "Yangın: uygun söndürme.",
-        "Alanı güvene al; notruf.",
-        "Olay kaydı ve analiz.",
-        "KSS yoksa bile göz yıkama hazır tut."
-      ],
-      "eh": [
-        "Yanıkların soğutulması; steril kapama.",
-        "Göz teması: yıkama; sağlık.",
-        "Şok belirtileri takibi.",
-        "Doktor ve rapor.",
-        "İlaç/tedavi takibi."
-      ],
-      "dis": [
-        "Elektronik atık ve yağlar ayrıştır.",
-        "Yetkili bertaraf.",
-        "Kayıt/döküm.",
-        "Temizlik ve güvenlik.",
-        "Denetim."
-      ]
-    },
-
-    "Reinigen_Säuren_Basen_Chlor": {
-      "hazard": [
-        "Aşındırıcı/reizend; gaz çıkışı; kayma.",
-        "Yanlış kimyasal karışımı.",
-        "Sıçrama/temas.",
-        "Havalandırma yetersizliği.",
-        "Etiket yanlış okuma."
-      ],
-      "tech": [
-        "Verdünme kuralı: önce su, sonra asit.",
-        "Dozaj/havalandırma; malzeme uyumu.",
-        "Acil yıkama istasyonları yakın.",
-        "Depolama grupları.",
-        "Sızıntı ve bağlayıcı prosedürü."
-      ],
-      "org": [
-        "SDS erişimi ve eğitim.",
-        "İş alanı BA asılması.",
-        "Etiket/uyarı işaretleri.",
-        "Yetkilendirme ve sınırlandırma.",
-        "Audit."
-      ],
-      "ppe": [
-        "Kimyasal eldiven, gözlük/visör, önlük.",
-        "Gerekirse maske.",
-        "Kaymaz ayakkabı.",
-        "Cilt bariyer krem.",
-        "Temizlik sonrası hijyen."
-      ],
-      "em": [
-        "Sızıntı: alanı boşalt; bağlayıcı; notruf.",
-        "Yanık: su ile uzun durulama.",
-        "Gaz çıkışında havalandırma.",
-        "Kayıt ve analiz.",
-        "İş durdurma ve güvenlik."
-      ],
-      "eh": [
-        "Cilt: bol su; giysi çıkar.",
-        "Göz: 15+ dakika.",
-        "Solunum: temiz hava; sağlık.",
-        "İlk yardım ve kayıt.",
-        "Doktor."
-      ],
-      "dis": [
-        "Nötralize çözelti uygun bertaraf.",
-        "Kontamine malzemeler tehlikeli atık.",
-        "Kayıt ve takip.",
-        "Depo temizliği.",
-        "Denetim."
-      ]
-    },
-
-    "Hochdruckreiniger": {
-      "hazard": [
-        "Deriyi delen jet; geri tepme.",
-        "Islak ortamda elektrik riski.",
-        "Kaygan zemin.",
-        "Kimyasal katkı maruziyeti.",
-        "Sıcak su/abrazif risk."
-      ],
-      "tech": [
-        "Basınç alanı güvenliği; uygun nozzle.",
-        "FI devresi; kablo/şlang kontrol.",
-        "Ekipmanı doğru sabitleme.",
-        "Sıçrama bariyeri.",
-        "Prosedür ve işaretleme."
-      ],
-      "org": [
-        "Alan çitleme; uyarı levhaları.",
-        "Gözetim ve kayıt.",
-        "Kimyasal kullanım freigabe.",
-        "Ekipman planlı bakım.",
-        "Risk değerlendirme güncelleme."
-      ],
-      "ppe": [
-        "Kesilmeye dayanıklı eldiven; gözlük/visör.",
-        "Sicherheitsschuhe; su geçirmez kıyafet.",
-        "Gerekirse kulak koruması.",
-        "Yüz koruma.",
-        "PSA bakımı."
-      ],
-      "em": [
-        "Yaralanmada cihazı kes; alanı güvene al.",
-        "Acil yardım; notruf.",
-        "Sızıntı varsa bağlayıcı ve bertaraf.",
-        "Elektrik riski ise freischalten.",
-        "Kayıt."
-      ],
-      "eh": [
-        "Hochdruck yaralanmaları mutlaka doktor.",
-        "Yıkama ve kapama.",
-        "Şok takibi.",
-        "Dokümantasyon.",
-        "Kontrol."
-      ],
-      "dis": [
-        "Kimyasal kalıntılar ayrıştır.",
-        "Abwasser kurallarına uy.",
-        "Kayıt ve rapor.",
-        "Temizlik.",
-        "Denetim."
-      ]
-    },
-
-    "Leiterarbeit": {
-      "hazard": [
-        "Düşme; devrilme; elektrik yakınında risk.",
-        "Kaygan basamak.",
-        "Aşırı uzanma.",
-        "Aşırı yük.",
-        "Yüksekte malzeme düşmesi."
-      ],
-      "tech": [
-        "Doğru eğim ve sağlam zemin.",
-        "Kayma önleyici.",
-        "Sadece onaylı, sağlam merdiven.",
-        "Bariyer ve uyarı.",
-        "İş için doğru tip seçimi."
-      ],
-      "org": [
-        "Yalnız çalışma yok; gözetim.",
-        "Freigabe; görev tanımı.",
-        "Hava koşulu kontrol.",
-        "Kurtarma planı.",
-        "Raporlama."
-      ],
-      "ppe": [
-        "Sicherheitsschuhe.",
-        "Gerekirse PSAgA.",
-        "El kavrama eldiveni.",
-        "Kask.",
-        "PSA kontrol."
-      ],
-      "em": [
-        "Düşme: ilk yardım; notruf.",
-        "Alanı güvene al.",
-        "Kaza kaydı.",
-        "Sebep analizi.",
-        "Önlem planı."
-      ],
-      "eh": [
-        "Çürük/ezik müdahalesi.",
-        "Kırık şüphesinde acil.",
-        "Hijyen ve pansuman.",
-        "Raporlama.",
-        "Takip."
-      ],
-      "dis": [
-        "Hasarlı merdiveni iş dışı bırak.",
-        "Ambalaj/hilfsstoff bertaraf.",
-        "Alanı topla/temizle.",
-        "Kayıt.",
-        "Denetim."
-      ]
-    }
+  "Hubarbeitsbühne": {
+    "hazard": [
+      "Absturz/Umkippen, Quetschungen und Kontakt zu elektrischen Leitungen berücksichtigen.",
+      "Wind- und Bodenrisiken bewerten; Tragfähigkeit prüfen.",
+      "Fehlerhafte Anschlagpunkte vermeiden; Bedienfehler minimieren.",
+      "Rettungszugang planen; Kommunikation sicherstellen.",
+      "Lastgrenzen und Plattformstabilität beachten."
+    ],
+    "tech": [
+      "Stabilität prüfen; Notablass und Anschlagpunkte kontrollieren.",
+      "Funktionsprüfung von Sensorik/Bremsen durchführen.",
+      "Lastgrenzen einhalten; Plattformkommunikation sicherstellen.",
+      "Checkliste vor Einsatz abarbeiten; täglicher Sichttest.",
+      "Wartungsplan umsetzen und dokumentieren."
+    ],
+    "org": [
+      "Nur qualifiziertes Personal; Freigabe und Bereichsabgrenzung.",
+      "Hinweise und Warnungen sichtbar anbringen.",
+      "Wettergrenzen festlegen; Einsatz stoppen bei Überschreitung.",
+      "Aufsicht und Rettungskonzept vorhalten.",
+      "Arbeitsplan mit Risiken und Maßnahmen kommunizieren."
+    ],
+    "ppe": [
+      "PSAgA (Gurt/Geschirr) mit zugelassenen Anschlagpunkten; Schutzhelm.",
+      "Handschuhe/Gesichtsschutz je nach Tätigkeit.",
+      "Rutschhemmende Schuhe für Wind/Klima.",
+      "Kleidung und Zusatzgeräte vor Einsatz prüfen.",
+      "PSA‑Kontrolle und Dokumentation."
+    ],
+    "em": [
+      "Notablass anwenden; Bereich sichern; Ersthelfer rufen.",
+      "Bei Plattformstörung Verfahren zum Entsperren nutzen.",
+      "Elektrische Gefahr: Annäherungsverbot; Fachpersonal alarmieren.",
+      "Ereignis dokumentieren; Analyse veranlassen.",
+      "Evakuierung bei struktureller Gefahr."
+    ],
+    "eh": [
+      "Nach Sturz: Erstversorgung; Schockprävention; Rettungsdienst.",
+      "Kopftrauma: ärztliche Abklärung.",
+      "Schnitt-/Schürfwunden fachgerecht versorgen.",
+      "Evakuation bei schwerer Verletzung.",
+      "Nachbetreuung und Dokumentation."
+    ],
+    "dis": [
+      "Hydrauliköl austritte mit Bindemittel aufnehmen; als gefährlichen Abfall entsorgen.",
+      "Batterien/Akkus gemäß Vorschrift führen.",
+      "Arbeitsbereich reinigen; Rutschgefahr beseitigen.",
+      "Wartungsabfälle getrennt sammeln.",
+      "Dokumentation und Auditnachweise pflegen."
+    ]
   }
 }
