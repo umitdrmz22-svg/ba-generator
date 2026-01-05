@@ -9,50 +9,57 @@
   /assets/style.css?v=20260105
 </head>
 <body class="page">
-  <header class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></header>
+  <header class="hero">
+    <div class="brand">
+      <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
+    </div>
+  </header>
 
   <main class="wrapper t-Maschine" id="indexRoot">
     <section class="card">
-      <label>Typ wählen:</label>
-      <div class="row" id="typeRow">
-        <label class="chip"><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
-        <label class="chip"><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-        <label class="chip"><input type="radio" name="type" value="Maschine" checked> Maschine</label>
-        <label class="chip"><input type="radio" name="type" value="PSA"> PSA</label>
+      <div class="row">
+        <div class="chipset">
+          <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
+          <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
+          <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
+          <label><input type="radio" name="type" value="PSA"> PSA</label>
+        </div>
+        <span class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</span>
       </div>
-      <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
     </section>
 
     <section class="card">
       <div class="grid2">
         <div>
-          <label>Unternehmen</label><input id="firm" type="text" placeholder="Firmenname" />
-          <label>Abteilung</label><input id="dept" type="text" placeholder="Abteilung" />
-          <label>Ersteller</label><input id="author" type="text" placeholder="Name" />
-          <label>Datum</label><input id="date" type="date" />
+          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
+          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung" />
+          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name" />
+          <label>Datum (optional)</label><input id="date" type="date" />
         </div>
         <div>
-          <label>Logo (URL oder Upload)</label>
-          <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
+          <label>Logo‑URL oder Upload (optional)</label>
           <input id="logoFile" type="file" accept="image/*" />
-          <small class="muted">PNG/JPG empfohlen. Bei fehlendem Upload bitte URL nutzen.</small>
+          <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
+          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine URL genutzt werden.</small>
           <div id="logoPreview" class="logo-preview"></div>
         </div>
       </div>
     </section>
 
     <section class="card">
-      <h3>Überschrift & Typografie</h3>
+      <h3>Überschrift & Typografie (optional)</h3>
       <div class="row">
-        <div style="flex:1">
+        <div class="col">
           <label>Name des Arbeitsmittels/Verfahrens</label>
           <input id="assetName" type="text" placeholder="z. B. Trennschleifer" />
           <label>Untertitel</label>
           <input id="subtitleText" type="text" value="Betriebsanweisung" />
         </div>
-        <div style="flex:1">
-          <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
-          <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
+        <div class="col">
+          <div class="chipset">
+            <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
+            <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
+          </div>
           <label>Schriftart:
             <select id="fontFamily"><option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option></select>
           </label>
@@ -61,9 +68,12 @@
           </label>
         </div>
       </div>
+      <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
+    <div class="actions">
+      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
+    </div>
   </main>
 
   /assets/app.js?v=20260105</script>
