@@ -3,15 +3,13 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <base href="/" />
+  /
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Betriebsanweisung – Auswahl</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20260105" />
+  /assets/style.css?v=20260105
 </head>
 <body class="page">
-  <header class="hero">
-    <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
-  </header>
+  <header class="hero"><h1>BETRIEBSANWEISUNG – AUSWAHL</h1></header>
 
   <main class="wrapper t-Maschine" id="indexRoot">
     <section class="box">
@@ -34,9 +32,10 @@
           <label>Datum (optional)</label><input id="date" type="date" />
         </div>
         <div>
-          <label>Logo hochladen (optional)</label>
+          <label>Logo‑URL oder Upload (optional)</label>
           <input id="logoFile" type="file" accept="image/*" />
-          <small class="muted">PNG/JPG empfohlen. Ohne Cloud-Umgebung wird der Upload übersprungen.</small>
+          <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
+          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine URL genutzt werden.</small>
           <div id="logoPreview" class="logo-preview"></div>
         </div>
       </div>
@@ -47,17 +46,15 @@
       <div class="row">
         <div style="flex:1">
           <label>Name des Arbeitsmittels/Verfahrens</label>
-          <input id="assetName" type="text" placeholder="z. B. Flexmaschine" />
-          <label>Untertitel (z. B. Betriebsanweisung)</label>
+          <input id="assetName" type="text" placeholder="z. B. Trennschleifer" />
+          <label>Untertitel</label>
           <input id="subtitleText" type="text" value="Betriebsanweisung" />
         </div>
         <div style="flex:1">
           <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
           <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
           <label>Schriftart:
-            <select id="fontFamily">
-              <option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option>
-            </select>
+            <select id="fontFamily"><option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option></select>
           </label>
           <label>Schriftgröße:
             <input type="number" id="fontSize" min="14" max="26" value="18" />
@@ -67,12 +64,9 @@
       <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
     </section>
 
-    <div class="actions">
-      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
-    </div>
+    <div class="actions"><button id="continue" class="btn-primary">Weiter zur Vorlage</button></div>
   </main>
 
-  <script defer src="/assets/app.js?v=20260105"></script>
+  /assets/app.js?v=20260105</script>
 </body>
 </html>
-``
