@@ -1,6 +1,6 @@
 
 :root { --theme:#005AA3; --bg:#f5f7fa; --ink:#111; --line:#d0d7de; --muted:#666; }
-.t-Gefahrstoff { --theme:#E53935; }   /* rot/orange */
+.t-Gefahrstoff { --theme:#E53935; }   /* rot/orange für Gefahrstoff-BA */
 .t-Biostoff    { --theme:#2E7D32; }   /* grün */
 .t-Maschine    { --theme:#005AA3; }   /* blau */
 .t-PSA         { --theme:#2E7D32; }   /* PSA grün */
