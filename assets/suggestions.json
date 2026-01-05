@@ -1,3 +1,4 @@
+
 {
   "Maschine": {
     "hazard": {
@@ -28,18 +29,10 @@
       ]
     },
     "ppe": {
-      "M004": [
-        "Augenschutz mit Seitenschutz; bei Funkenflug Gesichtsschutz ergänzen."
-      ],
-      "M003": [
-        "Gehörschutz bei Lärmexposition über Auslösewert tragen; Wirksamkeit regelmäßig prüfen."
-      ],
-      "M009": [
-        "Schutzhandschuhe dem Medium/Arbeitsgang entsprechend auswählen; Einzugsstellen beachten."
-      ],
-      "M018": [
-        "Bei Arbeiten in der Höhe Sicherheitsgurt/-geschirr verwenden; passende Anschlagpunkte prüfen."
-      ]
+      "M004": ["Augenschutz mit Seitenschutz; bei Funkenflug Gesichtsschutz ergänzen."],
+      "M003": ["Gehörschutz bei Lärmexposition über Auslösewert tragen; Wirksamkeit regelmäßig prüfen."],
+      "M009": ["Schutzhandschuhe dem Medium/Arbeitsgang entsprechend auswählen; Einzugsstellen beachten."],
+      "M018": ["Bei Arbeiten in der Höhe Sicherheitsgurt/-geschirr verwenden; passende Anschlagpunkte prüfen."]
     },
     "em": {
       "W001": [
@@ -62,6 +55,7 @@
       ]
     }
   },
+
   "Prozesse": {
     "Schweißen": {
       "hazard": [
@@ -87,6 +81,7 @@
         "Schweißzusatz‑/Schlacke‑Reste getrennt sammeln; kontaminierte Tücher/Filter sachgerecht entsorgen."
       ]
     },
+
     "CNC": {
       "hazard": [
         "Einzug‑/Quetschstellen und rotierende Teile; nur bei Stillstand und Freigabe eingreifen; Schutzhauben geschlossen halten."
@@ -110,6 +105,7 @@
         "KSS fachgerecht wechseln/entsorgen; ölhaltige Abfälle gekennzeichneten Behältern zuführen; Nachweise führen."
       ]
     },
+
     "Gefahrstoffschrank": {
       "hazard": [
         "Brand-/Chemiegefahr; falsche Lagergruppen können reagieren; Lüftung und Zulassungen beachten."
@@ -133,6 +129,7 @@
         "Leckagebinder verwenden; kontaminierte Materialien als gefährliche Abfälle entsorgen; Nachweise."
       ]
     },
+
     "Spraydosen": {
       "hazard": [
         "Aerosole entzündbar; Druckbehälter; Explosionsgefahr bei Erwärmung; Gesundheitsgefahr durch Lösemittel."
@@ -156,6 +153,7 @@
         "Leer-/Restdosen als Gefahrstoffabfall; Sammelbehälter; Nachweise."
       ]
     },
+
     "Hubarbeitsbühne": {
       "hazard": [
         "Absturz‑/Kippgefahr; Quetschstellen; Stromleitungskontakt; Wetterrisiken."
@@ -179,6 +177,7 @@
         "Betriebsstoffe/Leckagen aufnehmen; fachgerecht entsorgen; Fläche reinigen."
       ]
     },
+
     "Arbeiten_an_der_Elektrik": {
       "hazard": [
         "Elektrischer Schlag/Verbrennung; Lichtbogen; Brandgefahr; enge metallische Räume erhöhen Risiko."
@@ -202,6 +201,7 @@
         "Elektronikschrott/Betriebsstoffe getrennt erfassen; Entsorgung nach Vorschrift."
       ]
     },
+
     "Reinigen_Säuren_Basen_Chlor": {
       "hazard": [
         "Ätz-/Reizwirkung; Gasentwicklung; Rutschgefahr; Verwechslungsgefahr bei Chemikalien."
@@ -225,51 +225,9 @@
         "Neutralisierte Lösungen sachgerecht entsorgen; kontaminierte Materialien als Gefahrstoffabfall."
       ]
     },
+
     "Hochdruckreiniger": {
       "hazard": [
         "Hautdurchdringende Strahlen; Rückstoß; elektrisches Risiko bei nasser Umgebung; Rutschgefahr."
       ],
       "tech": [
-        "Druckbereich sichern; geeignete Düsen/Schutz; FI‑Schutzschalter; Kabel/Schläuche prüfen."
-      ],
-      "org": [
-        "Arbeitsbereich absperren; Unterweisung; Betriebszustände dokumentieren."
-      ],
-      "ppe": [
-        "Schnittfeste Handschuhe, Schutzbrille/Visier, Sicherheitsschuhe, Regen-/Schutzkleidung."
-      ],
-      "em": [
-        "Verletzung/Leckage: Gerät spannungsfrei; Bereich sichern; Erste Hilfe; Notruf bei schweren Verletzungen."
-      ],
-      "eh": [
-        "Hochdruckverletzungen sofort ärztlich abklären; Wunden spülen/abdecken; Dokumentation."
-      ],
-      "dis": [
-        "Reinigungschemikalienreste getrennt sammeln; Abwasserregelungen beachten."
-      ]
-    },
-    "Leiterarbeit": {
-      "hazard": [
-        "Absturz; Umkippen; Stromleitungsnähe; rutschige Sprossen."
-      ],
-      "tech": [
-        "Leiter auf festen Untergrund; Neigungswinkel; gegen Wegrutschen sichern; nur geprüfte Leitern verwenden."
-      ],
-      "org": [
-        "Alleinarbeit vermeiden; geeignete Leiter auswählen; Freigabe bei Höhenarbeit; Rettungskonzept."
-      ],
-      "ppe": [
-        "Sicherheitsschuhe; bei Bedarf PSAgA; Handschuhe für Griff."
-      ],
-      "em": [
-        "Sturz: Erste Hilfe; Notruf; Bereich sichern; Unfallmeldung."
-      ],
-      "eh": [
-        "Prellungen/Verletzungen versorgen; Arzt bei Verdacht auf Frakturen."
-      ],
-      "dis": [
-        "Defekte Leitern kennzeichnen/aussondern; Verpackungs-/Hilfsstoffe ordnungsgemäß entsorgen."
-      ]
-    }
-  }
-}
