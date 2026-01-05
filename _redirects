@@ -1,4 +1,7 @@
 
-/sayfa   /            301
-/yine    /            301
-/editor  /editor.html 301
+# /sayfa ve /yine rotalarını köke çözer
+/sayfa      /            200
+/yine       /            200
+
+# /editor altındaki her şeyi editor.html'e çözer
+/editor*    /editor.html 200
