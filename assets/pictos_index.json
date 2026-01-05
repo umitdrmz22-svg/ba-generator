@@ -8,130 +8,29 @@
     "GHS05": { "name": "Ätzend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/GHS-pictogram-acid.svg/96px-GHS-pictogram-acid.svg.png" },
     "GHS06": { "name": "Akute Toxizität (fatal)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/GHS-pictogram-skull.svg/96px-GHS-pictogram-skull.svg.png" },
     "GHS07": { "name": "Gesundheitsschädlich / Reizend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png" },
-    "GHS08": { "name": "Gesundheitsgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/GHS-pictogram-respiratory-hazard.svg/96px-GHS-pictogram-respiratory-hazard.svg.png" },
+    "GHS08": { "name": "Gesundheitsgefahr (z. B. CMR)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/GHS-pictogram-respiratory-hazard.svg/96px-GHS-pictogram-respiratory-hazard.svg.png" },
     "GHS09": { "name": "Umweltgefährlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/GHS-pictogram-pollu.svg/96px-GHS-pictogram-pollu.svg.png" }
   },
   "iso": {
-    "E001": { "name": "Notausgang (links)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ISO_7010_E001.svg/96px-ISO_7010_E001.svg.png" },
+    "E001": { "name": "Notausgang (links)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ISO_7010_E001.svg/96px-ISO_7010_E001.svg.png" },
     "E002": { "name": "Notausgang (rechts)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/ISO_7010_E002.svg/96px-ISO_7010_E002.svg.png" },
-    "E003": { "name": "Erste Hilfe", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/ISO_7010_E003_-_First_aid_sign.svg/96px-ISO_7010_E003_-_First_aid_sign.svg.png" },
-    "E004": { "name": "Notruftelefon", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/ISO_7010_E004_emergency_telephone.svg/96px-ISO_7010_E004_emergency_telephone.svg.png" },
-    "E005": { "name": "Richtungspfeil (sicherer Zustand)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg/96px-ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg.png" },
-    "E006": { "name": "Richtungspfeil 45°", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg/96px-ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg.png" },
-    "E007": { "name": "Sammelstelle", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ISO_7010_E007_-_Emergency_assembly_point.svg/96px-ISO_7010_E007_-_Emergency_assembly_point.svg.png" },
-    "E008": { "name": "Zum Öffnen einschlagen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/ISO_7010_E008_-_Break_to_obtain_access.svg/96px-ISO_7010_E008_-_Break_to_obtain_access.svg.png" },
-    "E009": { "name": "Arzt", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/ISO_7010_E009_doctor.svg/96px-ISO_7010_E009_doctor.svg.png" },
-    "E010": { "name": "Defibrillator", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/ISO_7010_E010_-_Automated_external_heart_defibrillator.svg/96px-ISO_7010_E010_-_Automated_external_heart_defibrillator.svg.png" },
-    "E011": { "name": "Augendusche", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/ISO_7010_E011_Eyewash_station.svg/96px-ISO_7010_E011_Eyewash_station.svg.png" },
-    "E012": { "name": "Sicherheitsdusche", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/ISO_7010_E012_safety_shower.svg/96px-ISO_7010_E012_safety_shower.svg.png" },
-    "E013": { "name": "Trage", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/ISO_7010_E013_stretcher.svg/96px-ISO_7010_E013_stretcher.svg.png" },
-    "E016": { "name": "Notfenster mit Leiter", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/ISO_7010_E016_-_Emergency_window_with_escape_ladder.svg/96px-ISO_7010_E016_-_Emergency_window_with_escape_ladder.svg.png" },
-    "E017": { "name": "Rettungsfenster", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/ISO_7010_E017_-_Rescue_window.svg/96px-ISO_7010_E017_-_Rescue_window.svg.png" },
-    "E018": { "name": "Gegen den Uhrzeigersinn öffnen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/ISO_7010_E018_Turn_anticlockwise_to_open.svg/96px-ISO_7010_E018_Turn_anticlockwise_to_open.svg.png" },
-    "E019": { "name": "Im Uhrzeigersinn öffnen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/ISO_7010_E019_Turn_clockwise_to_open.svg/96px-ISO_7010_E019_Turn_clockwise_to_open.svg.png" },
+    "E003": { "name": "Erste Hilfe",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/ISO_7010_E003_-_First_aid_sign.svg/96px-ISO_7010_E003_-_First_aid_sign.svg.png" },
+    "E004": { "name": "Notruftelefon",         "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/ISO_7010_E004_emergency_telephone.svg/96px-ISO_7010_E004_emergency_telephone.svg.png" },
+    "E005": { "name": "Richtungspfeil (90°)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg/96px-ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg.png" },
+    "E006": { "name": "Richtungspfeil (45°)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg/96px-ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg.png" },
+    "E007": { "name": "Sammelstelle",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ISO_7010_E007_-_Emergency_assembly_point.svg/96px-ISO_7010_E007_-_Emergency_assembly_point.svg.png" },
+    "E011": { "name": "Augendusche",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/ISO_7010_E011_Eyewash_station.svg/96px-ISO_7010_E011_Eyewash_station.svg.png" },
+    "E012": { "name": "Sicherheitsdusche",     "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/ISO_7010_E012_safety_shower.svg/96px-ISO_7010_E012_safety_shower.svg.png" },
 
-    "F001": { "name": "Feuerlöscher", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/ISO_7010_F001_fire_extinguisher.svg/96px-ISO_7010_F001_fire_extinguisher.svg.png" },
-    "F002": { "name": "Wandhydrant", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/ISO_7010_F002_fire_hose_reel.svg/96px-ISO_7010_F002_fire_hose_reel.svg.png" },
-    "F003": { "name": "Feuerleiter", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/ISO_7010_F003_fire_ladder.svg/96px-ISO_7010_F003_fire_ladder.svg.png" },
-    "F004": { "name": "Feuerlöscheinrichtungen – Sammlung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/ISO_7010_F004_-_Collection_of_fire_fighting_equipment.svg/96px-ISO_7010_F004_-_Collection_of_fire_fighting_equipment.svg.png" },
-    "F005": { "name": "Brandmelder", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ISO_7010_F005_fire_alarm_call_point.svg/96px-ISO_7010_F005_fire_alarm_call_point.svg.png" },
-    "F006": { "name": "Feuer-Notruftelefon", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/ISO_7010_F006_fire_emergency_telephone.svg/96px-ISO_7010_F006_fire_emergency_telephone.svg.png" },
+    "F001": { "name": "Feuerlöscher",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/ISO_7010_F001_fire_extinguisher.svg/96px-ISO_7010_F001_fire_extinguisher.svg.png" },
+    "F002": { "name": "Wandhydrant",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/ISO_7010_F002_fire_hose_reel.svg/96px-ISO_7010_F002_fire_hose_reel.svg.png" },
+    "F003": { "name": "Feuerleiter",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/ISO_7010_F003_fire_ladder.svg/96px-ISO_7010_F003_fire_ladder.svg.png" },
+    "F005": { "name": "Brandmelder",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ISO_7010_F005_fire_alarm_call_point.svg/96px-ISO_7010_F005_fire_alarm_call_point.svg.png" },
 
-    "P001": { "name": "Allgemeines Verbot", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/ISO_7010_P001_general_prohibition.svg/96px-ISO_7010_P001_general_prohibition.svg.png" },
-    "P002": { "name": "Rauchen verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/ISO_7010_P002_No_Smoking.svg/96px-ISO_7010_P002_No_Smoking.svg.png" },
-    "P003": { "name": "Offenes Feuer verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/ISO_7010_P003_No_Open_Flame.svg/96px-ISO_7010_P003_No_Open_Flame.svg.png" },
-    "P004": { "name": "Durchgang verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/ISO_7010_P004_No_thoroughfare.svg/96px-ISO_7010_P004_No_thoroughfare.svg.png" },
-    "P005": { "name": "Kein Trinkwasser", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/ISO_7010_P005_Not_drinking_water.svg/96px-ISO_7010_P005_Not_drinking_water.svg.png" },
+    "P001": { "name": "Allgemeines Verbot",    "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/ISO_7010_P001_general_prohibition.svg/96px-ISO_7010_P001_general_prohibition.svg.png" },
+    "P002": { "name": "Rauchen verboten",      "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/ISO_7010_P002_No_Smoking.svg/96px-ISO_7010_P002_No_Smoking.svg.png" },
+    "P003": { "name": "Offenes Feuer verboten","img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/ISO_7010_P003_No_Open_Flame.svg/96px-ISO_7010_P003_No_Open_Flame.svg.png" },
+    "P004": { "name": "Durchgang verboten",    "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/ISO_7010_P004_No_thoroughfare.svg/96px-ISO_7010_P004_No_thoroughfare.svg.png" },
     "P006": { "name": "Kein Zugang für Flurförderzeuge", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/ISO_7010_P006_No_access_for_industrial_vehicles.svg/96px-ISO_7010_P006_No_access_for_industrial_vehicles.svg.png" },
-    "P007": { "name": "Kein Zugang für Personen mit aktiven implantierten Herzgeräten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/ISO_7010_P007_No_access_for_people_with_active_implanted_cardiac_devices.svg/96px-ISO_7010_P007_No_access_for_people_with_active_implanted_cardiac_devices.svg.png" },
-    "P008": { "name": "Keine Metallgegenstände/Uhren", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/ISO_7010_P008_No_metallic_articles_or_watches.svg/96px-ISO_7010_P008_No_metallic_articles_or_watches.svg.png" },
-    "P010": { "name": "Nicht berühren", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/ISO_7010_P010_Do_not_touch.svg/96px-ISO_7010_P010_Do_not_touch.svg.png" },
-    "P011": { "name": "Nicht mit Wasser löschen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/ISO_7010_P011_Do_not_extinguish_with_water.svg/96px-ISO_7010_P011_Do_not_extinguish_with_water.svg.png" },
-    "P012": { "name": "Keine schweren Lasten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/ISO_7010_P012_No_heavy_load.svg/96px-ISO_7010_P012_No_heavy_load.svg.png" },
-    "P013": { "name": "Keine aktivierten Mobiltelefone", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/ISO_7010_P013_No_activated_mobile_phones.svg/96px-ISO_7010_P013_No_activated_mobile_phones.svg.png" },
-    "P014": { "name": "Kein Zugang für Personen mit Metallimplantaten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/ISO_7010_P014_No_access_for_people_with_metallic_implants.svg/96px-ISO_7010_P014_No_access_for_people_with_metallic_implants.svg.png" },
-    "P015": { "name": "Nicht hineingreifen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/ISO_7010_P015_Do_not_reach_in.svg/96px-ISO_7010_P015_Do_not_reach_in.svg.png" },
-    "P017": { "name": "Nicht schieben", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ISO_7010_P017_Do_not_push.svg/96px-ISO_7010_P017_Do_not_push.svg.png" },
-    "P018": { "name": "Nicht hier sitzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/ISO_7010_P018_Do_not_sit_here.svg/96px-ISO_7010_P018_Do_not_sit_here.svg.png" },
-    "P019": { "name": "Nicht auf Oberfläche treten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/ISO_7010_P019_Do_not_step_on_surface.svg/96px-ISO_7010_P019_Do_not_step_on_surface.svg.png" },
-    "P020": { "name": "Aufzug bei Brand nicht benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/ISO_7010_P020_Do_not_use_lift_in_the_event_of_fire.svg/96px-ISO_7010_P020_Do_not_use_lift_in_the_event_of_fire.svg.png" },
-    "P021": { "name": "Hunde verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/ISO_7010_P021_No_dogs.svg/96px-ISO_7010_P021_No_dogs.svg.png" },
-    "P022": { "name": "Essen/Trinken verboten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/ISO_7010_P022_No_eating_or_drinking.svg/96px-ISO_7010_P022_No_eating_or_drinking.svg.png" },
-    "P023": { "name": "Nicht versperren", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/ISO_7010_P023_Do_not_obstruct.svg/96px-ISO_7010_P023_Do_not_obstruct.svg.png" },
-    "P024": { "name": "Hier nicht gehen/stehen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/ISO_7010_P024_Do_not_walk_or_stand_here.svg/96px-ISO_7010_P024_Do_not_walk_or_stand_here.svg.png" },
-    "P025": { "name": "Unvollständiges Gerüst nicht benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/ISO_7010_P025_Do_not_use_this_incomplete_scaffold.svg/96px-ISO_7010_P025_Do_not_use_this_incomplete_scaffold.svg.png" },
-    "P026": { "name": "Nicht in/unter Wasser nutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ISO_7010_P026_Do_not_use_this_device_in_a_bathtub_shower_or_water-filled_reservoir.svg/96px-ISO_7010_P026_Do_not_use_this_device_in_a_bathtub_shower_or_water-filled_reservoir.svg.png" },
-    "P027": { "name": "Diesen Aufzug für Menschen mit Behinderung nicht verwenden", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/ISO_7010_P027_Do_not_use_this_lift_for_people_with_disabilities.svg/96px-ISO_7010_P027_Do_not_use_this_lift_for_people_with_disabilities.svg.png" },
+    "P010": { "name": "Nicht berühren",        "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/ISO_7010_P010_Do_not_touch.svg/96px-ISO_7010_P010_Do_not_touch.svg.png" },
 
-    "M001": { "name": "Allgemeines Gebot", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/ISO_7010_M001_general_mandatory_action.svg/96px-ISO_7010_M001_general_mandatory_action.svg.png" },
-    "M002": { "name": "Gebrauchsanweisung beachten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/ISO_7010_M002_Refer_to_instruction_manual_booklet.svg/96px-ISO_7010_M002_Refer_to_instruction_manual_booklet.svg.png" },
-    "M003": { "name": "Gehörschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/ISO_7010_M003_-_Wear_ear_protection.svg/96px-ISO_7010_M003_-_Wear_ear_protection.svg.png" },
-    "M004": { "name": "Augenschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/ISO_7010_M004_Wear_eye_protection.svg/96px-ISO_7010_M004_Wear_eye_protection.svg.png" },
-    "M005": { "name": "Erdung herstellen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ISO_7010_M005_Connect_an_earth_terminal_to_the_ground.svg/96px-ISO_7010_M005_Connect_an_earth_terminal_to_the_ground.svg.png" },
-    "M006": { "name": "Netzstecker ziehen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/ISO_7010_M006_Disconnect_mains_plug_from_electrical_outlet.svg/96px-ISO_7010_M006_Disconnect_mains_plug_from_electrical_outlet.svg.png" },
-    "M007": { "name": "Opaker Augenschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/ISO_7010_M007_Opaque_eye_protection_must_be_worn.svg/96px-ISO_7010_M007_Opaque_eye_protection_must_be_worn.svg.png" },
-    "M008": { "name": "Sicherheitsschuhe tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/ISO_7010_M008_wear_safety_footwear.svg/96px-ISO_7010_M008_wear_safety_footwear.svg.png" },
-    "M009": { "name": "Schutzhandschuhe tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/ISO_7010_M009_Wear_protective_gloves.svg/96px-ISO_7010_M009_Wear_protective_gloves.svg.png" },
-    "M010": { "name": "Schutzkleidung tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/ISO_7010_M010_Wear_protective_clothing.svg/96px-ISO_7010_M010_Wear_protective_clothing.svg.png" },
-    "M011": { "name": "Hände waschen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/ISO_7010_M011_Wash_your_hands.svg/96px-ISO_7010_M011_Wash_your_hands.svg.png" },
-    "M012": { "name": "Handlauf benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/ISO_7010_M012_Use_handrail.svg/96px-ISO_7010_M012_Use_handrail.svg.png" },
-    "M013": { "name": "Gesichtsschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/ISO_7010_M013_Wear_a_face_shield.svg/96px-ISO_7010_M013_Wear_a_face_shield.svg.png" },
-    "M014": { "name": "Kopfschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ISO_7010_M014_Wear_head_protection.svg/96px-ISO_7010_M014_Wear_head_protection.svg.png" },
-    "M015": { "name": "Warnkleidung tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/ISO_7010_M015_Wear_high-visibility_clothing.svg/96px-ISO_7010_M015_Wear_high-visibility_clothing.svg.png" },
-    "M016": { "name": "Maske tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/ISO_7010_M016_Wear_a_mask.svg/96px-ISO_7010_M016_Wear_a_mask.svg.png" },
-    "M017": { "name": "Atemschutz tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/ISO_7010_M017_Wear_respiratory_protection.svg/96px-ISO_7010_M017_Wear_respiratory_protection.svg.png" },
-    "M018": { "name": "Sicherheitsgeschirr tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/ISO_7010_M018_Wear_safety_harness.svg/96px-ISO_7010_M018_Wear_safety_harness.svg.png" },
-    "M019": { "name": "Schweißmaske tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/ISO_7010_M019_Wear_a_welding_mask.svg/96px-ISO_7010_M019_Wear_a_welding_mask.svg.png" },
-    "M020": { "name": "Sicherheitsgurte tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/ISO_7010_M020_Wear_safety_belts.svg/96px-ISO_7010_M020_Wear_safety_belts.svg.png" },
-    "M021": { "name": "Vor Wartung freischalten", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ISO_7010_M021_Disconnect_before_maintenance_or_repair.svg/96px-ISO_7010_M021_Disconnect_before_maintenance_or_repair.svg.png" },
-    "M022": { "name": "Schutzcreme benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/ISO_7010_M022_Use_barrier_cream.svg/96px-ISO_7010_M022_Use_barrier_cream.svg.png" },
-    "M023": { "name": "Fußgängerbrücke benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/ISO_7010_M023_Use_footbridge.svg/96px-ISO_7010_M023_Use_footbridge.svg.png" },
-    "M024": { "name": "Diesen Gehweg benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/ISO_7010_M024_Use_this_walkway.svg/96px-ISO_7010_M024_Use_this_walkway.svg.png" },
-    "M025": { "name": "Augenschutz für Säugling", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/ISO_7010_M025_Protect_infant%27s_eyes_with_opaque_eye_protection.svg/96px-ISO_7010_M025_Protect_infant%27s_eyes_with_opaque_eye_protection.svg.png" },
-    "M026": { "name": "Schutzschürze benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/ISO_7010_M026_Use_protective_apron.svg/96px-ISO_7010_M026_Use_protective_apron.svg.png" },
-    "M027": { "name": "Hautschutz benutzen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/ISO_7010_M027_Use_skin_protection.svg/96px-ISO_7010_M027_Use_skin_protection.svg.png" },
-    "M028": { "name": "Filtermaske verwenden", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/ISO_7010_M028_Use_face_mask_with_filter.svg/96px-ISO_7010_M028_Use_face_mask_with_filter.svg.png" },
-    "M029": { "name": "Isolierende Handschuhe tragen", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ISO_7010_M029_Wear_insulating_gloves.svg/96px-ISO_7010_M029_Wear_insulating_gloves.svg.png" },
-
-    "W001": { "name": "Allgemeine Warnung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/ISO_7010_W001_general_warning.svg/96px-ISO_7010_W001_general_warning.svg.png" },
-    "W002": { "name": "Warnung: Explosiv", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ISO_7010_W002_-_Warning;_Explosive_material.svg/96px-ISO_7010_W002_-_Warning;_Explosive_material.svg.png" },
-    "W003": { "name": "Warnung: Radioaktiv / Ionisierende Strahlung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/ISO_7010_W003_-_Warning;_Radioactive_material_or_ionizing_radiation.svg/96px-ISO_7010_W003_-_Warning;_Radioactive_material_or_ionizing_radiation.svg.png" },
-    "W004": { "name": "Warnung: Laserstrahl", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ISO_7010_W004_-_Warning;_Laser_beam.svg/96px-ISO_7010_W004_-_Warning;_Laser_beam.svg.png" },
-    "W005": { "name": "Warnung: Nichtionisierende Strahlung", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/ISO_7010_W005_-_Warning;_Non-ionizing_radiation.svg/96px-ISO_7010_W005_-_Warning;_Non-ionizing_radiation.svg.png" },
-    "W006": { "name": "Warnung: Magnetfeld", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/ISO_7010_W006_-_Warning;_Magnetic_field.svg/96px-ISO_7010_W006_-_Warning;_Magnetic_field.svg.png" },
-    "W007": { "name": "Warnung: Rutschgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/ISO_7010_W007_-_Warning;_Slippery_surface.svg/96px-ISO_7010_W007_-_Warning;_Slippery_surface.svg.png" },
-    "W008": { "name": "Warnung: Hindernis auf Bodenhöhe", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/ISO_7010_W008_-_Warning;_Floor-level_obstacle.svg/96px-ISO_7010_W008_-_Warning;_Floor-level_obstacle.svg.png" },
-    "W009": { "name": "Warnung: Absturzgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/ISO_7010_W009_-_Warning;_Drop_%28fall%29.svg/96px-ISO_7010_W009_-_Warning;_Drop_%28fall%29.svg.png" },
-    "W011": { "name": "Warnung: Flurförderzeuge", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/ISO_7010_W011_-_Warning;_Forklift_trucks_and_other_industrial_vehicles.svg/96px-ISO_7010_W011_-_Warning;_Forklift_trucks_and_other_industrial_vehicles.svg.png" },
-    "W012": { "name": "Warnung: Elektrizität", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ISO_7010_W012_-_Warning;_Electricity.svg/96px-ISO_7010_W012_-_Warning;_Electricity.svg.png" },
-    "W013": { "name": "Warnung: Scharfe Elemente", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/ISO_7010_W013_-_Warning;_Sharp_element.svg/96px-ISO_7010_W013_-_Warning;_Sharp_element.svg.png" },
-    "W014": { "name": "Warnung: Automatischer Anlauf", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/ISO_7010_W014_-_Warning;_Automatic_start-up.svg/96px-ISO_7010_W014_-_Warning;_Automatic_start-up.svg.png" },
-    "W015": { "name": "Warnung: Quetschgefahr", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/ISO_7010_W015_-_Warning;_Crushing.svg/96px-ISO_7010_W015_-_Warning;_Crushing.svg.png" },
-    "W016": { "name": "Warnung: Überkopf-LastUemit, iki şeyi aynı anda çözüyoruz:
-
-1) **ERR_TOO_MANY_REDIRECTS** (editor açılmıyor → yönlendirme döngüsü)  
-2) **Tam piktogram & öneri dosyaları** (JSON’ları burada veriyorum ve indirilebilir linkleri ekliyorum)
-
----
-
-## 1) Editor’un açılmaması: yönlendirme döngüsü (ERR_TOO_MANY_REDIRECTS)
-
-Bu hata genelde iki sebepten çıkar:
-
-- **Cloudflare SSL/TLS modu “Flexible”** iken origin (kaynak) **HTTP→HTTPS** veya **HTTPS→HTTP** zorluyorsa **sonsuz döngü** oluşur. Çözüm: Cloudflare **SSL/TLS Encryption Mode** değerini **Full** (mümkünse **Full (strict)**) yapın ve çakışan HTTPS→HTTP yönlendirmelerini kaldırın. [5](https://developers.cloudflare.com/ssl/troubleshooting/too-many-redirects/)  
-- **_redirects** dosyasında **kendi kendine** dönen kurallar (ör. `/` → `/` veya `/editor`’un tekrar `/editor`’a dönmesi) varsa döngüye girer. _redirects dosyasının doğru biçimi ve uygulama kapsamı Cloudflare Pages dokümanında anlatılır. [7](https://developers.cloudflare.com/pages/configuration/redirects/)
-
-### Hızlı düzeltme adımları
-
-**A. Cloudflare’da SSL/TLS ayarı**  
-- Cloudflare Dashboard → **SSL/TLS** → **Encryption mode**: **Full** veya **Full (strict)** seçin. (Flexible çoğu senaryoda redirect loop’a yol açar.) [5](https://developers.cloudflare.com/ssl/troubleshooting/too-many-redirects/)  
-- “Always Use HTTPS” açık ise origin üzerinde ters yönde (HTTPS→HTTP) kural olmadığından emin olun. [5](https://developers.cloudflare.com/ssl/troubleshooting/too-many-redirects/)
-
-**B. `_redirects` dosyası (Cloudflare Pages)**  
-Kök dizine **_redirects** (uzantısız, düz metin) ekleyin. **Sadece gerekli rotaları** tanımlayın—fazla kural eklemek döngü riskini arttırır. Önerilen **minimal** dosya:
-
-```text
-# Cloudflare Pages _redirects (minimal, döngü yok)
-/sayfa    /            200
-/editor   /editor.html 200
-``
