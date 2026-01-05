@@ -10,10 +10,8 @@
 </head>
 <body class="page" id="baBody">
   <header class="hero"><h1>BETRIEBSANWEISUNG – VORLAGE</h1></header>
-
   <div class="wrapper" id="baRoot" style="font-size:14px">
     <section class="box" id="head"></section>
-
     <section class="box layout">
       <aside class="side">
         <div class="ba-band">PIKTOGRAMM‑LISTE</div>
@@ -38,11 +36,11 @@
           <div class="target" data-target="dis">Entsorgung</div>
           <div class="auto"><label><input type="checkbox" id="autoExport" /> Automatisch in Word übernehmen</label></div>
         </div>
-
-        <div class="small">Tipp: Piktogramm anklicken → Zielbereich wählen. Alle Piktogramme sind sichtbar; Arama/Filter nutzen.</div>
+        <div class="small">Tipp: Piktogramm anklicken → Zielbereich wählen. Alle Piktogramme sind sichtbar; Suche/Filter nutzen.</div>
       </aside>
 
       <main>
+        <!-- Meta -->
         <div class="box">
           <div class="grid3">
             <div><label>Nr. (optional)</label><input id="metaNr" type="text" /></div>
@@ -54,6 +52,7 @@
           </div>
         </div>
 
+        <!-- Bereiche -->
         <div class="ba-band">ANWENDUNGSBEREICH</div>
         <textarea id="scope" rows="3" placeholder="Für welches Arbeitsmittel/Tätigkeit gilt diese Betriebsanweisung?"></textarea>
 
@@ -114,7 +113,6 @@
         <div class="ft-row"><input id="disFT" type="text" placeholder="Eigene Aussage hinzufügen…" /><button class="btn-primary" onclick="addFreeText('disFT','disList')">➕ Hinzufügen</button></div>
 
         <div id="fontHint" class="small" style="display:none;">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße automatisch reduziert (min. 10 pt).</div>
-
         <div class="actions" style="margin-top:10px">
           <button id="saveDocx" class="btn-primary">Als Word (.docx) speichern</button>
           <button class="btn-primary" onclick="window.print()">PDF</button>
@@ -122,9 +120,7 @@
       </main>
     </section>
   </div>
-
   /assets/app.js?v=20260105</script>
   <script>try{const H=JSON.parse(localStorage.getItem('BA_HEAD')||'{}');document.getElementById('baBody')?.classList.add('theme-'+(H?.type||'Maschine'));}catch{}</script>
 </body>
 </html>
-
