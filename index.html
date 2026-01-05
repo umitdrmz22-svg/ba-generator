@@ -1,26 +1,79 @@
 
-{
-  "ghs": {
-    "GHS01": { "name": "Explosiv", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/GHS-pictogram-explos.svg/96px-GHS-pictogram-explos.svg.png" },
-    "GHS02": { "name": "Entzündbar", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/GHS-pictogram-flamme.svg/96px-GHS-pictogram-flamme.svg.png" },
-    "GHS03": { "name": "Oxidierend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/GHS-pictogram-flamme_ueber_kreis.svg/96px-GHS-pictogram-flamme_ueber_kreis.svg.png" },
-    "GHS04": { "name": "Gas unter Druck", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/GHS-pictogram-gas-cylinder.svg/96px-GHS-pictogram-gas-cylinder.svg.png" },
-    "GHS05": { "name": "Ätzend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/GHS-pictogram-acid.svg/96px-GHS-pictogram-acid.svg.png" },
-    "GHS06": { "name": "Akute Toxizität (fatal)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/GHS-pictogram-skull.svg/96px-GHS-pictogram-skull.svg.png" },
-    "GHS07": { "name": "Gesundheitsschädlich / Reizend", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/GHS-pictogram-exclam.svg/96px-GHS-pictogram-exclam.svg.png" },
-    "GHS08": { "name": "Gesundheitsgefahr (z. B. CMR)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/GHS-pictogram-respiratory-hazard.svg/96px-GHS-pictogram-respiratory-hazard.svg.png" },
-    "GHS09": { "name": "Umweltgefährlich", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/GHS-pictogram-pollu.svg/96px-GHS-pictogram-pollu.svg.png" }
-  },
-  "iso": {
-    "E001": { "name": "Notausgang (links)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ISO_7010_E001.svg/96px-ISO_7010_E001.svg.png" },
-    "E002": { "name": "Notausgang (rechts)", "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/ISO_7010_E002.svg/96px-ISO_7010_E002.svg.png" },
-    "E003": { "name": "Erste Hilfe",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/ISO_7010_E003_-_First_aid_sign.svg/96px-ISO_7010_E003_-_First_aid_sign.svg.png" },
-    "E004": { "name": "Notruftelefon",         "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/ISO_7010_E004_emergency_telephone.svg/96px-ISO_7010_E004_emergency_telephone.svg.png" },
-    "E005": { "name": "Richtungspfeil (90°)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg/96px-ISO_7010_E005_-_Direction_arrow_%28safe_condition%29.svg.png" },
-    "E006": { "name": "Richtungspfeil (45°)",  "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg/96px-ISO_7010_E006_-_Directional_arrow_%2845_degrees%29.svg.png" },
-    "E007": { "name": "Sammelstelle",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ISO_7010_E007_-_Emergency_assembly_point.svg/96px-ISO_7010_E007_-_Emergency_assembly_point.svg.png" },
-    "E011": { "name": "Augendusche",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/ISO_7010_E011_Eyewash_station.svg/96px-ISO_7010_E011_Eyewash_station.svg.png" },
-    "E012": { "name": "Sicherheitsdusche",     "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/ISO_7010_E012_safety_shower.svg/96px-ISO_7010_E012_safety_shower.svg.png" },
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Betriebsanweisung – Auswahl</title>
+  <link rel="stylesheet" href="/assets/style.css?v=20260105">
+</head>
+<body class="page theme-Maschine" id="bodyRoot">
+  <header class="hero">
+    <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
+  </header>
 
-    "F001": { "name": "Feuerlöscher",          "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/ISO_7010_F001_fire_extinguisher.svg/96px-ISO_7010_F001_fire_extinguisher.svg.png" },
-    "F002": { "name": "Wandhydrant",           "img": "/functions/img?src=https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/ISO_7010_F002_fire_hose_reel.svg/96px-ISO_7010_F002_fire_hose_reel.svg.png" },
+  <main class="wrapper" id="indexRoot">
+    <!-- Typ-Auswahl -->
+    <section class="box">
+      <label>Typ wählen (optional):</label>
+      <div class="row" id="typeRow">
+        <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
+        <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
+        <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
+        <label><input type="radio" name="type" value="PSA"> PSA</label>
+      </div>
+      <div class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</div>
+    </section>
+
+    <!-- Metadaten -->
+    <section class="box">
+      <div class="grid2">
+        <div>
+          <label>Unternehmen (optional)</label><input id="firm" type="text" placeholder="Firmenname" />
+          <label>Abteilung (optional)</label><input id="dept" type="text" placeholder="Abteilung" />
+          <label>Ersteller (optional)</label><input id="author" type="text" placeholder="Name" />
+          <label>Datum (optional)</label><input id="date" type="date" />
+        </div>
+        <div>
+          <label>Logo‑URL oder Upload (optional)</label>
+          <input id="logoFile" type="file" accept="image/*" />
+          <input id="logoUrl" type="url" placeholder="https://… (PNG/JPG)" />
+          <small class="muted">PNG/JPG empfohlen. Ohne Cloud‑Upload kann eine URL genutzt werden.</small>
+          <div id="logoPreview" class="logo-preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typografie -->
+    <section class="box">
+      <h3>Überschrift & Typografie (optional)</h3>
+      <div class="row">
+        <div style="flex:1">
+          <label>Name des Arbeitsmittels/Verfahrens</label>
+          <input id="assetName" type="text" placeholder="z. B. Trennschleifer" />
+          <label>Untertitel</label>
+          <input id="subtitleText" type="text" value="Betriebsanweisung" />
+        </div>
+        <div style="flex:1">
+          <label><input type="checkbox" id="subtitleBold" checked> Fett</label>
+          <label><input type="checkbox" id="subtitleCenter" checked> Zentriert</label>
+          <label>Schriftart:
+            <select id="fontFamily"><option>Arial</option><option>Calibri</option><option>Noto Sans</option><option>Times New Roman</option></select>
+          </label>
+          <label>Schriftgröße:
+            <input type="number" id="fontSize" min="14" max="26" value="18" />
+          </label>
+        </div>
+      </div>
+      <div class="muted">Alle Angaben sind optional und können später im Editor geändert werden.</div>
+    </section>
+
+    <div class="actions">
+      <button id="continue" class="btn-primary">Weiter zur Vorlage</button>
+    </div>
+  </main>
+
+  <script src="/assets/app.js?v=20260105"></script>
+</body>
+</html>
