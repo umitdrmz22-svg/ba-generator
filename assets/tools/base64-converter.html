@@ -1,0 +1,24 @@
+
+<!doctype html><html lang="de"><head>
+<meta charset="utf-8"><title>Base64 Konverter</title>
+<style>body{font-family:Arial,sans-serif;margin:20px}.drop{border:2px dashed #6b7280;border-radius:10px;padding:18px;text-align:center}.out{display:grid;gap:10px;margin-top:16px}textarea{width:100%;height:120px}label{font-weight:bold}</style>
+</head><body>
+<h3>Bild → Base64 (klein & groß)</h3>
+<p>Datei hier ablegen oder klicken:</p>
+<input id="file" type="file" accept="image/*" multiple>
+<div class="drop" id="drop">oder hierher ziehen …</div>
+<div style="margin-top:10px">Zielgröße (klein, px): <input id="small" type="number" value="64" min="24" max="256">
+&nbsp; Zielgröße (groß, px): <input id="large" type="number" value="256" min="64" max="1024"></div>
+<div id="out" class="out"></div>
+<script>
+const file=document.getElementById('file'),drop=document.getElementById('drop'),out=document.getElementById('out');
+const toPng=(img,size)=>{const c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=size;c.height=size;ctx.fillStyle='#fff';ctx.fillRect(0,0,size,size);
+const s=Math.min(size/img.width,size/img.height),w=img.width*s,h=img.height*s;ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);return c.toDataURL('image/png');};
+const handle=(files)=>{const s=+document.getElementById('small').value,l=+document.getElementById('large').value;
+[...files].forEach(f=>{const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const small=toPng(img,s),big=toPng(img,l);
+const wrap=document.createElement('div');wrap.innerHTML=`<div><label>${f.name}</label></div><div><div>Klein (web):</div><textarea>${small}</textarea></div><div><div>Groß (Word):</div><textarea>${big}</textarea></div>`;out.prepend(wrap);};img.src=r.result;};r.readAsDataURL(f);});};
+file.onchange=e=>handle(e.target.files);
+drop.ondragover=e=>{e.preventDefault();drop.style.background='#f3f4f6';};
+drop.ondragleave=()=>drop.style.background='';
+drop.ondrop=e=>{e.preventDefault();drop.style.background='';handle(e.dataTransfer.files);};
+</script></body></html>
