@@ -1,0 +1,29 @@
+
+{
+  "ghs": {
+    "GHS01": {
+      "name": "Explosiv",
+      "thumbDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC",
+      "fullDataUrl":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC"
+    },
+    "GHS02": {
+      "name": "Entzündbar",
+      "thumbDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC",
+      "fullDataUrl":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC"
+    }
+  },
+  "iso": {
+    "E003": {
+      "name": "Erste Hilfe",
+      "thumbDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC",
+      "fullDataUrl":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC"
+    }
+  },
+  "adr": {
+    "ADR3": {
+      "name": "Klasse 3 – Entzündbare Flüssigkeiten",
+      "thumbDataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC",
+      "fullDataUrl":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB...SUQmCC"
+    }
+  }
+}
