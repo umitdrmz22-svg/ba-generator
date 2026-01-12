@@ -6,16 +6,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Betriebsanweisung – Vorlage</title>
 
-  <!-- CSP (nur falls Header yoksa): externe Bilder/Skriptler için izin -->
-  <meta http-equiv="Content-Security-Policy"
-        content="img-src https: data: blob:; script-src 'self' https:; connect-src https:; style-src 'self' https: 'unsafe-inline';">
-
   <!-- Schrift -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  https://fonts.gstatic.com
+  https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap
 
   <!-- Stil -->
-  <link rel="stylesheet" href="/assets/style.css?v=20260106">
+  /assets/style.css?v=20260107
+
+  <!-- DOCX – lokal (ohne CDN) -->
+  /assets/lib/docx.min.js</script>
 </head>
 <body class="page" id="baBody">
   <header class="hero">
@@ -27,7 +26,7 @@
     <aside class="side box">
       <div id="head"></div>
 
-      <!-- **NEU: ZUORDNEN ganz oben und kompakt** -->
+      <!-- ZUORDNEN oben & sticky (benutzerfreundlich) -->
       <div class="ba-band" style="margin-top:8px;">ZUORDNEN</div>
       <div class="assignbar assignbar-sticky">
         <button class="target" data-target="hazard">Gefährdungen</button>
@@ -43,7 +42,6 @@
         </div>
       </div>
 
-      <!-- **Piktogramm-Liste jetzt alt tarafta** -->
       <div class="ba-band">PIKTOGRAMM‑LISTE</div>
       <div class="filterbar filter-compact">
         <div class="chips">
@@ -54,10 +52,12 @@
         <input type="search" id="picSearch" placeholder="Suche nach Code oder Bezeichnung …">
       </div>
       <div class="piclist piclist-compact" id="picList"></div>
-      <p id="fontHint" class="small" style="display:none;margin-top:6px;">Hinweis: Verwende eine moderne Schrift (Inter), um die Darstellung zu verbessern.</p>
+      <p id="fontHint" class="small" style="display:none;margin-top:6px;">
+        Hinweis: Verwende eine moderne Schrift (Inter), um die Darstellung zu verbessern.
+      </p>
     </aside>
 
-    <!-- Hauptinhalt (kompakt) -->
+    <!-- Hauptinhalt -->
     <section class="box box-compact">
       <div class="section-icons" id="secIcons"></div>
 
@@ -129,14 +129,27 @@
       </div>
       <div id="disSug" class="sug sug-compact"></div>
 
-      <p class="small" style="margin-top:6px;">Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße wird automatisch reduziert (min. 10 pt).</p>
+      <p class="small" style="margin-top:6px;">
+        Hinweis: Inhalt überschreitet 2 Seiten → Schriftgröße wird automatisch reduziert (min. 10 pt).
+      </p>
     </section>
   </main>
 
-  <!-- DOCX-Bibliothek **ön‑yükleme** (CSP izinliyse) -->
-  <script src="https://cdn.jsdelivr.net/npm/docx@8.4.0/build/index.js" defer></script>
+  <!-- Piktogramm‑Explorer (Modal) -->
+  <div class="modal" id="picModal" hidden>
+    <div class="modal-inner">
+      <div class="modal-head">
+        <strong>Piktogramm‑Explorer</strong>
+        <button id="modalClose" class="btn-primary btn-compact">Schließen</button>
+      </div>
+      <div class="modal-body">
+        <div id="modalPicList" class="picgrid"></div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Uygulama -->
-  <script src="/assets/app.js?v=20260106" defer></script>
+  <!-- App -->
+  /assets/app.js?v=20260107</script>
 </body>
 </html>
+``
