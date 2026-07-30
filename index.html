@@ -1,74 +1,45 @@
-
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Betriebsanweisung – Auswahl</title>
-
-  <!-- Schrift -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <!-- Stil -->
-  <link rel="stylesheet" href="/assets/style.css?v=20260107">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Assistent zum Erstellen von Betriebsanweisungen für Gefahrstoffe und Maschinen.">
+  <title>BA Studio – Betriebsanweisungen erstellen</title>
+  <link rel="stylesheet" href="/assets/style.css?v=20260730">
 </head>
-<body class="page">
-  <header class="hero">
-    <h1>BETRIEBSANWEISUNG – AUSWAHL</h1>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">BA <span>Studio</span></a>
+    <span class="status"><i></i> Lokal im Browser</span>
   </header>
 
-  <main class="wrapper" id="indexRoot">
-    <section class="box box-compact">
-      <div class="ba-band">Grunddaten</div>
+  <main class="landing">
+    <section class="intro">
+      <p class="eyebrow">Betriebsanweisungs-Generator</p>
+      <h1>Von der Gefährdung zur<br><em>klaren Anweisung.</em></h1>
+      <p class="lead">Erstellen Sie eine strukturierte Betriebsanweisung für Gefahrstoffe oder Maschinen. SDB-Daten werden lokal ausgelesen und als auswählbare Vorschläge angeboten.</p>
+      <div class="trust"><span>✓ SDB-Import</span><span>✓ GHS-Erkennung</span><span>✓ Druckfertiges A4</span></div>
+    </section>
 
-      <div id="typeRow" class="row row-compact">
-        <label><input type="radio" name="type" value="Gefahrstoff"> Gefahrstoff</label>
-        <label><input type="radio" name="type" value="Biostoff"> Biostoff</label>
-        <label><input type="radio" name="type" value="Maschine" checked> Maschine</label>
-        <label><input type="radio" name="type" value="PSA"> PSA</label>
+    <section class="setup-card" aria-labelledby="setup-title">
+      <div class="step">SCHRITT 1 VON 2</div>
+      <h2 id="setup-title">Was möchten Sie erstellen?</h2>
+      <div class="type-grid" role="radiogroup" aria-label="Art der Betriebsanweisung">
+        <label class="type-option selected"><input type="radio" name="type" value="Gefahrstoff" checked><b>◇</b><span><strong>Gefahrstoff</strong><small>SDB importieren, H-/P-Sätze und GHS-Piktogramme übernehmen</small></span></label>
+        <label class="type-option"><input type="radio" name="type" value="Maschine"><b>⚙</b><span><strong>Maschine</strong><small>Gefährdungen und Schutzmaßnahmen passend auswählen</small></span></label>
       </div>
-      <p class="muted">Ohne Auswahl bleibt „Maschine“ Standard.</p>
-
-      <div class="grid2">
-        <div><label>Unternehmen (optional)<br><input id="firm" type="text"></label></div>
-        <div><label>Abteilung (optional)<br><input id="dept" type="text"></label></div>
-        <div><label>Ersteller (optional)<br><input id="author" type="text"></label></div>
-        <div><label>Datum (optional)<br><input id="date" type="date"></label></div>
+      <div class="form-grid">
+        <label>Unternehmen<input id="firm" autocomplete="organization" placeholder="Muster GmbH"></label>
+        <label>Arbeitsbereich<input id="dept" placeholder="z. B. Werkstatt"></label>
+        <label class="wide">Bezeichnung des Stoffes / der Maschine<input id="assetName" required placeholder="z. B. Aceton oder Ständerbohrmaschine"></label>
+        <label>Erstellt von<input id="author" autocomplete="name" placeholder="Name"></label>
+        <label>Stand<input id="date" type="date"></label>
+        <label class="wide">Firmenlogo (optional)<input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
       </div>
-
-      <div class="box box-compact" style="margin-top:10px;">
-        <div class="row row-compact">
-          <div style="flex:1;">
-            <label>Logo-URL (optional)<br><input id="logoUrl" type="url"></label>
-            <p class="small">Wenn kein Upload möglich ist, kann eine Logo-URL verwendet werden.</p>
-          </div>
-          <div><label>Logo-Datei (optional)<br><input id="logoFile" type="file" accept="image/*"></label></div>
-        </div>
-        <div id="logoPreview" class="logo-preview"></div>
-      </div>
-
-      <div class="box box-compact">
-        <div class="ba-band">Überschrift & Typografie (optional)</div>
-        <div class="grid2">
-          <div><label>Name des Arbeitsmittels/Verfahrens<br><input id="assetName" type="text"></label></div>
-          <div><label>Untertitel<br><input id="subtitleText" type="text" value="Betriebsanweisung"></label></div>
-          <div class="row row-compact">
-            <label><input id="subtitleBold" type="checkbox"> Fett</label>
-            <label><input id="subtitleCenter" type="checkbox" checked> Zentriert</label>
-          </div>
-          <div class="row row-compact">
-            <label>Schriftart:<select id="fontFamily"><option>Inter</option><option>Arial</option><option>Calibri</option></select></label>
-            <label>Schriftgröße:<input id="fontSize" type="number" min="10" max="30" value="18"></label>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align:right;">
-        <button id="continue" class="btn-primary btn-compact">Weiter zur Vorlage</button>
-      </div>
+      <p class="privacy">🔒 Ihre Angaben und hochgeladenen Dateien bleiben in diesem Browser.</p>
+      <button id="continue" class="primary">Betriebsanweisung erstellen <span>→</span></button>
     </section>
   </main>
-
-  <script src="/assets/app.js?v=20260107"></script>
+  <script src="/assets/app.js?v=20260730"></script>
 </body>
 </html>

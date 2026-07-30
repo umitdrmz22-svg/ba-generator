@@ -26,4 +26,3 @@ export const onRequestGet = async ({ request }) => {
     return new Response('Bad src', { status: 400 });
   }
 };
-``
