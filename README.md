@@ -6,7 +6,9 @@ Browserbasierter Assistent für Betriebsanweisungen zu **Gefahrstoffen** und **M
 
 - Auswahl zwischen Gefahrstoff- und Maschinen-Betriebsanweisung
 - lokaler Import textlesbarer Sicherheitsdatenblätter (`.pdf`/`.txt`)
-- Erkennung von GHS-Codes, Signalwort sowie H-, EUH- und P-Codes
+- Erkennung von GHS-Codes (zusätzlich aus eindeutigen H-Codes abgeleitet), Signalwort sowie H-, EUH- und P-Codes
+- Darstellung der neun offiziellen GHS/CLP-Piktogramme statt symbolischer Emoji-Platzhalter
+- allgemeine, piktogrammbezogene Vorschläge für Gefahren, Maßnahmen, Gefahrfall, Erste Hilfe und Entsorgung
 - auswählbare statt ungeprüft automatisch übernommene Sätze
 - fachlich getrennte Bereiche für Gefahren, Schutzmaßnahmen, Gefahrfall, Erste Hilfe und Entsorgung/Instandhaltung
 - maschinenspezifische Beispielsätze für mehrere häufige Maschinentypen
