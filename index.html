@@ -3,43 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Assistent zum Erstellen von Betriebsanweisungen für Gefahrstoffe und Maschinen.">
+  <meta name="description" content="Fachlicher Assistent für Betriebsanweisungen zu Gefahrstoffen, Arbeitsmitteln, PSA und Biostoffen.">
   <title>BA Studio – Betriebsanweisungen erstellen</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20260730">
+  <link rel="stylesheet" href="assets/style.css?v=20260803">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="/">BA <span>Studio</span></a>
-    <span class="status"><i></i> Lokal im Browser</span>
+    <a class="brand" href="./">BA <span>Studio</span></a>
+    <span class="status"><i></i> Verarbeitung lokal im Browser</span>
   </header>
-
   <main class="landing">
     <section class="intro">
       <p class="eyebrow">Betriebsanweisungs-Generator</p>
       <h1>Von der Gefährdung zur<br><em>klaren Anweisung.</em></h1>
-      <p class="lead">Erstellen Sie eine strukturierte Betriebsanweisung für Gefahrstoffe oder Maschinen. SDB-Daten werden lokal ausgelesen und als auswählbare Vorschläge angeboten.</p>
-      <div class="trust"><span>✓ SDB-Import</span><span>✓ GHS-Erkennung</span><span>✓ Druckfertiges A4</span></div>
+      <p class="lead">SDB oder betriebliche Grundlage einlesen, Verwendungszweck beschreiben, fachlich passende Sätze und Piktogramme auswählen – anschließend die BA im DGUV-orientierten A4-Format prüfen und freigeben.</p>
+      <div class="trust"><span>✓ Vier BA-Arten</span><span>✓ SDB-Analyse</span><span>✓ GHS &amp; ASR-Piktogramme</span><span>✓ Druckfertiges A4</span></div>
+      <div class="legal-mini">Entwurfshilfe: Die fertige BA muss immer anhand der Gefährdungsbeurteilung, des aktuellen SDB beziehungsweise der Herstellerinformationen fachkundig geprüft und betrieblich freigegeben werden.</div>
     </section>
-
     <section class="setup-card" aria-labelledby="setup-title">
       <div class="step">SCHRITT 1 VON 2</div>
-      <h2 id="setup-title">Was möchten Sie erstellen?</h2>
-      <div class="type-grid" role="radiogroup" aria-label="Art der Betriebsanweisung">
-        <label class="type-option selected"><input type="radio" name="type" value="Gefahrstoff" checked><b>◇</b><span><strong>Gefahrstoff</strong><small>SDB importieren, H-/P-Sätze und GHS-Piktogramme übernehmen</small></span></label>
-        <label class="type-option"><input type="radio" name="type" value="Maschine"><b>⚙</b><span><strong>Maschine</strong><small>Gefährdungen und Schutzmaßnahmen passend auswählen</small></span></label>
+      <h2 id="setup-title">Welche BA möchten Sie erstellen?</h2>
+      <div class="type-grid" id="typeGrid" role="radiogroup" aria-label="Art der Betriebsanweisung">
+        <label class="type-option selected danger"><input type="radio" name="type" value="Gefahrstoff" checked><b>GHS</b><span><strong>Gefahrstoff</strong><small>SDB, H-/P-Sätze und GHS-Piktogramme</small></span></label>
+        <label class="type-option machine"><input type="radio" name="type" value="Arbeitsmittel"><b>⚙</b><span><strong>Maschine / Arbeitsmittel</strong><small>Betriebsanleitung, GBU und Tätigkeit</small></span></label>
+        <label class="type-option ppe"><input type="radio" name="type" value="PSA"><b>PSA</b><span><strong>Persönliche Schutzausrüstung</strong><small>Benutzung, Grenzen, Pflege und Prüfung</small></span></label>
+        <label class="type-option bio"><input type="radio" name="type" value="Biostoff"><b>☣</b><span><strong>Biostoff</strong><small>Tätigkeit, Exposition und Hygieneregeln</small></span></label>
       </div>
       <div class="form-grid">
         <label>Unternehmen<input id="firm" autocomplete="organization" placeholder="Muster GmbH"></label>
-        <label>Arbeitsbereich<input id="dept" placeholder="z. B. Werkstatt"></label>
-        <label class="wide">Bezeichnung des Stoffes / der Maschine<input id="assetName" required placeholder="z. B. Aceton oder Ständerbohrmaschine"></label>
-        <label>Erstellt von<input id="author" autocomplete="name" placeholder="Name"></label>
+        <label>BA-Nummer<input id="baNumber" placeholder="z. B. BA-GS-001"></label>
+        <label>Arbeitsbereich<input id="dept" placeholder="z. B. Instandhaltung"></label>
+        <label>Arbeitsplatz<input id="workplace" placeholder="z. B. Werkbank 2"></label>
+        <label class="wide">Bezeichnung<input id="assetName" required placeholder="Produkt, Maschine, PSA oder Biostoff/Tätigkeit"></label>
+        <label class="wide">Verwendungszweck / konkrete Tätigkeit<input id="purpose" required placeholder="z. B. Schmierung der Förderkette bei Stillstand"></label>
+        <label>Erstellt von<input id="author" autocomplete="name" placeholder="Name / Funktion"></label>
+        <label>Verantwortlich / Freigabe<input id="responsible" placeholder="Name / Funktion"></label>
         <label>Stand<input id="date" type="date"></label>
+        <label>Revision<input id="revision" placeholder="z. B. 1"></label>
         <label class="wide">Firmenlogo (optional)<input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
       </div>
-      <p class="privacy">🔒 Ihre Angaben und hochgeladenen Dateien bleiben in diesem Browser.</p>
-      <button id="continue" class="primary">Betriebsanweisung erstellen <span>→</span></button>
+      <p class="privacy">🔒 Angaben und hochgeladene Dateien bleiben in diesem Browser.</p>
+      <div class="actions"><button id="loadDemo" class="secondary outline" type="button">Beispiel-BA laden</button><button id="continue" class="primary" type="button">Editor öffnen <span>→</span></button></div>
     </section>
   </main>
-  <script src="/assets/app.js?v=20260730"></script>
+  <script src="assets/engine.js?v=20260803"></script>
+  <script src="assets/app.js?v=20260803"></script>
 </body>
 </html>

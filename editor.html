@@ -1,53 +1,71 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Betriebsanweisung fachlich zusammenstellen und als A4-PDF ausgeben.">
   <title>BA Studio – Editor</title>
-  <link rel="stylesheet" href="/assets/style.css?v=20260730">
+  <link rel="stylesheet" href="assets/style.css?v=20260803">
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="/">BA <span>Studio</span></a><nav><button id="saveDraft" class="quiet">Entwurf speichern</button><button id="printBa" class="primary small">Drucken / PDF</button></nav></header>
+  <header class="topbar"><a class="brand" href="./">BA <span>Studio</span></a><nav><button id="saveDraft" class="quiet" type="button">Entwurf speichern</button><button id="printBa" class="primary small" type="button">Prüfen &amp; Drucken / PDF</button></nav></header>
   <main class="workspace" id="baRoot">
     <aside class="controls">
-      <div class="progress"><b>2</b><span><strong>Inhalte zusammenstellen</strong><small>Vorschläge prüfen und auswählen</small></span></div>
+      <div class="progress"><b>2</b><span><strong>Inhalte fachlich zusammenstellen</strong><small>Grundlage prüfen, Vorschläge auswählen oder eigene Sätze ergänzen</small></span></div>
 
-      <section id="sdbPanel" class="panel">
-        <div class="panel-title"><span>1</span><div><h2>Sicherheitsdatenblatt</h2><p>PDF oder Text – Verarbeitung nur lokal</p></div></div>
-        <label class="dropzone" id="dropzone">⬆<strong>SDB hier ablegen</strong><small>oder Datei auswählen (PDF, TXT)</small><input id="sdbFile" type="file" accept="application/pdf,text/plain"></label>
-        <textarea id="sdbText" rows="3" placeholder="Alternativ SDB-Text hier einfügen …"></textarea>
-        <button id="analyzeSdb" class="secondary">SDB analysieren</button>
+      <section class="panel meta-editor">
+        <div class="panel-title"><span>1</span><div><h2>Geltungsbereich und Tätigkeit</h2><p>Konkrete betriebliche Anwendung festlegen</p></div></div>
+        <div class="form-grid compact">
+          <label class="wide">Bezeichnung<input id="assetInput"></label>
+          <label class="wide">Verwendungszweck / Tätigkeit<input id="purposeInput"></label>
+          <label>Arbeitsbereich<input id="deptInput"></label><label>Arbeitsplatz<input id="workplaceInput"></label>
+          <label>BA-Nummer<input id="baNumberInput"></label><label>Revision<input id="revisionInput"></label>
+          <label>Notruf / Alarmierung<input id="emergencyInput" placeholder="112 / interne Nummer"></label><label>Ersthelfende<input id="firstAiderInput" placeholder="Name oder Aushang"></label>
+          <label class="wide">Entsorgung / Instandhaltung – Kontakt<input id="disposalContactInput" placeholder="zuständige Stelle / Werkstatt"></label>
+        </div>
+        <button id="refreshSuggestions" class="secondary" type="button">Vorschläge zum Verwendungszweck aktualisieren</button>
+      </section>
+
+      <section class="panel" id="sourcePanel">
+        <div class="panel-title"><span>2</span><div><h2 id="sourceTitle">Fachliche Grundlage</h2><p id="sourceHelp"></p></div></div>
+        <label class="dropzone" id="dropzone">⬆<strong>Datei hier ablegen</strong><small>PDF oder TXT – Verarbeitung lokal</small><input id="sourceFile" type="file" accept="application/pdf,text/plain"></label>
+        <textarea id="sourceText" rows="5" placeholder="Alternativ relevante Inhalte hier einfügen …"></textarea>
+        <button id="analyzeSource" class="secondary" type="button">Grundlage analysieren</button>
         <div id="analysisResult" class="analysis-result" aria-live="polite"></div>
       </section>
 
-      <section id="machinePanel" class="panel hidden">
-        <div class="panel-title"><span>1</span><div><h2>Maschine beschreiben</h2><p>Passende Beispielsätze ermitteln</p></div></div>
-        <label>Maschinenart<select id="machineKind"><option>Allgemein</option><option>Bohrmaschine</option><option>Drehmaschine</option><option>Kreissäge</option><option>Schweißgerät</option><option>CNC</option></select></label>
-        <label>Tätigkeit<input id="activity" placeholder="z. B. Werkstücke bohren"></label>
-        <button id="machineSuggest" class="secondary">Vorschläge aktualisieren</button>
+      <section class="panel hidden" id="ghsPanel">
+        <div class="panel-title"><span>3</span><div><h2>GHS-Piktogramme</h2><p>Automatisch erkannt und jederzeit manuell korrigierbar</p></div></div>
+        <div id="ghsPicker" class="picto-picker"></div>
+        <label>Signalwort<select id="signalWordInput"><option value="">Kein Signalwort</option><option>Gefahr</option><option>Achtung</option></select></label>
       </section>
 
       <section class="panel">
-        <div class="panel-title"><span>2</span><div><h2>Inhalte auswählen</h2><p>Nur geprüfte Aussagen übernehmen</p></div></div>
+        <div class="panel-title"><span>4</span><div><h2>Sicherheitszeichen nach ASR A1.3</h2><p>Nur für den konkreten Arbeitsplatz erforderliche Zeichen auswählen</p></div></div>
+        <div id="signPicker" class="sign-picker"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title"><span>5</span><div><h2>Inhalte auswählen</h2><p>Je Abschnitt mindestens fünf Vorschläge; eigene Formulierungen sind möglich</p></div></div>
         <div id="suggestions"></div>
       </section>
     </aside>
 
     <section class="preview-wrap">
-      <div class="preview-toolbar"><span>VORSCHAU · DIN A4</span><label>Farbschema <select id="colorTheme"><option value="auto">Typgerecht</option><option value="blue">Blau</option><option value="orange">Orange</option></select></label></div>
-      <article id="baSheet" class="ba-sheet chemical">
-        <header class="ba-head"><div id="logoPreview"></div><div><p id="companyOut"></p><h1>BETRIEBSANWEISUNG</h1><p>gemäß Gefährdungsbeurteilung</p></div><div class="meta"><b id="dateOut"></b><span id="departmentOut"></span></div></header>
-        <div class="asset"><small>ARBEITSBEREICH / TÄTIGKEIT</small><h2 id="assetOut">Nicht benannt</h2><p id="activityOut"></p></div>
+      <div class="preview-toolbar"><span>VORSCHAU · DIN A4</span><span id="completeStatus" class="badge warn">Prüfung offen</span></div>
+      <article id="baSheet" class="ba-sheet">
+        <header class="ba-head"><div id="logoPreview" class="logo"></div><div><p id="companyOut"></p><h1>BETRIEBSANWEISUNG</h1><p id="lawOut"></p></div><div class="meta"><b id="numberOut"></b><span id="dateOut"></span><span id="revisionOut"></span></div></header>
+        <div class="assignment"><div><small>ARBEITSBEREICH / ARBEITSPLATZ</small><b id="departmentOut"></b></div><div><small>VERWENDUNGSZWECK / TÄTIGKEIT</small><b id="purposeOut"></b></div></div>
+        <div class="asset"><small id="assetLabel">BEZEICHNUNG</small><h2 id="assetOut">Nicht benannt</h2></div>
         <div id="signalBlock" class="signal hidden"><strong id="signalWord"></strong><div id="pictograms" class="pictograms"></div></div>
-        <section><h3><span>!</span> Gefahren für Mensch und Umwelt</h3><div id="hazardOut" class="section-body empty"></div></section>
-        <section><h3><span>✓</span> Schutzmaßnahmen und Verhaltensregeln</h3><div id="measureOut" class="section-body empty"></div></section>
-        <section><h3><span>⚠</span> Verhalten im Gefahrfall</h3><div id="emergencyOut" class="section-body empty"></div></section>
-        <section><h3><span>✚</span> Erste Hilfe</h3><div id="firstAidOut" class="section-body empty"></div></section>
-        <section><h3><span>♻</span> Sachgerechte Entsorgung / Instandhaltung</h3><div id="disposalOut" class="section-body empty"></div></section>
-        <footer><span>Datum / Unterschrift Verantwortliche Person</span><strong>Vor Verwendung durch die verantwortliche Person prüfen und freigeben.</strong></footer>
+        <div id="signBlock" class="signal signs hidden"><div id="signsOut" class="signs-out"></div></div>
+        <div id="sectionsOut"></div>
+        <footer><div><span>Erstellt von</span><b id="authorOut"></b></div><div><span>Verantwortlich / Freigabe</span><b id="responsibleOut"></b></div><div><span>Datum / Unterschrift</span><b>________________________</b></div></footer>
       </article>
-      <p class="legal-note">Hinweis: Der Generator unterstützt die Erstellung, ersetzt aber weder Gefährdungsbeurteilung noch fachkundige Prüfung. Angaben des aktuellen SDB, Herstellerunterlagen und betriebliche Verhältnisse sind maßgeblich.</p>
+      <p class="legal-note">Entwurfshilfe – vor Verwendung anhand der Gefährdungsbeurteilung und der aktuellen Primärunterlagen fachkundig prüfen, betriebsspezifisch ergänzen und freigeben. Rechtsgrundlagen: <a href="https://www.gesetze-im-internet.de/gefstoffv_2010/__14.html" target="_blank" rel="noopener">§ 14 GefStoffV</a>, <a href="https://www.baua.de/DE/Angebote/Rechtstexte-und-Technische-Regeln/Regelwerk/TRGS/TRGS-555.html" target="_blank" rel="noopener">TRGS 555</a>, <a href="https://www.gesetze-im-internet.de/betrsichv_2015/__12.html" target="_blank" rel="noopener">§ 12 BetrSichV</a>, <a href="https://www.gesetze-im-internet.de/psa-bv/__3.html" target="_blank" rel="noopener">§ 3 PSA-BV</a>, <a href="https://www.gesetze-im-internet.de/biostoffv_2013/__14.html" target="_blank" rel="noopener">§ 14 BioStoffV</a>, <a href="https://www.baua.de/DE/Angebote/Regelwerk/ASR/ASR-A1-3.html" target="_blank" rel="noopener">ASR A1.3</a>.</p>
     </section>
   </main>
-  <script src="/assets/app.js?v=20260730"></script>
+  <script src="assets/engine.js?v=20260803"></script>
+  <script src="assets/app.js?v=20260803"></script>
 </body>
 </html>
