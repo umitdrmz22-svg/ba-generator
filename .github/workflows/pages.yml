@@ -41,6 +41,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Supabase-Laufzeitkonfiguration erzeugen
+        env:
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const config = {
+            url: 'https://rqvcbjomrjccyuchxpuh.supabase.co',
+            publishableKey: process.env.SUPABASE_PUBLISHABLE_KEY || ''
+          };
+          fs.writeFileSync('assets/auth-config.js', `window.BA_AUTH_CONFIG = ${JSON.stringify(config, null, 2)};\n`);
+          NODE
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
