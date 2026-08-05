@@ -1,0 +1,17 @@
+const fs=require('fs');
+const assert=require('assert');
+const editor=fs.readFileSync('editor.html','utf8');
+const index=fs.readFileSync('index.html','utf8');
+const auth=fs.readFileSync('auth.html','utf8');
+const pictograms=fs.readFileSync('assets/section-pictograms.js','utf8');
+const sql=fs.readFileSync('supabase/001_auth_and_tenants.sql','utf8');
+assert(editor.includes('section-pictograms.js'),'Editor lädt die abschnittsbezogene Piktogrammlogik nicht.');
+assert(editor.includes('section-pictograms.css'),'Editor lädt das Piktogramm-Layout nicht.');
+assert(index.includes('data-auth-slot')&&editor.includes('data-auth-slot'),'Konto-Navigation fehlt.');
+assert(auth.includes('registerForm')&&auth.includes('loginForm'),'Registrierungs- oder Anmeldeformular fehlt.');
+assert(pictograms.includes("key==='hazard'")&&pictograms.includes("key==='firstAid'")&&pictograms.includes("key==='disposal'"),'Piktogramme werden nicht fachlich auf Abschnitte verteilt.');
+assert(pictograms.includes("signalBlock?.classList.add('section-distributed')"),'Alte Piktogramm-Sammelzeile wird nicht ausgeblendet.');
+assert(sql.includes('enable row level security'),'RLS ist nicht aktiviert.');
+assert(sql.includes("'ersteller','pruefer','freigeber'"),'Dokumentenrollen fehlen im Mandantenmodell.');
+assert(!sql.includes('service_role'),'Ein privilegierter Schlüssel oder eine service_role-Abhängigkeit darf nicht im Client-Schema vorausgesetzt werden.');
+console.log('UI-, Auth- und Piktogrammtests bestanden.');

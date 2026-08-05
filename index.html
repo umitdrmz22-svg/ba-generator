@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Fachlicher Assistent für Betriebsanweisungen zu Gefahrstoffen, Arbeitsmitteln, PSA und Biostoffen.">
   <title>BA Studio – Betriebsanweisungen erstellen</title>
-  <link rel="stylesheet" href="assets/style.css?v=20260803">
+  <link rel="stylesheet" href="assets/style.css?v=20260805">
+  <link rel="stylesheet" href="assets/auth.css?v=20260805">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="./">BA <span>Studio</span></a>
-    <span class="status"><i></i> Verarbeitung lokal im Browser</span>
+    <span class="status"><i></i> Dokumentinhalte lokal im Browser</span>
+    <div class="auth-slot" data-auth-slot></div>
   </header>
   <main class="landing">
     <section class="intro">
@@ -42,11 +44,14 @@
         <label>Revision<input id="revision" placeholder="z. B. 1"></label>
         <label class="wide">Firmenlogo (optional)<input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
       </div>
-      <p class="privacy">🔒 Angaben und hochgeladene Dateien bleiben in diesem Browser.</p>
+      <p class="privacy">🔒 BA-Inhalte und hochgeladene Dateien bleiben in diesem Browser. Benutzerkonten werden getrennt über den Auth-Dienst verwaltet.</p>
       <div class="actions"><button id="loadDemo" class="secondary outline" type="button">Beispiel-BA laden</button><button id="continue" class="primary" type="button">Editor öffnen <span>→</span></button></div>
     </section>
   </main>
-  <script src="assets/engine.js?v=20260803"></script>
-  <script src="assets/app.js?v=20260803"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/auth-config.js?v=20260805"></script>
+  <script src="assets/auth-client.js?v=20260805"></script>
+  <script src="assets/engine.js?v=20260805"></script>
+  <script src="assets/app.js?v=20260805"></script>
 </body>
 </html>

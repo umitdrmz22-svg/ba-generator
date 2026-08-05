@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Betriebsanweisung fachlich zusammenstellen und als A4-PDF ausgeben.">
   <title>BA Studio – Editor</title>
-  <link rel="stylesheet" href="assets/style.css?v=20260803">
+  <link rel="stylesheet" href="assets/style.css?v=20260805">
+  <link rel="stylesheet" href="assets/auth.css?v=20260805">
+  <link rel="stylesheet" href="assets/section-pictograms.css?v=20260805">
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="./">BA <span>Studio</span></a><nav><button id="saveDraft" class="quiet" type="button">Entwurf speichern</button><button id="printBa" class="primary small" type="button">Prüfen &amp; Drucken / PDF</button></nav></header>
+  <header class="topbar"><a class="brand" href="./">BA <span>Studio</span></a><nav><button id="saveDraft" class="quiet" type="button">Entwurf speichern</button><button id="printBa" class="primary small" type="button">Prüfen &amp; Drucken / PDF</button></nav><div class="auth-slot" data-auth-slot></div></header>
   <main class="workspace" id="baRoot">
     <aside class="controls">
       <div class="progress"><b>2</b><span><strong>Inhalte fachlich zusammenstellen</strong><small>Grundlage prüfen, Vorschläge auswählen oder eigene Sätze ergänzen</small></span></div>
@@ -65,7 +67,11 @@
       <p class="legal-note">Entwurfshilfe – vor Verwendung anhand der Gefährdungsbeurteilung und der aktuellen Primärunterlagen fachkundig prüfen, betriebsspezifisch ergänzen und freigeben. Rechtsgrundlagen: <a href="https://www.gesetze-im-internet.de/gefstoffv_2010/__14.html" target="_blank" rel="noopener">§ 14 GefStoffV</a>, <a href="https://www.baua.de/DE/Angebote/Rechtstexte-und-Technische-Regeln/Regelwerk/TRGS/TRGS-555.html" target="_blank" rel="noopener">TRGS 555</a>, <a href="https://www.gesetze-im-internet.de/betrsichv_2015/__12.html" target="_blank" rel="noopener">§ 12 BetrSichV</a>, <a href="https://www.gesetze-im-internet.de/psa-bv/__3.html" target="_blank" rel="noopener">§ 3 PSA-BV</a>, <a href="https://www.gesetze-im-internet.de/biostoffv_2013/__14.html" target="_blank" rel="noopener">§ 14 BioStoffV</a>, <a href="https://www.baua.de/DE/Angebote/Regelwerk/ASR/ASR-A1-3.html" target="_blank" rel="noopener">ASR A1.3</a>.</p>
     </section>
   </main>
-  <script src="assets/engine.js?v=20260803"></script>
-  <script src="assets/app.js?v=20260803"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/auth-config.js?v=20260805"></script>
+  <script src="assets/auth-client.js?v=20260805"></script>
+  <script src="assets/engine.js?v=20260805"></script>
+  <script src="assets/app.js?v=20260805"></script>
+  <script src="assets/section-pictograms.js?v=20260805"></script>
 </body>
 </html>

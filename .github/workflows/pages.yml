@@ -3,6 +3,8 @@ name: Deploy BA Studio to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,19 +13,34 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  test-and-deploy:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/app.js
+          node --check assets/engine.js
+          node --check assets/auth-client.js
+          node --check assets/section-pictograms.js
+      - name: Run automated tests
+        run: |
+          node tests/engine.test.js
+          node tests/ui-extension.test.js
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: test
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Test suggestion engine
-        run: node tests/engine.test.js
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:

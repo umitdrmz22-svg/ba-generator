@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Sicher bei BA Studio anmelden oder ein Firmenkonto registrieren.">
+  <title>BA Studio – Anmelden und Registrieren</title>
+  <link rel="stylesheet" href="assets/style.css?v=20260805">
+  <link rel="stylesheet" href="assets/auth.css?v=20260805">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">BA <span>Studio</span></a>
+    <span class="status"><i></i> Sichere Benutzerverwaltung</span>
+    <div class="auth-slot" data-auth-slot></div>
+  </header>
+  <main class="auth-page">
+    <section class="auth-card" aria-labelledby="authTitle">
+      <div class="auth-card-head">
+        <p class="eyebrow">Benutzerkonto und Firmenbereich</p>
+        <h1 id="authTitle">Anmelden oder registrieren</h1>
+        <p>Nach der Registrierung wird ein eigener Firmenbereich angelegt. Rollen für Ersteller, Prüfer und Freigeber werden später innerhalb dieses Bereichs vergeben.</p>
+      </div>
+      <div class="auth-tabs" role="tablist" aria-label="Anmeldung oder Registrierung">
+        <button class="active" type="button" data-auth-tab="login">Anmelden</button>
+        <button type="button" data-auth-tab="register">Registrieren</button>
+      </div>
+      <div id="authConfigNotice" class="auth-config-notice" hidden>
+        <b>Technische Konfiguration fehlt.</b><br>
+        Für echte Benutzerkonten müssen in Cloudflare Pages die Variablen <code>SUPABASE_URL</code> und <code>SUPABASE_PUBLISHABLE_KEY</code> gesetzt und das SQL-Schema ausgeführt werden.
+      </div>
+      <form id="loginForm" class="auth-form">
+        <label>E-Mail-Adresse<input name="email" type="email" autocomplete="email" required></label>
+        <label>Passwort<input name="password" type="password" autocomplete="current-password" required></label>
+        <button class="auth-submit" type="submit">Anmelden</button>
+        <button id="resetPassword" class="auth-secondary" type="button">Passwort vergessen</button>
+      </form>
+      <form id="registerForm" class="auth-form" hidden>
+        <label>Vor- und Nachname<input name="fullName" autocomplete="name" required maxlength="120"></label>
+        <label>Unternehmen / Organisation<input name="organizationName" autocomplete="organization" required maxlength="160"></label>
+        <label>E-Mail-Adresse<input name="email" type="email" autocomplete="email" required></label>
+        <label>Passwort<input name="password" type="password" autocomplete="new-password" minlength="10" required></label>
+        <label>Passwort wiederholen<input name="passwordRepeat" type="password" autocomplete="new-password" minlength="10" required></label>
+        <label class="checkbox"><input name="terms" type="checkbox" value="accepted" required><span>Ich bestätige, dass ich die Datenschutz- und Nutzungsinformationen gelesen habe. Die betrieblichen Dokumente bleiben fachlich zu prüfen und freizugeben.</span></label>
+        <button class="auth-submit" type="submit">Firmenkonto registrieren</button>
+      </form>
+      <div id="authMessage" class="auth-message" hidden aria-live="polite"></div>
+      <p class="auth-foot">Passwörter werden nicht von BA Studio gespeichert. Authentifizierung und Sitzungen werden über Supabase Auth verarbeitet. Berechtigungen für Firmendaten werden zusätzlich durch Row Level Security abgesichert.</p>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/auth-config.js?v=20260805"></script>
+  <script src="assets/auth-client.js?v=20260805"></script>
+</body>
+</html>
