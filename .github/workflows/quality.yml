@@ -1,0 +1,19 @@
+name: Qualitätsprüfung
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JavaScript-Syntax prüfen
+        run: |
+          for file in assets/auth-config.js assets/auth-client.js assets/ba-cloud.js assets/engine.js assets/app.js; do
+            node --check "$file"
+          done
