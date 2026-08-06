@@ -7,11 +7,12 @@
   <title>BA Studio – Betriebsanweisungen erstellen</title>
   <link rel="stylesheet" href="assets/style.css?v=20260805">
   <link rel="stylesheet" href="assets/auth.css?v=20260806">
+  <link rel="stylesheet" href="assets/ba-library.css?v=20260806">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="./">BA <span>Studio</span></a>
-    <span class="status"><i></i> Dokumentinhalte lokal im Browser</span>
+    <span class="status"><i></i> BA im geschützten Firmenbereich</span>
     <div class="auth-slot" data-auth-slot></div>
   </header>
   <main class="landing">
@@ -19,11 +20,12 @@
       <p class="eyebrow">Betriebsanweisungs-Generator</p>
       <h1>Von der Gefährdung zur<br><em>klaren Anweisung.</em></h1>
       <p class="lead">SDB oder betriebliche Grundlage einlesen, Verwendungszweck beschreiben, fachlich passende Sätze und Piktogramme auswählen – anschließend die BA im DGUV-orientierten A4-Format prüfen und freigeben.</p>
-      <div class="trust"><span>✓ Vier BA-Arten</span><span>✓ SDB-Analyse</span><span>✓ GHS &amp; ASR-Piktogramme</span><span>✓ Druckfertiges A4</span></div>
+      <div class="trust"><span>✓ Vier BA-Arten</span><span>✓ SDB-Analyse</span><span>✓ GHS &amp; ASR-Piktogramme</span><span>✓ Online gespeichert</span></div>
       <div class="legal-mini">Entwurfshilfe: Die fertige BA muss immer anhand der Gefährdungsbeurteilung, des aktuellen SDB beziehungsweise der Herstellerinformationen fachkundig geprüft und betrieblich freigegeben werden.</div>
     </section>
+
     <section class="setup-card" aria-labelledby="setup-title">
-      <div class="step">SCHRITT 1 VON 2</div>
+      <div class="step">NEUE BETRIEBSANWEISUNG</div>
       <h2 id="setup-title">Welche BA möchten Sie erstellen?</h2>
       <div class="type-grid" id="typeGrid" role="radiogroup" aria-label="Art der Betriebsanweisung">
         <label class="type-option selected danger"><input type="radio" name="type" value="Gefahrstoff" checked><b>GHS</b><span><strong>Gefahrstoff</strong><small>SDB, H-/P-Sätze und GHS-Piktogramme</small></span></label>
@@ -44,13 +46,25 @@
         <label>Revision<input id="revision" placeholder="z. B. 1"></label>
         <label class="wide">Firmenlogo (optional)<input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp"></label>
       </div>
-      <p class="privacy">🔒 BA-Inhalte und hochgeladene Dateien bleiben in diesem Browser. Benutzerkonten werden getrennt über den Auth-Dienst verwaltet.</p>
+      <p class="privacy">🔒 Die BA wird dem angemeldeten Firmenbereich zugeordnet und während der Bearbeitung automatisch online gespeichert.</p>
       <div class="actions"><button id="loadDemo" class="secondary outline" type="button">Beispiel-BA laden</button><button id="continue" class="primary" type="button">Editor öffnen <span>→</span></button></div>
     </section>
+
+    <aside class="ba-library-card" aria-labelledby="saved-ba-title">
+      <div class="ba-library-head">
+        <div><p class="eyebrow">FIRMENBEREICH</p><h2 id="saved-ba-title">Gespeicherte Betriebsanweisungen</h2><p>Vorhandene Entwürfe öffnen und weiterbearbeiten.</p></div>
+        <span class="ba-library-sort">A–Z</span>
+      </div>
+      <label class="ba-library-search"><span>⌕</span><input id="savedBaSearch" type="search" placeholder="Bezeichnung, BA-Nr. oder Bereich"></label>
+      <div id="savedBaList" class="ba-library-list" aria-live="polite">
+        <div class="ba-library-empty"><strong>Wird geladen …</strong></div>
+      </div>
+      <div id="savedBaMessage" class="ba-library-message"></div>
+    </aside>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/auth-config.js?v=20260805"></script>
-  <script src="assets/auth-client.js?v=20260805"></script>
+  <script src="assets/auth-client.js?v=20260806"></script>
   <script src="assets/engine.js?v=20260805"></script>
   <script src="assets/app.js?v=20260805"></script>
 </body>
