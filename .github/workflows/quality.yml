@@ -1,19 +1,33 @@
 name: Qualitätsprüfung
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch: {}
 
 permissions:
   contents: read
 
 jobs:
-  javascript:
+  qa3:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: JavaScript-Syntax prüfen
         run: |
-          for file in assets/auth-config.js assets/auth-client.js assets/ba-cloud.js assets/engine.js assets/app.js; do
-            node --check "$file"
+          for file in assets/auth-config.js assets/auth-client.js assets/ba-cloud.js assets/engine.js assets/app.js; do node --check "$file"; done
+      - name: Modul- und Lizenzvertrag prüfen
+        run: |
+          INDEX=$(for f in index.html public/index.html docs/index.html; do if [ -f "$f" ]; then echo "$f"; break; fi; done)
+          test -n "$INDEX"
+          grep -Fq 'defidev-legal/ehs-entitlement-gate.js' "$INDEX"
+          grep -Fq 'data-product-id="ehs_ba_monthly"' "$INDEX"
+      - name: Engine/UI Tests dreimal ausführen
+        run: |
+          for PASS in 1 2 3; do
+            echo "QA pass $PASS"
+            node tests/engine.test.js
+            node tests/ui-extension.test.js
           done
