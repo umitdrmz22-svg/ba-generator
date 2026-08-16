@@ -227,7 +227,7 @@ private fun EhsApp(activity: Activity) {
     }
 
     selectedModule?.let { module ->
-        ModuleWebView(module) { selectedModule = null }
+        ModuleWebView(module, session?.accessToken.orEmpty()) { selectedModule = null }
         return
     }
 
@@ -508,7 +508,7 @@ private fun AccountScreen(
 }
 
 @Composable
-private fun ModuleWebView(module: Module, onBack: () -> Unit) {
+private fun ModuleWebView(module: Module, accessToken: String, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text("‹ Module") }
@@ -522,7 +522,9 @@ private fun ModuleWebView(module: Module, onBack: () -> Unit) {
                     settings.domStorageEnabled = true
                     settings.allowFileAccess = false
                     settings.allowContentAccess = false
-                    loadUrl(module.url)
+                    val targetUrl = if (accessToken.isBlank()) module.url else
+                        "${module.url}#ehs_token=${android.net.Uri.encode(accessToken)}"
+                    loadUrl(targetUrl)
                 }
             },
             modifier = Modifier.fillMaxSize(),
