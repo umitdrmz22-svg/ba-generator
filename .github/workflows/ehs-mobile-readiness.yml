@@ -1,0 +1,82 @@
+name: EHS mobile readiness
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/ehs-mobile-readiness.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mobile-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Apply mobile-safe EHS baseline
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          css = r'''/* DefiDev EHS mobile baseline — generated 2026-08-16 */
+          html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+          img, svg, video, canvas { max-width: 100%; }
+          button, input, select, textarea { font: inherit; }
+          @media (max-width: 900px) {
+            html, body { max-width: 100%; overflow-x: hidden; }
+            body { margin: 0; }
+            main, .main, .content, .container, .app, .app-shell, .workspace { max-width: 100% !important; min-width: 0 !important; }
+            .grid, .layout, .workspace, .app-grid, .main-grid, .dashboard-grid, .form-grid, .columns, .content-grid, .split, .two-col, .two-column { grid-template-columns: minmax(0, 1fr) !important; }
+            .row, .toolbar, .actions, .button-row, .topbar, .header-actions { flex-wrap: wrap !important; }
+            aside, .sidebar, .side-panel, .nav-panel { position: static !important; width: 100% !important; max-width: none !important; min-width: 0 !important; }
+            button, [role="button"], input, select { min-height: 44px; }
+            input, select, textarea { max-width: 100%; box-sizing: border-box; font-size: 16px; }
+            table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            pre, code { max-width: 100%; overflow-wrap: anywhere; }
+            dialog, .modal, .modal-content, .dialog, .panel, .drawer { max-width: calc(100vw - 24px) !important; max-height: calc(100dvh - 24px) !important; overflow: auto !important; box-sizing: border-box; }
+            .defidev-legal-mobile { padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); text-align: center; font-size: 12px; line-height: 1.5; }
+            .defidev-legal-mobile a { margin: 0 8px; }
+          }
+          @media (max-width: 560px) {
+            body { font-size: 15px; }
+            h1 { font-size: clamp(1.45rem, 7vw, 2rem); }
+            h2 { font-size: clamp(1.2rem, 6vw, 1.55rem); }
+            .card, .panel, section, article { max-width: 100%; box-sizing: border-box; }
+            .toolbar > *, .actions > *, .button-row > * { max-width: 100%; }
+          }
+          @media print { .defidev-legal-mobile { display: none !important; } }
+          '''
+
+          legal = '''\n<div class="defidev-legal-mobile" data-defidev-mobile-legal="1">\n  <a href="https://umitdrmz22-svg.github.io/defidev-legal/privacy-ehs.html" target="_blank" rel="noopener">Datenschutz</a>\n  <a href="https://umitdrmz22-svg.github.io/defidev-legal/impressum.html" target="_blank" rel="noopener">Impressum</a>\n  <a href="https://umitdrmz22-svg.github.io/defidev-legal/support.html" target="_blank" rel="noopener">Support</a>\n</div>\n'''
+
+          html_files = [p for p in Path('.').rglob('index.html') if '.git' not in p.parts and 'node_modules' not in p.parts]
+          if not html_files:
+              raise SystemExit('No index.html found')
+          for html in html_files:
+              css_path = html.parent / 'ehs-mobile.css'
+              css_path.write_text(css, encoding='utf-8')
+              text = html.read_text(encoding='utf-8')
+              if 'name="viewport"' not in text and "name='viewport'" not in text:
+                  text = text.replace('</head>', '  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>', 1)
+              if 'ehs-mobile.css' not in text:
+                  text = text.replace('</head>', '  <link rel="stylesheet" href="./ehs-mobile.css">\n</head>', 1)
+              if 'data-defidev-mobile-legal="1"' not in text:
+                  text = text.replace('</body>', legal + '</body>', 1)
+              html.write_text(text, encoding='utf-8')
+          PY
+      - name: Run repository tests
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            npm install --ignore-scripts --no-audit --no-fund
+            npm test --if-present
+          fi
+      - name: Commit validated mobile baseline
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "DefiDev Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Make EHS interface phone friendly"
+          git push
