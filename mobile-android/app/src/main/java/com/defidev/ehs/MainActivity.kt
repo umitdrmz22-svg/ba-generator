@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.activity.BackHandler
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -155,8 +154,8 @@ private fun EhsApp(activity: Activity) {
     val billing = remember {
         BillingManager(
             activity,
-            onPurchase = { purchase ->
-                val active = session ?: return@BillingManager
+            onPurchase = purchaseHandler@{ purchase ->
+                val active = session ?: return@purchaseHandler
                 scope.launch {
                     val verified = SupabaseApi.verifyPurchase(active, purchase.purchaseToken)
                     entitlement = verified ?: entitlement
@@ -377,11 +376,7 @@ private fun AccountScreen(
 @Composable
 private fun ModuleWebView(module: Module, onBack: () -> Unit) {
     var webView: WebView? by remember { mutableStateOf(null) }
-    BackHandler {
-        val view = webView
-        if (view?.canGoBack() == true) view.goBack() else onBack()
-    }
-    Column(Modifier.fillMaxSize()) {
+Column(Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text("‹ Module") }
             Text(module.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
