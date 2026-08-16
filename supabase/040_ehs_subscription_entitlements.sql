@@ -1,9 +1,8 @@
 -- DefiDev EHS Platform — zentrale Google-Play-Abonnementberechtigung
 -- Stand: 2026-08-16
 -- Einmal im GEMEINSAMEN Supabase-Projekt ausführen.
--- Wichtig: Kaufstatus darf ausschließlich durch einen vertrauenswürdigen Server/
--- Edge Function nach Google-Play-Prüfung geschrieben werden. Clients erhalten
--- absichtlich KEINE INSERT-/UPDATE-/DELETE-Rechte auf diese Tabelle.
+-- Rohdaten des Google-Play-Kaufs (insb. purchase_token) bleiben ausschließlich
+-- für vertrauenswürdige Server-/Edge-Function-Zugriffe bestimmt.
 
 create table if not exists public.ehs_subscriptions (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -21,7 +20,7 @@ create table if not exists public.ehs_subscriptions (
   constraint ehs_subscription_product check (product_id = 'ehs_pro_monthly')
 );
 
--- Upgrade an already-created table safely when this migration is rerun.
+-- Upgrade an already-created table safely when this script is rerun.
 alter table public.ehs_subscriptions drop constraint if exists ehs_subscriptions_status_check;
 alter table public.ehs_subscriptions
   add constraint ehs_subscriptions_status_check
@@ -29,53 +28,32 @@ alter table public.ehs_subscriptions
 
 alter table public.ehs_subscriptions enable row level security;
 
--- No direct client policy is created. The server/Edge Function is the only
--- component intended to write/read raw purchase tokens.
+-- Remove legacy helper functions if they were created by an earlier draft.
+drop function if exists public.has_active_ehs_subscription();
+drop function if exists public.get_ehs_subscription_status();
+
+-- No client may insert/update/delete entitlements or read sensitive purchase data.
 revoke all on table public.ehs_subscriptions from anon, authenticated;
 
-create or replace function public.has_active_ehs_subscription()
-returns boolean
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select exists (
-    select 1
-    from public.ehs_subscriptions s
-    where s.user_id = auth.uid()
-      and s.product_id = 'ehs_pro_monthly'
-      -- Google Play cancellations retain access until the paid period expires.
-      and s.status in ('active','grace','canceled')
-      and (s.expires_at is null or s.expires_at > now())
-  );
-$$;
+-- Authenticated users may read only their own non-sensitive entitlement columns.
+drop policy if exists "ehs_subscription_read_own" on public.ehs_subscriptions;
+create policy "ehs_subscription_read_own"
+on public.ehs_subscriptions
+for select
+to authenticated
+using ((select auth.uid()) = user_id);
 
-create or replace function public.get_ehs_subscription_status()
-returns table (
-  product_id text,
-  status text,
-  expires_at timestamptz,
-  auto_renewing boolean,
-  last_verified_at timestamptz
-)
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select s.product_id, s.status, s.expires_at, s.auto_renewing, s.last_verified_at
-  from public.ehs_subscriptions s
-  where s.user_id = auth.uid()
-  limit 1;
-$$;
-
-revoke all on function public.has_active_ehs_subscription() from public;
-revoke all on function public.get_ehs_subscription_status() from public;
-grant execute on function public.has_active_ehs_subscription() to authenticated;
-grant execute on function public.get_ehs_subscription_status() to authenticated;
+grant select (
+  user_id,
+  product_id,
+  base_plan_id,
+  status,
+  expires_at,
+  auto_renewing,
+  last_verified_at
+) on public.ehs_subscriptions to authenticated;
 
 comment on table public.ehs_subscriptions is
-  'Server-verified Google Play entitlement for the shared DefiDev EHS monthly subscription.';
-comment on function public.has_active_ehs_subscription() is
-  'Returns true for active/grace subscriptions and canceled subscriptions until their paid expiry.';
+  'Server-verified Google Play entitlement for the shared DefiDev EHS monthly subscription. Raw purchase tokens are not client-readable.';
+comment on policy "ehs_subscription_read_own" on public.ehs_subscriptions is
+  'Authenticated users can read only their own entitlement row; column grants exclude purchase token and package details.';
