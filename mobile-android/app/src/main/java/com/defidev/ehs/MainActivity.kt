@@ -14,7 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -31,23 +30,37 @@ import java.security.MessageDigest
 
 private const val SUPABASE_URL = "https://rqvcbjomrjccyuchxpuh.supabase.co"
 private const val SUPABASE_KEY = "sb_publishable_iKh-ZfqV3iJpr_9b7SErEA_XhrqnSsY"
-private const val PRODUCT_ID = "ehs_pro_monthly"
 private const val PACKAGE_NAME = "com.defidev.ehs"
 private const val PRIVACY_URL = "https://umitdrmz22-svg.github.io/defidev-legal/privacy-ehs.html"
 private const val DELETE_URL = "https://umitdrmz22-svg.github.io/defidev-legal/delete-ehs-account.html"
+private const val LEGACY_ALL_ACCESS_PRODUCT = "ehs_pro_monthly"
+private const val FIXED_DE_PRICE = "4,99 € / Monat"
 
 private data class Session(val accessToken: String, val userId: String, val email: String)
-private data class Entitlement(val active: Boolean, val status: String, val expiresAt: String?)
-private data class Module(val title: String, val subtitle: String, val url: String)
+private data class Entitlement(
+    val productId: String,
+    val active: Boolean,
+    val status: String,
+    val expiresAt: String?,
+)
+private data class Module(
+    val key: String,
+    val title: String,
+    val subtitle: String,
+    val url: String,
+    val productId: String,
+)
 
 private val modules = listOf(
-    Module("BA Studio", "Betriebsanweisungen", "https://umitdrmz22-svg.github.io/ba-generator/"),
-    Module("Fluchtplan Studio", "Flucht- und Rettungspläne", "https://umitdrmz22-svg.github.io/fluchtplan-ai/"),
-    Module("Brandschutzordnung Studio", "Brandschutzordnungen", "https://umitdrmz22-svg.github.io/brandschutzordnung-studio/"),
-    Module("Gefahrstoffkataster", "Gefahrstoffe und Sicherheitsdaten", "https://umitdrmz22-svg.github.io/gefahrstoffkataster-online/"),
-    Module("Dokumentmanagement", "EHS-Dokumente und Freigaben", "https://umitdrmz22-svg.github.io/dokumentmanagement-studio/"),
-    Module("Unfallmanagement", "Unfälle, 5-Why und Maßnahmen", "https://umitdrmz22-svg.github.io/Unfallmanagemet_studio/")
+    Module("ba", "BA Studio", "Betriebsanweisungen", "https://umitdrmz22-svg.github.io/ba-generator/", "ehs_ba_monthly"),
+    Module("fluchtplan", "Fluchtplan Studio", "Flucht- und Rettungspläne", "https://umitdrmz22-svg.github.io/fluchtplan-ai/", "ehs_fluchtplan_monthly"),
+    Module("brandschutzordnung", "Brandschutzordnung Studio", "Brandschutzordnungen", "https://umitdrmz22-svg.github.io/brandschutzordnung-studio/", "ehs_brandschutzordnung_monthly"),
+    Module("gefahrstoffkataster", "Gefahrstoffkataster", "Gefahrstoffe und Sicherheitsdaten", "https://umitdrmz22-svg.github.io/gefahrstoffkataster-online/", "ehs_gefahrstoffkataster_monthly"),
+    Module("dokumentmanagement", "Dokumentmanagement", "EHS-Dokumente und Freigaben", "https://umitdrmz22-svg.github.io/dokumentmanagement-studio/", "ehs_dokumentmanagement_monthly"),
+    Module("unfallmanagement", "Unfallmanagement", "Unfälle, 5-Why und Maßnahmen", "https://umitdrmz22-svg.github.io/Unfallmanagemet_studio/", "ehs_unfallmanagement_monthly"),
 )
+private val sellableProductIds = modules.map { it.productId }.toSet()
+private val recognizedProductIds = sellableProductIds + LEGACY_ALL_ACCESS_PRODUCT
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +74,7 @@ private class BillingManager(
     private val onPurchase: (Purchase) -> Unit,
     private val onMessage: (String) -> Unit,
 ) : PurchasesUpdatedListener {
-    var productDetails by mutableStateOf<ProductDetails?>(null)
+    var productDetails by mutableStateOf<Map<String, ProductDetails>>(emptyMap())
         private set
     var connected by mutableStateOf(false)
         private set
@@ -77,43 +90,62 @@ private class BillingManager(
             override fun onBillingSetupFinished(result: BillingResult) {
                 connected = result.responseCode == BillingClient.BillingResponseCode.OK
                 if (connected) {
-                    queryProduct()
+                    queryProducts()
                     onReady?.invoke()
-                } else onMessage("Google Play Billing konnte nicht gestartet werden: ${result.debugMessage}")
+                } else {
+                    onMessage("Google Play Billing konnte nicht gestartet werden: ${result.debugMessage}")
+                }
             }
-            override fun onBillingServiceDisconnected() { connected = false }
+
+            override fun onBillingServiceDisconnected() {
+                connected = false
+            }
         })
     }
 
-    private fun queryProduct() {
-        val product = QueryProductDetailsParams.Product.newBuilder()
-            .setProductId(PRODUCT_ID)
-            .setProductType(BillingClient.ProductType.SUBS)
-            .build()
-        val params = QueryProductDetailsParams.newBuilder().setProductList(listOf(product)).build()
+    private fun queryProducts() {
+        val products = sellableProductIds.map { productId ->
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(productId)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        }
+        val params = QueryProductDetailsParams.newBuilder().setProductList(products).build()
         client.queryProductDetailsAsync(params) { result, queryResult ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                productDetails = queryResult.productDetailsList.firstOrNull()
+                productDetails = queryResult.productDetailsList.associateBy { it.productId }
             }
         }
     }
 
     fun restorePurchases() {
         if (!connected) { start { restorePurchases() }; return }
-        val params = QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.SUBS)
+            .build()
         client.queryPurchasesAsync(params) { result, purchases ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                purchases.filter { it.products.contains(PRODUCT_ID) && it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                purchases
+                    .filter { purchase ->
+                        purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                            purchase.products.any { it in recognizedProductIds }
+                    }
                     .forEach(onPurchase)
             }
         }
     }
 
-    fun launchSubscription(session: Session) {
-        if (!connected) { start { launchSubscription(session) }; return }
-        val details = productDetails ?: run { queryProduct(); onMessage("Abonnementdaten werden geladen. Bitte erneut versuchen."); return }
-        val offerToken = details.subscriptionOfferDetails?.firstOrNull()?.offerToken
-            ?: run { onMessage("Für das Monatsabo ist in Google Play noch kein aktiver Basistarif hinterlegt."); return }
+    fun launchSubscription(session: Session, module: Module) {
+        if (!connected) { start { launchSubscription(session, module) }; return }
+        val details = productDetails[module.productId] ?: run {
+            queryProducts()
+            onMessage("Abonnementdaten werden geladen. Bitte erneut versuchen.")
+            return
+        }
+        val offerToken = details.subscriptionOfferDetails?.firstOrNull()?.offerToken ?: run {
+            onMessage("Für ${module.title} ist in Google Play noch kein aktiver Monats-Basistarif hinterlegt.")
+            return
+        }
         val productParams = BillingFlowParams.ProductDetailsParams.newBuilder()
             .setProductDetails(details)
             .setOfferToken(offerToken)
@@ -123,30 +155,46 @@ private class BillingManager(
             .setObfuscatedAccountId(sha256(session.userId))
             .build()
         val result = client.launchBillingFlow(activity, params)
-        if (result.responseCode != BillingClient.BillingResponseCode.OK) onMessage(result.debugMessage)
+        if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+            onMessage(result.debugMessage)
+        }
     }
 
-    fun formattedPrice(): String? = productDetails?.subscriptionOfferDetails
-        ?.firstOrNull()?.pricingPhases?.pricingPhaseList?.lastOrNull()?.formattedPrice
+    fun formattedPrice(productId: String): String? = productDetails[productId]
+        ?.subscriptionOfferDetails
+        ?.firstOrNull()
+        ?.pricingPhases
+        ?.pricingPhaseList
+        ?.lastOrNull()
+        ?.formattedPrice
 
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> purchases.orEmpty()
-                .filter { it.products.contains(PRODUCT_ID) && it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                .filter { purchase ->
+                    purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                        purchase.products.any { it in recognizedProductIds }
+                }
                 .forEach(onPurchase)
             BillingClient.BillingResponseCode.USER_CANCELED -> Unit
             else -> onMessage("Kauf konnte nicht abgeschlossen werden: ${result.debugMessage}")
         }
     }
 
-    fun close() { client.endConnection() }
+    fun close() {
+        client.endConnection()
+    }
 }
+
+private fun hasAccess(module: Module, entitlements: Map<String, Entitlement>): Boolean =
+    entitlements[LEGACY_ALL_ACCESS_PRODUCT]?.active == true ||
+        entitlements[module.productId]?.active == true
 
 @Composable
 private fun EhsApp(activity: Activity) {
     val scope = rememberCoroutineScope()
     var session by remember { mutableStateOf<Session?>(null) }
-    var entitlement by remember { mutableStateOf(Entitlement(false, "none", null)) }
+    var entitlements by remember { mutableStateOf<Map<String, Entitlement>>(emptyMap()) }
     var message by remember { mutableStateOf("") }
     var selectedModule by remember { mutableStateOf<Module?>(null) }
     var accountScreen by remember { mutableStateOf(false) }
@@ -155,17 +203,28 @@ private fun EhsApp(activity: Activity) {
         BillingManager(
             activity,
             onPurchase = purchaseHandler@{ purchase ->
-                val active = session ?: return@purchaseHandler
+                val activeSession = session ?: return@purchaseHandler
+                val productId = purchase.products.firstOrNull { it in recognizedProductIds }
+                    ?: return@purchaseHandler
                 scope.launch {
-                    val verified = SupabaseApi.verifyPurchase(active, purchase.purchaseToken)
-                    entitlement = verified ?: entitlement
-                    message = if (verified?.active == true) "EHS Pro wurde freigeschaltet." else "Der Kauf konnte noch nicht verifiziert werden."
+                    val verified = SupabaseApi.verifyPurchase(activeSession, productId, purchase.purchaseToken)
+                    if (verified != null) {
+                        entitlements = entitlements + (verified.productId to verified)
+                        val moduleTitle = modules.firstOrNull { it.productId == verified.productId }?.title ?: "EHS"
+                        message = if (verified.active) "$moduleTitle wurde freigeschaltet." else "Abonnementstatus wurde aktualisiert."
+                    } else {
+                        message = "Der Kauf konnte noch nicht verifiziert werden."
+                    }
                 }
             },
             onMessage = { message = it },
         )
     }
-    DisposableEffect(Unit) { billing.start(); onDispose { billing.close() } }
+
+    DisposableEffect(Unit) {
+        billing.start()
+        onDispose { billing.close() }
+    }
 
     selectedModule?.let { module ->
         ModuleWebView(module) { selectedModule = null }
@@ -181,17 +240,17 @@ private fun EhsApp(activity: Activity) {
                     val result = SupabaseApi.signIn(email, password)
                     if (result != null) {
                         session = result
-                        entitlement = SupabaseApi.getEntitlement(result)
+                        entitlements = SupabaseApi.getEntitlements(result)
                         message = ""
                         billing.restorePurchases()
-                    } else message = "Anmeldung fehlgeschlagen. E-Mail und Passwort prüfen."
+                    } else {
+                        message = "Anmeldung fehlgeschlagen. E-Mail und Passwort prüfen."
+                    }
                 }
             },
             onSignup = { email, password ->
-                scope.launch {
-                    message = SupabaseApi.signUp(email, password)
-                }
-            }
+                scope.launch { message = SupabaseApi.signUp(email, password) }
+            },
         )
         return
     }
@@ -200,55 +259,56 @@ private fun EhsApp(activity: Activity) {
     if (accountScreen) {
         AccountScreen(
             session = currentSession,
-            entitlement = entitlement,
+            entitlements = entitlements,
             message = message,
             onBack = { accountScreen = false },
             onRestore = { billing.restorePurchases() },
+            onRefresh = {
+                scope.launch {
+                    entitlements = SupabaseApi.getEntitlements(currentSession)
+                    billing.restorePurchases()
+                }
+            },
             onDelete = {
                 scope.launch {
                     val ok = SupabaseApi.deleteAccount(currentSession)
                     if (ok) {
                         session = null
-                        entitlement = Entitlement(false, "none", null)
+                        entitlements = emptyMap()
                         accountScreen = false
-                        message = "Konto wurde gelöscht. Ein Google-Play-Abo muss separat in Google Play gekündigt werden."
-                    } else message = "Kontolöschung konnte nicht abgeschlossen werden. Bitte Support kontaktieren."
+                        message = "Konto wurde gelöscht. Laufende Google-Play-Abos müssen separat in Google Play gekündigt werden."
+                    } else {
+                        message = "Kontolöschung konnte nicht abgeschlossen werden. Bitte Support kontaktieren."
+                    }
                 }
             },
             onLogout = {
                 session = null
-                entitlement = Entitlement(false, "none", null)
+                entitlements = emptyMap()
                 accountScreen = false
                 message = ""
-            }
-        )
-        return
-    }
-
-    if (!entitlement.active) {
-        PaywallScreen(
-            email = currentSession.email,
-            price = billing.formattedPrice(),
-            status = entitlement.status,
-            message = message,
-            onBuy = { billing.launchSubscription(currentSession) },
-            onRestore = { billing.restorePurchases() },
-            onRefresh = {
-                scope.launch {
-                    entitlement = SupabaseApi.getEntitlement(currentSession)
-                    if (!entitlement.active) billing.restorePurchases()
-                }
             },
-            onAccount = { accountScreen = true }
         )
         return
     }
 
     Dashboard(
         email = currentSession.email,
-        entitlement = entitlement,
-        onModule = { selectedModule = it },
-        onAccount = { accountScreen = true }
+        entitlements = entitlements,
+        message = message,
+        priceFor = { productId -> billing.formattedPrice(productId) },
+        onModule = { module ->
+            if (hasAccess(module, entitlements)) selectedModule = module
+        },
+        onSubscribe = { module -> billing.launchSubscription(currentSession, module) },
+        onRestore = { billing.restorePurchases() },
+        onRefresh = {
+            scope.launch {
+                entitlements = SupabaseApi.getEntitlements(currentSession)
+                billing.restorePurchases()
+            }
+        },
+        onAccount = { accountScreen = true },
     )
 }
 
@@ -264,79 +324,134 @@ private fun LoginScreen(
         Column(
             Modifier.fillMaxSize().padding(24.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text("DefiDev EHS", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-            Text("Professionelle EHS-Werkzeuge in einer App", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("EHS-Module einzeln abonnieren", color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
-            OutlinedTextField(email, { email = it.trim().take(160) }, label = { Text("E-Mail") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it.trim().take(160) },
+                label = { Text("E-Mail") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
             Spacer(Modifier.height(10.dp))
-            OutlinedTextField(password, { password = it.take(128) }, label = { Text("Passwort") }, singleLine = true, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it.take(128) },
+                label = { Text("Passwort") },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth(),
+            )
             Spacer(Modifier.height(14.dp))
-            Button(onClick = { onLogin(email, password) }, enabled = email.contains('@') && password.length >= 6, modifier = Modifier.fillMaxWidth()) { Text("Anmelden") }
-            OutlinedButton(onClick = { onSignup(email, password) }, enabled = email.contains('@') && password.length >= 8, modifier = Modifier.fillMaxWidth()) { Text("Konto erstellen") }
-            if (message.isNotBlank()) { Spacer(Modifier.height(12.dp)); Text(message, style = MaterialTheme.typography.bodySmall) }
+            Button(
+                onClick = { onLogin(email, password) },
+                enabled = email.contains('@') && password.length >= 6,
+                modifier = Modifier.fillMaxWidth(),
+            ) { Text("Anmelden") }
+            OutlinedButton(
+                onClick = { onSignup(email, password) },
+                enabled = email.contains('@') && password.length >= 8,
+                modifier = Modifier.fillMaxWidth(),
+            ) { Text("Konto erstellen") }
+            if (message.isNotBlank()) {
+                Spacer(Modifier.height(12.dp))
+                Text(message, style = MaterialTheme.typography.bodySmall)
+            }
             Spacer(Modifier.height(18.dp))
-            Text("Mit der Registrierung gelten Datenschutzerklärung und Nutzungsbedingungen.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                "Mit der Registrierung gelten Datenschutzerklärung und Nutzungsbedingungen.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
 
 @Composable
-private fun PaywallScreen(
+private fun Dashboard(
     email: String,
-    price: String?,
-    status: String,
+    entitlements: Map<String, Entitlement>,
     message: String,
-    onBuy: () -> Unit,
+    priceFor: (String) -> String?,
+    onModule: (Module) -> Unit,
+    onSubscribe: (Module) -> Unit,
     onRestore: () -> Unit,
     onRefresh: () -> Unit,
     onAccount: () -> Unit,
 ) {
-    Column(Modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) { Text("EHS Pro", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold); Text(email) }
-            TextButton(onClick = onAccount) { Text("Konto") }
-        }
-        Card(shape = RoundedCornerShape(24.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
-            Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("Ein Monatsabo für alle EHS-Module", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                Text("BA Studio · Fluchtplan · Brandschutzordnung · Gefahrstoffkataster · Dokumentmanagement · Unfallmanagement")
-                Text(price?.let { "$it / Monat" } ?: "Preis wird direkt aus Google Play geladen", style = MaterialTheme.typography.titleLarge)
-                Text("Das Abo verlängert sich automatisch gemäß Google-Play-Kaufdialog und kann jederzeit in Google Play gekündigt werden.", style = MaterialTheme.typography.bodySmall)
-                Button(onClick = onBuy, modifier = Modifier.fillMaxWidth()) { Text("EHS Pro abonnieren") }
-                OutlinedButton(onClick = onRestore, modifier = Modifier.fillMaxWidth()) { Text("Kauf wiederherstellen") }
-                TextButton(onClick = onRefresh, modifier = Modifier.align(Alignment.CenterHorizontally)) { Text("Status aktualisieren") }
-            }
-        }
-        Text("Aktueller Lizenzstatus: $status", style = MaterialTheme.typography.bodySmall)
-        if (message.isNotBlank()) Text(message, style = MaterialTheme.typography.bodySmall)
-    }
-}
-
-@Composable
-private fun Dashboard(email: String, entitlement: Entitlement, onModule: (Module) -> Unit, onAccount: () -> Unit) {
+    val legacyAccess = entitlements[LEGACY_ALL_ACCESS_PRODUCT]?.active == true
+    val activeCount = modules.count { hasAccess(it, entitlements) }
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("DefiDev EHS", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-                Text("EHS Pro aktiv · $email", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("$activeCount von ${modules.size} Modulen aktiv · $email", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             TextButton(onClick = onAccount) { Text("Konto") }
+        }
+        if (legacyAccess) {
+            Spacer(Modifier.height(8.dp))
+            Text("Legacy EHS Pro: Alle Module freigeschaltet", style = MaterialTheme.typography.bodySmall)
+        }
+        if (message.isNotBlank()) {
+            Spacer(Modifier.height(8.dp))
+            Text(message, style = MaterialTheme.typography.bodySmall)
         }
         Spacer(Modifier.height(12.dp))
         LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             items(modules) { module ->
-                Card(onClick = { onModule(module) }, shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(18.dp)) {
-                        Text(module.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
-                        Text(module.subtitle, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                val active = hasAccess(module, entitlements)
+                val entitlement = entitlements[module.productId]
+                Card(
+                    onClick = { if (active) onModule(module) },
+                    shape = RoundedCornerShape(20.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(Modifier.weight(1f)) {
+                                Text(module.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+                                Text(module.subtitle, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Text(if (active) "Aktiv" else "Gesperrt", style = MaterialTheme.typography.labelLarge)
+                        }
+                        if (active) {
+                            Text(
+                                entitlement?.expiresAt?.let { "Abo aktiv bis $it" } ?: "Monatsabo aktiv",
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            Button(onClick = { onModule(module) }, modifier = Modifier.fillMaxWidth()) {
+                                Text("Modul öffnen")
+                            }
+                        } else {
+                            val price = priceFor(module.productId)
+                            Text(
+                                price?.let { "$it / Monat" } ?: FIXED_DE_PRICE,
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Text(
+                                "Monatlich kündbar. Automatische Verlängerung gemäß Google-Play-Kaufdialog.",
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            Button(onClick = { onSubscribe(module) }, modifier = Modifier.fillMaxWidth()) {
+                                Text("${module.title} abonnieren")
+                            }
+                        }
                     }
                 }
             }
             item {
-                Spacer(Modifier.height(8.dp))
-                Text("Lizenz: ${entitlement.status}${entitlement.expiresAt?.let { " · bis $it" } ?: ""}", style = MaterialTheme.typography.bodySmall)
+                Spacer(Modifier.height(4.dp))
+                OutlinedButton(onClick = onRestore, modifier = Modifier.fillMaxWidth()) {
+                    Text("Google-Play-Abos wiederherstellen")
+                }
+                TextButton(onClick = onRefresh, modifier = Modifier.fillMaxWidth()) {
+                    Text("Lizenzstatus aktualisieren")
+                }
             }
         }
     }
@@ -345,38 +460,56 @@ private fun Dashboard(email: String, entitlement: Entitlement, onModule: (Module
 @Composable
 private fun AccountScreen(
     session: Session,
-    entitlement: Entitlement,
+    entitlements: Map<String, Entitlement>,
     message: String,
     onBack: () -> Unit,
     onRestore: () -> Unit,
+    onRefresh: () -> Unit,
     onDelete: () -> Unit,
     onLogout: () -> Unit,
 ) {
     var confirmDelete by remember { mutableStateOf(false) }
+    val activeModules = modules.filter { hasAccess(it, entitlements) }
     Column(Modifier.fillMaxSize().padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         TextButton(onClick = onBack) { Text("‹ Zurück") }
         Text("Konto", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
         Text(session.email)
-        Text("Abo-Status: ${entitlement.status}")
-        OutlinedButton(onClick = onRestore, modifier = Modifier.fillMaxWidth()) { Text("Google-Play-Kauf wiederherstellen") }
-        OutlinedButton(onClick = onLogout, modifier = Modifier.fillMaxWidth()) { Text("Abmelden") }
+        Text("Aktive Module: ${activeModules.size} / ${modules.size}")
+        activeModules.forEach { module ->
+            Text("• ${module.title}", style = MaterialTheme.typography.bodySmall)
+        }
+        OutlinedButton(onClick = onRestore, modifier = Modifier.fillMaxWidth()) {
+            Text("Google-Play-Abos wiederherstellen")
+        }
+        TextButton(onClick = onRefresh, modifier = Modifier.fillMaxWidth()) {
+            Text("Status aktualisieren")
+        }
+        OutlinedButton(onClick = onLogout, modifier = Modifier.fillMaxWidth()) {
+            Text("Abmelden")
+        }
         HorizontalDivider()
         Text("Datenschutz: $PRIVACY_URL", style = MaterialTheme.typography.bodySmall)
         Text("Externer Löschweg: $DELETE_URL", style = MaterialTheme.typography.bodySmall)
         Button(
             onClick = { if (confirmDelete) onDelete() else confirmDelete = true },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
-            modifier = Modifier.fillMaxWidth()
-        ) { Text(if (confirmDelete) "Löschung endgültig bestätigen" else "Konto endgültig löschen") }
-        if (confirmDelete) Text("Achtung: Die Kontolöschung kann nicht rückgängig gemacht werden. Ein Play-Abo wird dadurch nicht automatisch gekündigt.", style = MaterialTheme.typography.bodySmall)
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(if (confirmDelete) "Löschung endgültig bestätigen" else "Konto endgültig löschen")
+        }
+        if (confirmDelete) {
+            Text(
+                "Achtung: Die Kontolöschung kann nicht rückgängig gemacht werden. Laufende Play-Abos werden dadurch nicht automatisch gekündigt.",
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
         if (message.isNotBlank()) Text(message, style = MaterialTheme.typography.bodySmall)
     }
 }
 
 @Composable
 private fun ModuleWebView(module: Module, onBack: () -> Unit) {
-    var webView: WebView? by remember { mutableStateOf(null) }
-Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text("‹ Module") }
             Text(module.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
@@ -384,7 +517,6 @@ Column(Modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
                 WebView(context).apply {
-                    webView = this
                     webViewClient = WebViewClient()
                     settings.javaScriptEnabled = true
                     settings.domStorageEnabled = true
@@ -393,7 +525,7 @@ Column(Modifier.fillMaxSize()) {
                     loadUrl(module.url)
                 }
             },
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         )
     }
 }
@@ -416,36 +548,74 @@ private object SupabaseApi {
         when (response.first) {
             in 200..299 -> {
                 val json = JSONObject(response.second)
-                if (json.optString("access_token").isNotBlank()) "Konto erstellt. Du kannst dich jetzt anmelden."
-                else "Konto erstellt. Bitte bestätige die E-Mail, falls Supabase eine Bestätigung versendet."
+                if (json.optString("access_token").isNotBlank()) {
+                    "Konto erstellt. Du kannst dich jetzt anmelden."
+                } else {
+                    "Konto erstellt. Bitte bestätige die E-Mail, falls Supabase eine Bestätigung versendet."
+                }
             }
-            else -> runCatching { JSONObject(response.second).optString("msg") }.getOrDefault("Registrierung fehlgeschlagen.").ifBlank { "Registrierung fehlgeschlagen." }
+            else -> runCatching { JSONObject(response.second).optString("msg") }
+                .getOrDefault("Registrierung fehlgeschlagen.")
+                .ifBlank { "Registrierung fehlgeschlagen." }
         }
     }
 
-    suspend fun getEntitlement(session: Session): Entitlement = withContext(Dispatchers.IO) {
-        val url = "$SUPABASE_URL/rest/v1/ehs_subscriptions?select=status,expires_at&user_id=eq.${session.userId}&limit=1"
+    suspend fun getEntitlements(session: Session): Map<String, Entitlement> = withContext(Dispatchers.IO) {
+        val url = "$SUPABASE_URL/rest/v1/ehs_subscriptions?select=product_id,status,expires_at&user_id=eq.${session.userId}"
         val response = request(url, "GET", null, session.accessToken)
-        if (response.first !in 200..299) return@withContext Entitlement(false, "none", null)
+        if (response.first !in 200..299) return@withContext emptyMap()
         val rows = JSONArray(response.second)
-        if (rows.length() == 0) return@withContext Entitlement(false, "none", null)
-        val row = rows.getJSONObject(0)
-        val status = row.optString("status", "none")
-        val expiry = row.optString("expires_at").takeIf { it.isNotBlank() && it != "null" }
-        val active = status in setOf("active", "grace", "canceled") && (expiry == null || runCatching { java.time.Instant.parse(expiry).isAfter(java.time.Instant.now()) }.getOrDefault(false))
-        Entitlement(active, status, expiry)
+        buildMap {
+            for (index in 0 until rows.length()) {
+                val row = rows.getJSONObject(index)
+                val productId = row.optString("product_id")
+                if (productId !in recognizedProductIds) continue
+                val status = row.optString("status", "none")
+                val expiry = row.optString("expires_at").takeIf { it.isNotBlank() && it != "null" }
+                val active = status in setOf("active", "grace", "canceled") &&
+                    (expiry == null || runCatching {
+                        java.time.Instant.parse(expiry).isAfter(java.time.Instant.now())
+                    }.getOrDefault(false))
+                put(productId, Entitlement(productId, active, status, expiry))
+            }
+        }
     }
 
-    suspend fun verifyPurchase(session: Session, purchaseToken: String): Entitlement? = withContext(Dispatchers.IO) {
-        val body = JSONObject().put("packageName", PACKAGE_NAME).put("purchaseToken", purchaseToken)
-        val response = request("$SUPABASE_URL/functions/v1/verify-play-subscription", "POST", body, session.accessToken)
+    suspend fun verifyPurchase(
+        session: Session,
+        productId: String,
+        purchaseToken: String,
+    ): Entitlement? = withContext(Dispatchers.IO) {
+        if (productId !in recognizedProductIds) return@withContext null
+        val body = JSONObject()
+            .put("packageName", PACKAGE_NAME)
+            .put("productId", productId)
+            .put("purchaseToken", purchaseToken)
+        val response = request(
+            "$SUPABASE_URL/functions/v1/verify-play-subscription",
+            "POST",
+            body,
+            session.accessToken,
+        )
         if (response.first !in 200..299) return@withContext null
         val json = JSONObject(response.second)
-        Entitlement(json.optBoolean("entitled", false), json.optString("status", "none"), json.optString("expiresAt").takeIf { it.isNotBlank() && it != "null" })
+        val verifiedProduct = json.optString("productId")
+        if (verifiedProduct !in recognizedProductIds) return@withContext null
+        Entitlement(
+            productId = verifiedProduct,
+            active = json.optBoolean("entitled", false),
+            status = json.optString("status", "none"),
+            expiresAt = json.optString("expiresAt").takeIf { it.isNotBlank() && it != "null" },
+        )
     }
 
     suspend fun deleteAccount(session: Session): Boolean = withContext(Dispatchers.IO) {
-        val response = request("$SUPABASE_URL/functions/v1/delete-my-account", "POST", JSONObject(), session.accessToken)
+        val response = request(
+            "$SUPABASE_URL/functions/v1/delete-my-account",
+            "POST",
+            JSONObject(),
+            session.accessToken,
+        )
         response.first in 200..299
     }
 
