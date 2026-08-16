@@ -12,7 +12,7 @@ create table if not exists public.ehs_subscriptions (
   base_plan_id text,
   package_name text not null,
   purchase_token text not null unique,
-  status text not null check (status in ('pending','active','grace','paused','canceled','expired','revoked')),
+  status text not null check (status in ('pending','active','grace','on_hold','paused','canceled','expired','revoked')),
   expires_at timestamptz,
   auto_renewing boolean not null default false,
   last_verified_at timestamptz not null default now(),
@@ -21,10 +21,16 @@ create table if not exists public.ehs_subscriptions (
   constraint ehs_subscription_product check (product_id = 'ehs_pro_monthly')
 );
 
+-- Upgrade an already-created table safely when this migration is rerun.
+alter table public.ehs_subscriptions drop constraint if exists ehs_subscriptions_status_check;
+alter table public.ehs_subscriptions
+  add constraint ehs_subscriptions_status_check
+  check (status in ('pending','active','grace','on_hold','paused','canceled','expired','revoked'));
+
 alter table public.ehs_subscriptions enable row level security;
 
--- No direct client policy is created. service_role bypasses RLS and is the only
--- role intended to write/read raw purchase tokens.
+-- No direct client policy is created. The server/Edge Function is the only
+-- component intended to write/read raw purchase tokens.
 revoke all on table public.ehs_subscriptions from anon, authenticated;
 
 create or replace function public.has_active_ehs_subscription()
@@ -39,7 +45,8 @@ as $$
     from public.ehs_subscriptions s
     where s.user_id = auth.uid()
       and s.product_id = 'ehs_pro_monthly'
-      and s.status in ('active','grace')
+      -- Google Play cancellations retain access until the paid period expires.
+      and s.status in ('active','grace','canceled')
       and (s.expires_at is null or s.expires_at > now())
   );
 $$;
@@ -71,4 +78,4 @@ grant execute on function public.get_ehs_subscription_status() to authenticated;
 comment on table public.ehs_subscriptions is
   'Server-verified Google Play entitlement for the shared DefiDev EHS monthly subscription.';
 comment on function public.has_active_ehs_subscription() is
-  'Returns only whether the authenticated user currently has an active/grace EHS Pro entitlement.';
+  'Returns true for active/grace subscriptions and canceled subscriptions until their paid expiry.';
