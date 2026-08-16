@@ -12,6 +12,11 @@
 
   const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const parseState=()=>{try{return JSON.parse(localStorage.getItem(STORE)||'null');}catch{return null;}};
+  const waitForEhsAccess=async()=>{
+    if(globalThis.DefiDevEHSAccess)return globalThis.DefiDevEHSAccess;
+    if(!document.querySelector('script[src*="ehs-entitlement-gate.js"]'))return null;
+    return await new Promise(resolve=>window.addEventListener('defidev-ehs-entitlement-ready',event=>resolve(globalThis.DefiDevEHSAccess||event.detail||null),{once:true}));
+  };
   const setSaveState=(text,type='')=>{
     let node=document.querySelector('#cloudSaveState');
     if(!node&&document.querySelector('#saveDraft')){
@@ -20,7 +25,11 @@
     if(node){node.textContent=text;node.className=`cloud-save-state ${type}`.trim();}
   };
   const loadOrganization=async()=>{
-    const {data,error}=await client.from('organization_members').select('organization_id,role,organizations(name)').eq('user_id',session.user.id).eq('status','active').limit(1).maybeSingle();
+    const ehsAccess=await waitForEhsAccess();
+    let query=client.from('organization_members').select('organization_id,role,organizations(name)').eq('user_id',session.user.id).eq('status','active');
+    if(ehsAccess?.organizationId)query=query.eq('organization_id',ehsAccess.organizationId);
+    else query=query.limit(1);
+    const {data,error}=await query.maybeSingle();
     if(error)throw error;
     if(!data)throw new Error('Für dieses Benutzerkonto wurde kein aktiver Firmenbereich gefunden.');
     organization=data;
