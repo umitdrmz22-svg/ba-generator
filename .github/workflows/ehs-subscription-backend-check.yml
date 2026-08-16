@@ -1,0 +1,30 @@
+name: EHS subscription backend check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - supabase/040_ehs_subscription_entitlements.sql
+      - supabase/functions/verify-play-subscription/**
+      - .github/workflows/ehs-subscription-backend-check.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check Edge Function
+        run: deno check supabase/functions/verify-play-subscription/index.ts
+      - name: Reject committed secrets
+        run: |
+          if grep -R -nE '"private_key"[[:space:]]*:[[:space:]]*"-----BEGIN|sb_secret_[A-Za-z0-9_-]{20,}|service_role[^[:space:]]*[=:][^[:space:]]{20,}' supabase/functions supabase/*.sql; then
+            echo "Potential secret committed to repository"
+            exit 1
+          fi
