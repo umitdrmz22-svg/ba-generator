@@ -1,0 +1,64 @@
+name: Fix EHS mobile back handler
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-ehs-backhandler.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-test-commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Patch optional BackHandler
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('mobile-android/app/src/main/java/com/defidev/ehs/MainActivity.kt')
+          s = p.read_text()
+          s = s.replace('import androidx.activity.compose.BackHandler\n', '')
+          block = '''    BackHandler {
+                  val view = webView
+                  if (view?.canGoBack() == true) view.goBack() else onBack()
+              }
+          '''
+          if block not in s:
+              block = '''    BackHandler {
+              val view = webView
+              if (view?.canGoBack() == true) view.goBack() else onBack()
+          }
+          '''
+          s = s.replace(block, '')
+          p.write_text(s)
+          PY
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '8.13'
+      - name: Install Android API 36
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+      - name: Verify full Android build
+        working-directory: mobile-android
+        run: |
+          gradle --no-daemon :app:testDebugUnitTest
+          gradle --no-daemon :app:lintDebug
+          gradle --no-daemon :app:assembleDebug
+          gradle --no-daemon :app:bundleRelease
+      - name: Commit only if green
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "DefiDev Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add mobile-android/app/src/main/java/com/defidev/ehs/MainActivity.kt
+          git commit -m "Remove optional EHS BackHandler compatibility issue"
+          git push
