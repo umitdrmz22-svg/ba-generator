@@ -22,7 +22,7 @@ type ModuleAccess = {
   active: boolean;
   mode: AccessMode;
   sources: string[];
-  works: Array<{ id: string; name: string; code: string; role: string; seatType: string }>;
+  works: Array<{ id: string; organizationId: string; name: string; code: string; role: string; seatType: string }>;
   expiresAt: string | null;
 };
 
@@ -140,7 +140,7 @@ export default {
     if (werkIds.length > 0) {
       const { data, error } = await admin
         .from('ehs_werks')
-        .select('id,name,code,licensed_modules,billing_status,current_period_end')
+        .select('id,organization_id,name,code,licensed_modules,billing_status,current_period_end')
         .in('id', werkIds);
       if (error) {
         console.error('werk license query failed', error.code);
@@ -167,6 +167,7 @@ export default {
         if (!item.sources.includes('corporate_werk')) item.sources.push('corporate_werk');
         item.works.push({
           id: String(werk.id),
+          organizationId: String(werk.organization_id ?? ''),
           name: String(werk.name ?? ''),
           code: String(werk.code ?? ''),
           role: String(membership.role ?? ''),
