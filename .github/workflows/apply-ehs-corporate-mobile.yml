@@ -68,17 +68,18 @@ jobs:
           active_pattern = re.compile(r'''(?P<indent>\s+)Text\(\s*\n\s*entitlement\?\.expiresAt\?\.let \{ "Abo aktiv bis \$it" \} \?: "Monatsabo aktiv",\s*\n\s*style = MaterialTheme\.typography\.bodySmall,\s*\n\s*\)''')
           def active_repl(m):
               i = m.group('indent')
-              return f'''{i}val accessText = when {{
-          {i}    entitlement == null -> "Lizenz aktiv"
-          {i}    "corporate_werk" in entitlement.sources && entitlement.mode == "read" ->
-          {i}        "Firmenlizenz · Leser${{entitlement.works.firstOrNull()?.let {{ " · $it" }} ?: ""}}"
-          {i}    "corporate_werk" in entitlement.sources ->
-          {i}        "Firmenlizenz · Bearbeiter${{entitlement.works.firstOrNull()?.let {{ " · $it" }} ?: ""}}"
-          {i}    "legacy_all_access" in entitlement.sources -> "Legacy EHS Pro"
-          {i}    entitlement.expiresAt != null -> "Google-Play-Abo aktiv bis ${{entitlement.expiresAt}}"
-          {i}    else -> "Google-Play-Monatsabo aktiv"
-          {i}}}
-          {i}Text(accessText, style = MaterialTheme.typography.bodySmall)'''
+              template = '''@@val accessText = when {
+@@    entitlement == null -> "Lizenz aktiv"
+@@    "corporate_werk" in entitlement.sources && entitlement.mode == "read" ->
+@@        "Firmenlizenz · Leser§{entitlement.works.firstOrNull()?.let { " · $it" } ?: ""}"
+@@    "corporate_werk" in entitlement.sources ->
+@@        "Firmenlizenz · Bearbeiter§{entitlement.works.firstOrNull()?.let { " · $it" } ?: ""}"
+@@    "legacy_all_access" in entitlement.sources -> "Legacy EHS Pro"
+@@    entitlement.expiresAt != null -> "Google-Play-Abo aktiv bis §{entitlement.expiresAt}"
+@@    else -> "Google-Play-Monatsabo aktiv"
+@@}
+@@Text(accessText, style = MaterialTheme.typography.bodySmall)'''
+              return template.replace('@@', i).replace('§', '$')
           s, count = active_pattern.subn(active_repl, s, count=1)
           if count == 0 and 'val accessText = when {' not in s:
               raise SystemExit('Dashboard active-license block not found')
@@ -86,16 +87,17 @@ jobs:
           account_pattern = re.compile(r'''(?P<indent>\s+)activeModules\.forEach \{ module ->\s*\n\s*Text\("• \$\{module\.title\}", style = MaterialTheme\.typography\.bodySmall\)\s*\n\s*\}''')
           def account_repl(m):
               i = m.group('indent')
-              return f'''{i}activeModules.forEach {{ module ->
-          {i}    val access = entitlements[module.productId]
-          {i}    val suffix = when {{
-          {i}        access == null -> ""
-          {i}        "corporate_werk" in access.sources && access.mode == "read" -> " · Firmenlizenz / Leser"
-          {i}        "corporate_werk" in access.sources -> " · Firmenlizenz / Bearbeiter"
-          {i}        else -> " · Google Play"
-          {i}    }}
-          {i}    Text("• ${{module.title}}$suffix", style = MaterialTheme.typography.bodySmall)
-          {i}}}'''
+              template = '''@@activeModules.forEach { module ->
+@@    val access = entitlements[module.productId]
+@@    val suffix = when {
+@@        access == null -> ""
+@@        "corporate_werk" in access.sources && access.mode == "read" -> " · Firmenlizenz / Leser"
+@@        "corporate_werk" in access.sources -> " · Firmenlizenz / Bearbeiter"
+@@        else -> " · Google Play"
+@@    }
+@@    Text("• §{module.title}$suffix", style = MaterialTheme.typography.bodySmall)
+@@}'''
+              return template.replace('@@', i).replace('§', '$')
           s, count = account_pattern.subn(account_repl, s, count=1)
           if count == 0 and 'Firmenlizenz / Leser' not in s:
               raise SystemExit('Account active-module block not found')
