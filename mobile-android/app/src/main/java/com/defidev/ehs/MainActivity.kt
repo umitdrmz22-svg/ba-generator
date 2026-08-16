@@ -42,6 +42,9 @@ private data class Entitlement(
     val active: Boolean,
     val status: String,
     val expiresAt: String?,
+    val mode: String = "edit",
+    val sources: List<String> = emptyList(),
+    val works: List<String> = emptyList(),
 )
 private data class Module(
     val key: String,
@@ -209,7 +212,7 @@ private fun EhsApp(activity: Activity) {
                 scope.launch {
                     val verified = SupabaseApi.verifyPurchase(activeSession, productId, purchase.purchaseToken)
                     if (verified != null) {
-                        entitlements = entitlements + (verified.productId to verified)
+                        entitlements = SupabaseApi.getEntitlements(activeSession)
                         val moduleTitle = modules.firstOrNull { it.productId == verified.productId }?.title ?: "EHS"
                         message = if (verified.active) "$moduleTitle wurde freigeschaltet." else "Abonnementstatus wurde aktualisiert."
                     } else {
@@ -327,7 +330,7 @@ private fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text("DefiDev EHS", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-            Text("EHS-Module einzeln abonnieren", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("Einzelabo oder Firmen-/Werk-Lizenz", color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
             OutlinedTextField(
                 value = email,
@@ -382,7 +385,7 @@ private fun Dashboard(
     onRefresh: () -> Unit,
     onAccount: () -> Unit,
 ) {
-    val legacyAccess = entitlements[LEGACY_ALL_ACCESS_PRODUCT]?.active == true
+    val legacyAccess = entitlements.values.any { "legacy_all_access" in it.sources }
     val activeCount = modules.count { hasAccess(it, entitlements) }
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -419,10 +422,17 @@ private fun Dashboard(
                             Text(if (active) "Aktiv" else "Gesperrt", style = MaterialTheme.typography.labelLarge)
                         }
                         if (active) {
-                            Text(
-                                entitlement?.expiresAt?.let { "Abo aktiv bis $it" } ?: "Monatsabo aktiv",
-                                style = MaterialTheme.typography.bodySmall,
-                            )
+                            val accessText = when {
+                                entitlement == null -> "Lizenz aktiv"
+                                "corporate_werk" in entitlement.sources && entitlement.mode == "read" ->
+                                    "Firmenlizenz · Leser${entitlement.works.firstOrNull()?.let { " · $it" } ?: ""}"
+                                "corporate_werk" in entitlement.sources ->
+                                    "Firmenlizenz · Bearbeiter${entitlement.works.firstOrNull()?.let { " · $it" } ?: ""}"
+                                "legacy_all_access" in entitlement.sources -> "Legacy EHS Pro"
+                                entitlement.expiresAt != null -> "Google-Play-Abo aktiv bis ${entitlement.expiresAt}"
+                                else -> "Google-Play-Monatsabo aktiv"
+                            }
+                            Text(accessText, style = MaterialTheme.typography.bodySmall)
                             Button(onClick = { onModule(module) }, modifier = Modifier.fillMaxWidth()) {
                                 Text("Modul öffnen")
                             }
@@ -476,7 +486,14 @@ private fun AccountScreen(
         Text(session.email)
         Text("Aktive Module: ${activeModules.size} / ${modules.size}")
         activeModules.forEach { module ->
-            Text("• ${module.title}", style = MaterialTheme.typography.bodySmall)
+            val access = entitlements[module.productId]
+            val suffix = when {
+                access == null -> ""
+                "corporate_werk" in access.sources && access.mode == "read" -> " · Firmenlizenz / Leser"
+                "corporate_werk" in access.sources -> " · Firmenlizenz / Bearbeiter"
+                else -> " · Google Play"
+            }
+            Text("• ${module.title}$suffix", style = MaterialTheme.typography.bodySmall)
         }
         OutlinedButton(onClick = onRestore, modifier = Modifier.fillMaxWidth()) {
             Text("Google-Play-Abos wiederherstellen")
@@ -563,22 +580,48 @@ private object SupabaseApi {
     }
 
     suspend fun getEntitlements(session: Session): Map<String, Entitlement> = withContext(Dispatchers.IO) {
-        val url = "$SUPABASE_URL/rest/v1/ehs_subscriptions?select=product_id,status,expires_at&user_id=eq.${session.userId}"
-        val response = request(url, "GET", null, session.accessToken)
+        val response = request(
+            "$SUPABASE_URL/functions/v1/get-ehs-entitlements",
+            "GET",
+            null,
+            session.accessToken,
+        )
         if (response.first !in 200..299) return@withContext emptyMap()
-        val rows = JSONArray(response.second)
+        val root = runCatching { JSONObject(response.second) }.getOrNull() ?: return@withContext emptyMap()
+        val rows = root.optJSONArray("modules") ?: return@withContext emptyMap()
         buildMap {
             for (index in 0 until rows.length()) {
-                val row = rows.getJSONObject(index)
-                val productId = row.optString("product_id")
-                if (productId !in recognizedProductIds) continue
-                val status = row.optString("status", "none")
-                val expiry = row.optString("expires_at").takeIf { it.isNotBlank() && it != "null" }
-                val active = status in setOf("active", "grace", "canceled") &&
-                    (expiry == null || runCatching {
-                        java.time.Instant.parse(expiry).isAfter(java.time.Instant.now())
-                    }.getOrDefault(false))
-                put(productId, Entitlement(productId, active, status, expiry))
+                val row = rows.optJSONObject(index) ?: continue
+                val productId = row.optString("productId")
+                if (productId !in sellableProductIds) continue
+                val sourcesArray = row.optJSONArray("sources") ?: JSONArray()
+                val sources = buildList {
+                    for (i in 0 until sourcesArray.length()) add(sourcesArray.optString(i))
+                }.filter { it.isNotBlank() }
+                val worksArray = row.optJSONArray("works") ?: JSONArray()
+                val works = buildList {
+                    for (i in 0 until worksArray.length()) {
+                        val werk = worksArray.optJSONObject(i) ?: continue
+                        val name = werk.optString("name")
+                        val code = werk.optString("code")
+                        val label = if (code.isNotBlank()) "$name ($code)" else name
+                        if (label.isNotBlank()) add(label)
+                    }
+                }
+                val active = row.optBoolean("active", false)
+                val expiresAt = row.optString("expiresAt").takeIf { it.isNotBlank() && it != "null" }
+                put(
+                    productId,
+                    Entitlement(
+                        productId = productId,
+                        active = active,
+                        status = if (active) "active" else "none",
+                        expiresAt = expiresAt,
+                        mode = row.optString("mode", if (active) "edit" else "none"),
+                        sources = sources,
+                        works = works,
+                    ),
+                )
             }
         }
     }
