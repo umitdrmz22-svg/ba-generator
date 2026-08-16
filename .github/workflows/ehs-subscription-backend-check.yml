@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - supabase/040_ehs_subscription_entitlements.sql
+      - supabase/041_ehs_module_subscriptions.sql
       - supabase/functions/verify-play-subscription/**
       - .github/workflows/ehs-subscription-backend-check.yml
   workflow_dispatch:
@@ -22,6 +23,18 @@ jobs:
           deno-version: v2.x
       - name: Type-check Edge Function
         run: deno check supabase/functions/verify-play-subscription/index.ts
+      - name: Validate module product IDs
+        run: |
+          for id in \
+            ehs_ba_monthly \
+            ehs_fluchtplan_monthly \
+            ehs_brandschutzordnung_monthly \
+            ehs_gefahrstoffkataster_monthly \
+            ehs_dokumentmanagement_monthly \
+            ehs_unfallmanagement_monthly; do
+            grep -q "$id" supabase/041_ehs_module_subscriptions.sql
+            grep -q "$id" supabase/functions/verify-play-subscription/index.ts
+          done
       - name: Reject committed secrets
         run: |
           if grep -R -nE '"private_key"[[:space:]]*:[[:space:]]*"-----BEGIN|sb_secret_[A-Za-z0-9_-]{20,}|service_role[^[:space:]]*[=:][^[:space:]]{20,}' supabase/functions supabase/*.sql; then
