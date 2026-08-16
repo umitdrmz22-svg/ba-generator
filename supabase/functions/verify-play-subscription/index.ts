@@ -1,6 +1,15 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.57.4';
 
-const PRODUCT_ID = 'ehs_pro_monthly';
+const LEGACY_ALL_ACCESS_PRODUCT = 'ehs_pro_monthly';
+const MODULE_PRODUCTS = new Set([
+  'ehs_ba_monthly',
+  'ehs_fluchtplan_monthly',
+  'ehs_brandschutzordnung_monthly',
+  'ehs_gefahrstoffkataster_monthly',
+  'ehs_dokumentmanagement_monthly',
+  'ehs_unfallmanagement_monthly',
+  LEGACY_ALL_ACCESS_PRODUCT,
+]);
 const ANDROID_PUBLISHER_SCOPE = 'https://www.googleapis.com/auth/androidpublisher';
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const GOOGLE_PUBLISHER_BASE = 'https://androidpublisher.googleapis.com/androidpublisher/v3';
@@ -11,25 +20,18 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-type ServiceAccount = {
-  client_email: string;
-  private_key: string;
-};
-
+type ServiceAccount = { client_email: string; private_key: string };
 type SubscriptionLineItem = {
   productId?: string;
   expiryTime?: string;
   autoRenewingPlan?: { autoRenewEnabled?: boolean };
   offerDetails?: { basePlanId?: string };
 };
-
 type SubscriptionPurchaseV2 = {
   subscriptionState?: string;
   acknowledgementState?: string;
   lineItems?: SubscriptionLineItem[];
-  externalAccountIdentifiers?: {
-    obfuscatedExternalAccountId?: string;
-  };
+  externalAccountIdentifiers?: { obfuscatedExternalAccountId?: string };
 };
 
 function jsonResponse(body: unknown, status = 200) {
@@ -84,7 +86,6 @@ async function serviceAccountAccessToken(account: ServiceAccount) {
     new TextEncoder().encode(unsigned),
   );
   const assertion = `${unsigned}.${base64Url(new Uint8Array(signature))}`;
-
   const tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -121,23 +122,16 @@ function mapState(state?: string) {
 }
 
 function maxExpiry(lineItems: SubscriptionLineItem[]) {
-  const valid = lineItems
+  return lineItems
     .map((item) => item.expiryTime)
     .filter((value): value is string => Boolean(value))
-    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-  return valid[0] ?? null;
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0] ?? null;
 }
 
-async function getGoogleSubscription(
-  packageName: string,
-  purchaseToken: string,
-  accessToken: string,
-): Promise<SubscriptionPurchaseV2> {
+async function getGoogleSubscription(packageName: string, purchaseToken: string, accessToken: string) {
   const url = `${GOOGLE_PUBLISHER_BASE}/applications/${encodeURIComponent(packageName)}` +
     `/purchases/subscriptionsv2/tokens/${encodeURIComponent(purchaseToken)}`;
-  const response = await fetch(url, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+  const response = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
   const body = await response.json();
   if (!response.ok) {
     console.error('subscriptionsv2.get failed', response.status, body?.error?.status);
@@ -149,6 +143,7 @@ async function getGoogleSubscription(
 
 async function acknowledgeIfNeeded(
   packageName: string,
+  productId: string,
   purchaseToken: string,
   accessToken: string,
   purchase: SubscriptionPurchaseV2,
@@ -158,7 +153,7 @@ async function acknowledgeIfNeeded(
   if (!['active', 'grace', 'canceled'].includes(state)) return;
 
   const url = `${GOOGLE_PUBLISHER_BASE}/applications/${encodeURIComponent(packageName)}` +
-    `/purchases/subscriptions/${encodeURIComponent(PRODUCT_ID)}` +
+    `/purchases/subscriptions/${encodeURIComponent(productId)}` +
     `/tokens/${encodeURIComponent(purchaseToken)}:acknowledge`;
   const response = await fetch(url, {
     method: 'POST',
@@ -169,8 +164,7 @@ async function acknowledgeIfNeeded(
     body: '{}',
   });
   if (!response.ok) {
-    const body = await response.text();
-    console.error('Subscription acknowledgement failed', response.status, body.slice(0, 300));
+    console.error('Subscription acknowledgement failed', response.status, (await response.text()).slice(0, 300));
     throw new Error('Purchase verified but acknowledgement failed');
   }
 }
@@ -202,7 +196,8 @@ export default {
       const requestBody = await req.json().catch(() => ({}));
       const packageName = String(requestBody.packageName ?? '').trim();
       const purchaseToken = String(requestBody.purchaseToken ?? '').trim();
-      if (!packageName || !purchaseToken || purchaseToken.length > 4096) {
+      const productId = String(requestBody.productId ?? '').trim();
+      if (!packageName || !purchaseToken || purchaseToken.length > 4096 || !MODULE_PRODUCTS.has(productId)) {
         return jsonResponse({ error: 'INVALID_REQUEST' }, 400);
       }
 
@@ -218,11 +213,9 @@ export default {
       const googleAccessToken = await serviceAccountAccessToken(account);
       const purchase = await getGoogleSubscription(packageName, purchaseToken, googleAccessToken);
       const lineItems = purchase.lineItems ?? [];
-      const matchingLineItems = lineItems.filter((item) => item.productId === PRODUCT_ID);
+      const matchingLineItems = lineItems.filter((item) => item.productId === productId);
       if (matchingLineItems.length === 0) return jsonResponse({ error: 'WRONG_PRODUCT' }, 400);
 
-      // The Android billing flow must set setObfuscatedAccountId(SHA-256(Supabase user UUID)).
-      // Requiring the same value from Google prevents a valid token being attached to another user.
       const expectedAccountId = await sha256Hex(user.id);
       const googleAccountId = purchase.externalAccountIdentifiers?.obfuscatedExternalAccountId;
       if (!googleAccountId || googleAccountId !== expectedAccountId) {
@@ -234,7 +227,7 @@ export default {
       const autoRenewing = matchingLineItems.some((item) => item.autoRenewingPlan?.autoRenewEnabled === true);
       const basePlanId = matchingLineItems.find((item) => item.offerDetails?.basePlanId)?.offerDetails?.basePlanId ?? null;
 
-      await acknowledgeIfNeeded(packageName, purchaseToken, googleAccessToken, purchase);
+      await acknowledgeIfNeeded(packageName, productId, purchaseToken, googleAccessToken, purchase);
 
       const admin = createClient(supabaseUrl, secretKey, {
         auth: { persistSession: false, autoRefreshToken: false },
@@ -244,7 +237,7 @@ export default {
         .upsert({
           user_id: user.id,
           provider: 'google_play',
-          product_id: PRODUCT_ID,
+          product_id: productId,
           base_plan_id: basePlanId,
           package_name: packageName,
           purchase_token: purchaseToken,
@@ -253,7 +246,7 @@ export default {
           auto_renewing: autoRenewing,
           last_verified_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id' });
+        }, { onConflict: 'user_id,product_id' });
       if (writeError) {
         console.error('ehs_subscriptions upsert failed', writeError.code);
         throw new Error('Entitlement storage failed');
@@ -263,7 +256,8 @@ export default {
         (!expiresAt || new Date(expiresAt).getTime() > Date.now());
       return jsonResponse({
         ok: true,
-        productId: PRODUCT_ID,
+        productId,
+        legacyAllAccess: productId === LEGACY_ALL_ACCESS_PRODUCT,
         status,
         entitled,
         expiresAt,
