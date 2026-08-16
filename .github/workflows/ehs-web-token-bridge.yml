@@ -1,0 +1,60 @@
+name: Bridge native EHS session to web module gates
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/ehs-web-token-bridge.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch-test-commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+      - name: Patch token bridge
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('mobile-android/app/src/main/java/com/defidev/ehs/MainActivity.kt')
+          s=p.read_text()
+          old='''    selectedModule?.let { module ->\n        ModuleWebView(module) { selectedModule = null }\n        return\n    }'''
+          new='''    selectedModule?.let { module ->\n        ModuleWebView(module, session?.accessToken.orEmpty()) { selectedModule = null }\n        return\n    }'''
+          if old in s: s=s.replace(old,new,1)
+          old2='private fun ModuleWebView(module: Module, onBack: () -> Unit) {'
+          new2='private fun ModuleWebView(module: Module, accessToken: String, onBack: () -> Unit) {'
+          if old2 in s: s=s.replace(old2,new2,1)
+          old3='''                    loadUrl(module.url)'''
+          new3='''                    val targetUrl = if (accessToken.isBlank()) module.url else\n                        "${module.url}#ehs_token=${android.net.Uri.encode(accessToken)}"\n                    loadUrl(targetUrl)'''
+          if old3 in s: s=s.replace(old3,new3,1)
+          p.write_text(s)
+          PY
+          grep -n "ehs_token" mobile-android/app/src/main/java/com/defidev/ehs/MainActivity.kt
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '8.13'
+      - name: Install Android API 36
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+      - name: Full Android gate
+        working-directory: mobile-android
+        run: |
+          gradle --no-daemon :app:testDebugUnitTest
+          gradle --no-daemon :app:lintDebug
+          gradle --no-daemon :app:assembleDebug
+          gradle --no-daemon :app:bundleRelease
+          test -s app/build/outputs/bundle/release/app-release.aab
+      - name: Commit only after green gate
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "DefiDev Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add mobile-android/app/src/main/java/com/defidev/ehs/MainActivity.kt
+          git commit -m "Bridge EHS session into module license gate"
+          git push
