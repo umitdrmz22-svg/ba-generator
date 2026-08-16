@@ -40,9 +40,10 @@ jobs:
               val sources: List<String> = emptyList(),
               val works: List<String> = emptyList(),
           )'''
-          if old not in s:
+          if old in s:
+              s = s.replace(old, new, 1)
+          elif 'val sources: List<String> = emptyList()' not in s:
               raise SystemExit('Entitlement data class pattern not found')
-          s = s.replace(old, new, 1)
 
           old = '''                    if (verified != null) {
                                   entitlements = entitlements + (verified.productId to verified)
@@ -54,51 +55,50 @@ jobs:
                                   val moduleTitle = modules.firstOrNull { it.productId == verified.productId }?.title ?: "EHS"
                                   message = if (verified.active) "$moduleTitle wurde freigeschaltet." else "Abonnementstatus wurde aktualisiert."
                               } else {'''
-          if old not in s:
+          if old in s:
+              s = s.replace(old, new, 1)
+          elif 'entitlements = SupabaseApi.getEntitlements(activeSession)' not in s:
               raise SystemExit('Purchase handler pattern not found')
-          s = s.replace(old, new, 1)
 
           s = s.replace('Text("EHS-Module einzeln abonnieren", color = MaterialTheme.colorScheme.onSurfaceVariant)',
                         'Text("Einzelabo oder Firmen-/Werk-Lizenz", color = MaterialTheme.colorScheme.onSurfaceVariant)', 1)
-
           s = s.replace('val legacyAccess = entitlements[LEGACY_ALL_ACCESS_PRODUCT]?.active == true',
                         'val legacyAccess = entitlements.values.any { "legacy_all_access" in it.sources }', 1)
 
-          old = '''                            Text(
-                                  entitlement?.expiresAt?.let { "Abo aktiv bis $it" } ?: "Monatsabo aktiv",
-                                  style = MaterialTheme.typography.bodySmall,
-                              )'''
-          new = '''                            val accessText = when {
-                                  entitlement == null -> "Lizenz aktiv"
-                                  "corporate_werk" in entitlement.sources && entitlement.mode == "read" ->
-                                      "Firmenlizenz · Leser${entitlement.works.firstOrNull()?.let { " · $it" } ?: ""}"
-                                  "corporate_werk" in entitlement.sources ->
-                                      "Firmenlizenz · Bearbeiter${entitlement.works.firstOrNull()?.let { " · $it" } ?: ""}"
-                                  "legacy_all_access" in entitlement.sources -> "Legacy EHS Pro"
-                                  entitlement.expiresAt != null -> "Google-Play-Abo aktiv bis ${entitlement.expiresAt}"
-                                  else -> "Google-Play-Monatsabo aktiv"
-                              }
-                              Text(accessText, style = MaterialTheme.typography.bodySmall)'''
-          if old not in s:
+          active_pattern = re.compile(r'''(?P<indent>\s+)Text\(\s*\n\s*entitlement\?\.expiresAt\?\.let \{ "Abo aktiv bis \$it" \} \?: "Monatsabo aktiv",\s*\n\s*style = MaterialTheme\.typography\.bodySmall,\s*\n\s*\)''')
+          def active_repl(m):
+              i = m.group('indent')
+              return f'''{i}val accessText = when {{
+          {i}    entitlement == null -> "Lizenz aktiv"
+          {i}    "corporate_werk" in entitlement.sources && entitlement.mode == "read" ->
+          {i}        "Firmenlizenz · Leser${{entitlement.works.firstOrNull()?.let {{ " · $it" }} ?: ""}}"
+          {i}    "corporate_werk" in entitlement.sources ->
+          {i}        "Firmenlizenz · Bearbeiter${{entitlement.works.firstOrNull()?.let {{ " · $it" }} ?: ""}}"
+          {i}    "legacy_all_access" in entitlement.sources -> "Legacy EHS Pro"
+          {i}    entitlement.expiresAt != null -> "Google-Play-Abo aktiv bis ${{entitlement.expiresAt}}"
+          {i}    else -> "Google-Play-Monatsabo aktiv"
+          {i}}}
+          {i}Text(accessText, style = MaterialTheme.typography.bodySmall)'''
+          s, count = active_pattern.subn(active_repl, s, count=1)
+          if count == 0 and 'val accessText = when {' not in s:
               raise SystemExit('Dashboard active-license block not found')
-          s = s.replace(old, new, 1)
 
-          old = '''        activeModules.forEach { module ->
-                  Text("• ${module.title}", style = MaterialTheme.typography.bodySmall)
-              }'''
-          new = '''        activeModules.forEach { module ->
-                  val access = entitlements[module.productId]
-                  val suffix = when {
-                      access == null -> ""
-                      "corporate_werk" in access.sources && access.mode == "read" -> " · Firmenlizenz / Leser"
-                      "corporate_werk" in access.sources -> " · Firmenlizenz / Bearbeiter"
-                      else -> " · Google Play"
-                  }
-                  Text("• ${module.title}$suffix", style = MaterialTheme.typography.bodySmall)
-              }'''
-          if old not in s:
+          account_pattern = re.compile(r'''(?P<indent>\s+)activeModules\.forEach \{ module ->\s*\n\s*Text\("• \$\{module\.title\}", style = MaterialTheme\.typography\.bodySmall\)\s*\n\s*\}''')
+          def account_repl(m):
+              i = m.group('indent')
+              return f'''{i}activeModules.forEach {{ module ->
+          {i}    val access = entitlements[module.productId]
+          {i}    val suffix = when {{
+          {i}        access == null -> ""
+          {i}        "corporate_werk" in access.sources && access.mode == "read" -> " · Firmenlizenz / Leser"
+          {i}        "corporate_werk" in access.sources -> " · Firmenlizenz / Bearbeiter"
+          {i}        else -> " · Google Play"
+          {i}    }}
+          {i}    Text("• ${{module.title}}$suffix", style = MaterialTheme.typography.bodySmall)
+          {i}}}'''
+          s, count = account_pattern.subn(account_repl, s, count=1)
+          if count == 0 and 'Firmenlizenz / Leser' not in s:
               raise SystemExit('Account active-module block not found')
-          s = s.replace(old, new, 1)
 
           pattern = re.compile(r'''    suspend fun getEntitlements\(session: Session\): Map<String, Entitlement> = withContext\(Dispatchers.IO\) \{.*?\n    \}\n\n    suspend fun verifyPurchase''', re.S)
           replacement = '''    suspend fun getEntitlements(session: Session): Map<String, Entitlement> = withContext(Dispatchers.IO) {
@@ -149,10 +149,11 @@ jobs:
           }
 
           suspend fun verifyPurchase'''
-          s2, n = pattern.subn(replacement, s, count=1)
-          if n != 1:
-              raise SystemExit(f'getEntitlements replacement count={n}')
-          s = s2
+          if '/functions/v1/get-ehs-entitlements' not in s:
+              s2, n = pattern.subn(replacement, s, count=1)
+              if n != 1:
+                  raise SystemExit(f'getEntitlements replacement count={n}')
+              s = s2
 
           p.write_text(s)
           PY
