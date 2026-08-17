@@ -11,6 +11,15 @@ const emailOf=(v:unknown)=>String(v??'').trim().toLowerCase();
 const validEmail=(v:string)=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)&&v.length<=254;
 const text=(v:unknown,max:number)=>String(v??'').trim().replace(/\s+/g,' ').slice(0,max);
 const uniqueModules=(v:unknown)=>[...new Set(Array.isArray(v)?v.map(String):[])].filter(x=>MODULES.includes(x));
+const nextMonthlyPeriodEnd=(start:Date)=>{
+  const end=new Date(start);
+  const day=end.getUTCDate();
+  end.setUTCDate(1);
+  end.setUTCMonth(end.getUTCMonth()+1);
+  const lastDay=new Date(Date.UTC(end.getUTCFullYear(),end.getUTCMonth()+1,0)).getUTCDate();
+  end.setUTCDate(Math.min(day,lastDay));
+  return end;
+};
 
 export default{async fetch(req:Request){
   if(req.method==='OPTIONS')return new Response('ok',{headers:corsHeaders});
@@ -58,7 +67,7 @@ export default{async fetch(req:Request){
       const plan=await planFor(modules.length);
       const{data:org,error:orgError}=await admin.from('organizations').insert({name:companyName,created_by:user.id}).select('id').single();if(orgError||!org)throw orgError||new Error('ORG_CREATE_FAILED');orgId=String(org.id);
       const{data:company,error:companyError}=await admin.from('ehs_companies').insert({organization_id:orgId,name:companyName,legal_name:legalName,billing_email:billingEmail,vat_id:vatId,status:'active',created_by:user.id}).select('id').single();if(companyError||!company)throw companyError||new Error('COMPANY_CREATE_FAILED');companyId=String(company.id);
-      const start=new Date(),end=new Date(start);end.setMonth(end.getMonth()+1);
+      const start=new Date(),end=nextMonthlyPeriodEnd(start);
       const{data:werk,error:werkError}=await admin.from('ehs_werks').insert({organization_id:orgId,company_id:companyId,name:werkName,code:werkCode,plan_code:plan.plan_code,licensed_modules:modules,billing_status:'active',payment_source:'invoice',current_period_start:start.toISOString(),current_period_end:end.toISOString(),created_by:user.id}).select('id').single();if(werkError||!werk)throw werkError||new Error('WERK_CREATE_FAILED');werkId=String(werk.id);
       const invite=await inviteOwner(companyId,werkId,ownerEmail);
       await audit('company_provisioned',companyId,werkId,{moduleCount:modules.length,planCode:plan.plan_code,mailStatus:invite.mailStatus});
@@ -75,7 +84,7 @@ export default{async fetch(req:Request){
     const companyId=String(body.companyId??''),werkName=text(body.werkName,160),werkCode=text(body.werkCode,60),modules=uniqueModules(body.modules);
     if(!companyId||werkName.length<2||!werkCode||modules.length<1)return json({error:'INVALID_INPUT'},400);
     const{data:company}=await admin.from('ehs_companies').select('id,organization_id,status').eq('id',companyId).maybeSingle();if(!company||company.status!=='active'||!company.organization_id)return json({error:'COMPANY_NOT_FOUND'},404);
-    try{const plan=await planFor(modules.length);const start=new Date(),end=new Date(start);end.setMonth(end.getMonth()+1);const{data:werk,error}=await admin.from('ehs_werks').insert({organization_id:company.organization_id,company_id:companyId,name:werkName,code:werkCode,plan_code:plan.plan_code,licensed_modules:modules,billing_status:'active',payment_source:'invoice',current_period_start:start.toISOString(),current_period_end:end.toISOString(),created_by:user.id}).select('id').single();if(error||!werk)throw error||new Error('WERK_CREATE_FAILED');await audit('werk_added',companyId,String(werk.id),{moduleCount:modules.length,planCode:plan.plan_code});return json({ok:true,werkId:werk.id,planCode:plan.plan_code},201);}catch(error){return json({error:String((error as Error)?.message||'WERK_CREATE_FAILED')},409);}
+    try{const plan=await planFor(modules.length);const start=new Date(),end=nextMonthlyPeriodEnd(start);const{data:werk,error}=await admin.from('ehs_werks').insert({organization_id:company.organization_id,company_id:companyId,name:werkName,code:werkCode,plan_code:plan.plan_code,licensed_modules:modules,billing_status:'active',payment_source:'invoice',current_period_start:start.toISOString(),current_period_end:end.toISOString(),created_by:user.id}).select('id').single();if(error||!werk)throw error||new Error('WERK_CREATE_FAILED');await audit('werk_added',companyId,String(werk.id),{moduleCount:modules.length,planCode:plan.plan_code});return json({ok:true,werkId:werk.id,planCode:plan.plan_code},201);}catch(error){return json({error:String((error as Error)?.message||'WERK_CREATE_FAILED')},409);}
   }
 
   if(action==='updateWerk'){
