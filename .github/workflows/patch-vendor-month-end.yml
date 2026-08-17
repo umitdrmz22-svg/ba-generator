@@ -1,0 +1,44 @@
+name: One-time vendor monthly period clamp patch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-vendor-month-end.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Clamp monthly billing periods safely
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('supabase/functions/ehs-vendor-admin/index.ts')
+          s=p.read_text()
+          marker="const uniqueModules=(v:unknown)=>[...new Set(Array.isArray(v)?v.map(String):[])].filter(x=>MODULES.includes(x));\n"
+          helper="""const nextMonthlyPeriodEnd=(start:Date)=>{\n  const end=new Date(start);\n  const day=end.getUTCDate();\n  end.setUTCDate(1);\n  end.setUTCMonth(end.getUTCMonth()+1);\n  const lastDay=new Date(Date.UTC(end.getUTCFullYear(),end.getUTCMonth()+1,0)).getUTCDate();\n  end.setUTCDate(Math.min(day,lastDay));\n  return end;\n};\n"""
+          if 'const nextMonthlyPeriodEnd=' not in s:
+              if marker not in s: raise SystemExit('helper insertion marker not found')
+              s=s.replace(marker,marker+helper,1)
+          old='const start=new Date(),end=new Date(start);end.setMonth(end.getMonth()+1);'
+          count=s.count(old)
+          if count != 2: raise SystemExit(f'expected 2 period expressions, found {count}')
+          s=s.replace(old,'const start=new Date(),end=nextMonthlyPeriodEnd(start);')
+          p.write_text(s)
+          PY
+          grep -Fq 'nextMonthlyPeriodEnd' supabase/functions/ehs-vendor-admin/index.ts
+          ! grep -Fq 'end.setMonth(end.getMonth()+1)' supabase/functions/ehs-vendor-admin/index.ts
+      - name: Commit source and remove helper
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add supabase/functions/ehs-vendor-admin/index.ts
+          git rm .github/workflows/patch-vendor-month-end.yml
+          git commit -m 'Clamp corporate monthly period ends safely'
+          git push
