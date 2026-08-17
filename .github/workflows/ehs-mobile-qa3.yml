@@ -32,25 +32,25 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-boot-timeout: 600
-          script: |
-            set -eu
-            APK=mobile-android/app/build/outputs/apk/debug/app-debug.apk
-            test -s "$APK"
-            adb install -r "$APK"
-            AAPT=$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -n1)
-            PKG=$($AAPT dump badging "$APK" | sed -n "s/package: name='\([^']*\)'.*/\1/p")
-            test -n "$PKG"
-            mkdir -p ehs-mobile-qa3-logs
+          script: >-
+            set -eu;
+            APK=mobile-android/app/build/outputs/apk/debug/app-debug.apk;
+            test -s "$APK";
+            adb install -r "$APK";
+            AAPT=$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -n1);
+            PKG=$($AAPT dump badging "$APK" | sed -n "s/package: name='\([^']*\)'.*/\1/p");
+            test -n "$PKG";
+            mkdir -p ehs-mobile-qa3-logs;
             for SEED in 101 202 303; do
-              adb shell pm clear "$PKG" >/dev/null
-              adb logcat -c
-              adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null
-              sleep 1
-              adb shell monkey -p "$PKG" --throttle 70 -s "$SEED" -v 400 >"ehs-mobile-qa3-logs/monkey-$SEED.txt" 2>&1 || true
-              sleep 2
-              adb logcat -b all -d -v threadtime >"ehs-mobile-qa3-logs/logcat-$SEED.txt"
-              if grep -q "ANR in $PKG" "ehs-mobile-qa3-logs/logcat-$SEED.txt"; then echo "ANR on seed $SEED"; exit 1; fi
-              if grep -A20 -B5 "FATAL EXCEPTION" "ehs-mobile-qa3-logs/logcat-$SEED.txt" | grep -Fq "$PKG"; then echo "Crash on seed $SEED"; exit 1; fi
+              adb shell pm clear "$PKG" >/dev/null;
+              adb logcat -c;
+              adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null;
+              sleep 1;
+              adb shell monkey -p "$PKG" --throttle 70 -s "$SEED" -v 400 >"ehs-mobile-qa3-logs/monkey-$SEED.txt" 2>&1 || true;
+              sleep 2;
+              adb logcat -b all -d -v threadtime >"ehs-mobile-qa3-logs/logcat-$SEED.txt";
+              if grep -q "ANR in $PKG" "ehs-mobile-qa3-logs/logcat-$SEED.txt"; then echo "ANR on seed $SEED"; exit 1; fi;
+              if grep -A20 -B5 "FATAL EXCEPTION" "ehs-mobile-qa3-logs/logcat-$SEED.txt" | grep -Fq "$PKG"; then echo "Crash on seed $SEED"; exit 1; fi;
             done
       - uses: actions/upload-artifact@v7
         if: always()
