@@ -597,7 +597,7 @@ private fun ModuleWebView(module: Module, accessToken: String, onBack: () -> Uni
                     settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_NEVER_ALLOW
                     settings.mediaPlaybackRequiresUserGesture = true
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) settings.safeBrowsingEnabled = true
-                    WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
+                    WebView.setWebContentsDebuggingEnabled((context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0)
                     val targetUrl = if (accessToken.isBlank()) module.url else
                         "${module.url}#ehs_token=${android.net.Uri.encode(accessToken)}"
                     loadUrl(targetUrl)
