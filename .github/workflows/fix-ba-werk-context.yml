@@ -1,0 +1,54 @@
+name: Fix BA Werk context
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/fix-ba-werk-context.yml']
+  workflow_dispatch: {}
+permissions: {contents: write}
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Patch BA cloud layer
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('assets/ba-cloud.js'); s=p.read_text()
+          if "let originWerkId='';" not in s: s=s.replace("  let organization=null;\n", "  let organization=null;\n  let originWerkId='';\n",1)
+          old="""    const ehsAccess=await waitForEhsAccess();
+    let query=client.from('organization_members')"""
+          new="""    const ehsAccess=await waitForEhsAccess();
+    const selectedWerk=ehsAccess?.selectedWerk || (Array.isArray(ehsAccess?.works)&&ehsAccess.works.length===1?ehsAccess.works[0]:null);
+    originWerkId=String(selectedWerk?.id||'');
+    if(!originWerkId)throw new Error('Bitte BA Studio über das EHS-Dashboard öffnen und ein Werk auswählen.');
+    let query=client.from('organization_members')"""
+          if new not in s:
+              assert old in s, 'loadOrganization anchor missing'; s=s.replace(old,new,1)
+          old="""        const {data,error}=await client.from('operating_instructions').insert({...payload,created_by:session.user.id}).select('id').single();"""
+          new="""        const {data,error}=await client.from('operating_instructions').insert({...payload,origin_werk_id:originWerkId,created_by:session.user.id}).select('id').single();"""
+          if new not in s:
+              assert old in s, 'draft insert anchor missing'; s=s.replace(old,new,1)
+          old="""      organization_id:organization.organization_id,title:copy.asset"""
+          new="""      organization_id:organization.organization_id,origin_werk_id:originWerkId,title:copy.asset"""
+          if new not in s:
+              assert old in s, 'duplicate anchor missing'; s=s.replace(old,new,1)
+          old="""      const {data,error}=await client.from('operating_instructions').select('id,title,ba_number,ba_type,department,workplace,revision_label,status,updated_at,payload').eq('organization_id',organization.organization_id).neq('status','archived').order('title',{ascending:true});"""
+          new="""      const {data,error}=await client.from('operating_instructions').select('id,title,ba_number,ba_type,department,workplace,revision_label,status,updated_at,payload,origin_werk_id').eq('organization_id',organization.organization_id).eq('origin_werk_id',originWerkId).neq('status','archived').order('title',{ascending:true});"""
+          if new not in s:
+              assert old in s, 'library query anchor missing'; s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          node --check assets/ba-cloud.js
+          grep -q 'origin_werk_id:originWerkId' assets/ba-cloud.js
+          grep -q "eq('origin_werk_id',originWerkId)" assets/ba-cloud.js
+      - name: BA tests x3
+        run: for i in 1 2 3; do npm test; done
+      - name: Commit
+        run: |
+          git config user.name 'DefiDev Automation'; git config user.email 'actions@users.noreply.github.com'
+          git add assets/ba-cloud.js
+          git diff --cached --quiet && exit 0
+          git commit -m 'Scope BA data to selected Werk'
+          git push
