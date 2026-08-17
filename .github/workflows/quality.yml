@@ -18,11 +18,29 @@ jobs:
       - name: JavaScript-Syntax prüfen
         run: |
           for file in assets/auth-config.js assets/auth-client.js assets/ba-cloud.js assets/engine.js assets/app.js; do node --check "$file"; done
-      - name: Deploy-Lizenzvertrag prüfen
+      - name: Werk- und Lizenzisolierung prüfen
         run: |
+          grep -Fq 'origin_werk_id:originWerkId' assets/ba-cloud.js
+          grep -Fq ".eq('origin_werk_id',originWerkId)" assets/ba-cloud.js
+          grep -Fq 'selectedWerk' assets/ba-cloud.js
           test -f .github/workflows/ehs-module-gate.yml
           grep -Fq 'defidev-legal/ehs-entitlement-gate.js' .github/workflows/ehs-module-gate.yml
           grep -Fq 'ehs_ba_monthly' .github/workflows/ehs-module-gate.yml
+      - name: Corporate security source contract
+        run: |
+          for file in \
+            supabase/056_ehs_company_sales_invites_and_audit.sql \
+            supabase/057_ehs_atomic_invite_seat_reservations.sql \
+            supabase/058_ehs_explicit_server_only_deny_policies.sql \
+            supabase/059_ehs_module_werk_rls_isolation.sql \
+            supabase/060_ehs_unfall_action_werk_rls.sql \
+            supabase/functions/ehs-company-admin/index.ts; do
+            test -s "$file"
+          done
+          grep -Fq 'ehs_has_module_werk_access' supabase/059_ehs_module_werk_rls_isolation.sql
+          grep -Fq 'SEAT_LIMIT_REACHED' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'ehs_company_audit_log' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'ehs-company-admin.html' supabase/functions/ehs-company-admin/index.ts
       - name: Engine/UI Tests dreimal ausführen
         run: |
           for PASS in 1 2 3; do echo "QA pass $PASS"; node tests/engine.test.js; node tests/ui-extension.test.js; done
