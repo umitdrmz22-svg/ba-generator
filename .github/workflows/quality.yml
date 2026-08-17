@@ -41,17 +41,22 @@ jobs:
             supabase/065_ehs_sync_company_admin_from_werk_owner.sql \
             supabase/066_ehs_account_deletion_preserve_company_records.sql \
             supabase/067_ehs_personal_account_cleanup_rpc.sql \
+            supabase/068_ehs_reconcile_company_admin_on_member_removal.sql \
             supabase/functions/ehs-company-admin/index.ts \
             supabase/functions/ehs-vendor-admin/index.ts \
             supabase/functions/delete-my-account/index.ts; do
             test -s "$file"
           done
           grep -Fq 'ehs_has_module_werk_access' supabase/059_ehs_module_werk_rls_isolation.sql
+          grep -Fq "set status = 'disabled'" supabase/068_ehs_reconcile_company_admin_on_member_removal.sql
+          grep -Fq "m.role in ('owner','admin')" supabase/068_ehs_reconcile_company_admin_on_member_removal.sql
           grep -Fq 'SEAT_LIMIT_REACHED' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'ehs_company_audit_log' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'auditEvents' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'email_confirmed_at' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'VERIFIED_EMAIL_REQUIRED' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'FORBIDDEN_ROLE_GRANT' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'FORBIDDEN_PRIVILEGED_TARGET' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'ehs-set-password.html' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'email_confirmed_at' supabase/functions/ehs-vendor-admin/index.ts
           grep -Fq 'ehs_vendor_audit_log' supabase/functions/ehs-vendor-admin/index.ts
