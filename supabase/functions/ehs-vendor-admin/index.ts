@@ -36,7 +36,7 @@ export default{async fetch(req:Request){
     const{data:invite,error}=await admin.from('ehs_werk_invites').insert({company_id:companyId,werk_id:werkId,email:ownerEmail,seat_type:'editor',role:'owner',status:'pending',invited_by:user.id}).select('id,email,expires_at').single();
     if(error)throw error;
     let mailStatus='queued';
-    const{error:mailError}=await admin.auth.admin.inviteUserByEmail(ownerEmail,{redirectTo:'https://umitdrmz22-svg.github.io/defidev-legal/ehs-company-admin.html',data:{ehs_company_id:companyId,ehs_werk_id:werkId,ehs_invite_id:invite.id}});
+    const{error:mailError}=await admin.auth.admin.inviteUserByEmail(ownerEmail,{redirectTo:'https://umitdrmz22-svg.github.io/defidev-legal/ehs-set-password.html',data:{ehs_company_id:companyId,ehs_werk_id:werkId,ehs_invite_id:invite.id}});
     if(mailError){const msg=String(mailError.message??'').toLowerCase();mailStatus=msg.includes('already')||msg.includes('registered')?'existing_account':'email_failed';}
     return{inviteId:invite.id,expiresAt:invite.expires_at,mailStatus};
   };
