@@ -7,6 +7,8 @@
   if(!client||!session)return;
 
   let organization=null;
+  let originWerkId='';
+  let originWerkName='';
   let saveTimer=null;
   let saving=false;
 
@@ -26,8 +28,13 @@
   };
   const loadOrganization=async()=>{
     const ehsAccess=await waitForEhsAccess();
+    const selectedWerk=ehsAccess?.selectedWerk||(Array.isArray(ehsAccess?.works)&&ehsAccess.works.length===1?ehsAccess.works[0]:null);
+    originWerkId=String(selectedWerk?.id||'');
+    originWerkName=String(selectedWerk?.name||selectedWerk?.code||'Werk');
+    if(!originWerkId)throw new Error('Bitte BA Studio über das EHS-Dashboard öffnen und ein Werk auswählen.');
     let query=client.from('organization_members').select('organization_id,role,organizations(name)').eq('user_id',session.user.id).eq('status','active');
-    if(ehsAccess?.organizationId)query=query.eq('organization_id',ehsAccess.organizationId);
+    if(selectedWerk?.organizationId)query=query.eq('organization_id',selectedWerk.organizationId);
+    else if(ehsAccess?.organizationId)query=query.eq('organization_id',ehsAccess.organizationId);
     else query=query.limit(1);
     const {data,error}=await query.maybeSingle();
     if(error)throw error;
@@ -40,6 +47,7 @@
     const state=parseState();
     if(!state?.type||!state?.asset)return;
     if(!organization)await loadOrganization();
+    if(!originWerkId)return;
     saving=true;setSaveState('Wird online gespeichert …');
     try{
       const payload={
@@ -56,17 +64,17 @@
       };
       const id=localStorage.getItem(CLOUD_ID);
       if(id){
-        const {data,error}=await client.from('operating_instructions').update(payload).eq('id',id).eq('organization_id',organization.organization_id).select('id').maybeSingle();
+        const {data,error}=await client.from('operating_instructions').update(payload).eq('id',id).eq('organization_id',organization.organization_id).eq('origin_werk_id',originWerkId).select('id').maybeSingle();
         if(error)throw error;
         if(!data)localStorage.removeItem(CLOUD_ID);
       }
       if(!localStorage.getItem(CLOUD_ID)){
-        const {data,error}=await client.from('operating_instructions').insert({...payload,created_by:session.user.id}).select('id').single();
+        const {data,error}=await client.from('operating_instructions').insert({...payload,origin_werk_id:originWerkId,created_by:session.user.id}).select('id').single();
         if(error)throw error;
         localStorage.setItem(CLOUD_ID,data.id);
       }
-      setSaveState('Online gespeichert ✓','ok');
-    }catch(error){console.error(error);setSaveState('Online-Speicherung fehlgeschlagen','error');}
+      setSaveState(`Online gespeichert · ${originWerkName} ✓`,'ok');
+    }catch(error){console.error(error);const message=String(error?.message||'');setSaveState(message.includes('EHS_ORIGIN')?'Werk-Kontext ungültig. Bitte über das EHS-Dashboard erneut öffnen.':'Online-Speicherung fehlgeschlagen','error');}
     finally{saving=false;}
   };
   const scheduleSave=()=>{clearTimeout(saveTimer);saveTimer=setTimeout(()=>upsertDraft(false),900);};
@@ -87,13 +95,13 @@
     copy.asset=`${copy.asset||record.title} – Kopie`;
     copy.baNumber='';copy.revision='0';copy.date=new Date().toISOString().slice(0,10);
     const {data,error}=await client.from('operating_instructions').insert({
-      organization_id:organization.organization_id,title:copy.asset,ba_number:'',ba_type:copy.type||record.ba_type,department:copy.dept||'',workplace:copy.workplace||'',revision_label:'0',status:'draft',payload:copy,created_by:session.user.id,updated_by:session.user.id
+      organization_id:organization.organization_id,origin_werk_id:originWerkId,title:copy.asset,ba_number:'',ba_type:copy.type||record.ba_type,department:copy.dept||'',workplace:copy.workplace||'',revision_label:'0',status:'draft',payload:copy,created_by:session.user.id,updated_by:session.user.id
     }).select('id').single();
     if(error)throw error;
     localStorage.setItem(STORE,JSON.stringify(copy));localStorage.setItem(CLOUD_ID,data.id);location.href='editor.html';
   };
   const archiveRecord=async id=>{
-    const {error}=await client.from('operating_instructions').update({status:'archived',updated_by:session.user.id}).eq('id',id).eq('organization_id',organization.organization_id);
+    const {error}=await client.from('operating_instructions').update({status:'archived',updated_by:session.user.id}).eq('id',id).eq('organization_id',organization.organization_id).eq('origin_werk_id',originWerkId);
     if(error)throw error;
     await renderLibrary();
   };
@@ -104,23 +112,23 @@
     host.innerHTML='<div class="ba-library-empty"><strong>Wird geladen …</strong></div>';
     try{
       if(!organization)await loadOrganization();
-      const {data,error}=await client.from('operating_instructions').select('id,title,ba_number,ba_type,department,workplace,revision_label,status,updated_at,payload').eq('organization_id',organization.organization_id).neq('status','archived').order('title',{ascending:true});
+      const {data,error}=await client.from('operating_instructions').select('id,title,ba_number,ba_type,department,workplace,revision_label,status,updated_at,payload,origin_werk_id').eq('organization_id',organization.organization_id).eq('origin_werk_id',originWerkId).neq('status','archived').order('title',{ascending:true});
       if(error)throw error;
       const query=(document.querySelector('#savedBaSearch')?.value||'').trim().toLocaleLowerCase('de-DE');
       const rows=(data||[]).filter(row=>!query||[row.title,row.ba_number,row.ba_type,row.department,row.workplace].join(' ').toLocaleLowerCase('de-DE').includes(query));
-      if(!rows.length){host.innerHTML='<div class="ba-library-empty"><strong>Noch keine gespeicherten BA</strong><span>Eine neue BA wird nach dem Öffnen des Editors automatisch im Firmenbereich gespeichert.</span></div>';if(message)message.textContent='';return;}
+      if(!rows.length){host.innerHTML=`<div class="ba-library-empty"><strong>Noch keine gespeicherten BA in ${escapeHtml(originWerkName)}</strong><span>Eine neue BA wird nach dem Öffnen des Editors automatisch diesem Werk zugeordnet.</span></div>`;if(message)message.textContent='';return;}
       host.innerHTML=rows.map(row=>`<article class="ba-library-item" data-id="${escapeHtml(row.id)}"><div class="ba-library-title"><strong>${escapeHtml(row.title)}</strong><span class="ba-library-type">${escapeHtml(row.ba_type)}</span></div><div class="ba-library-meta"><span>${escapeHtml(row.ba_number||'ohne BA-Nr.')}</span><span>${escapeHtml(row.department||'ohne Bereich')}</span><span>Rev. ${escapeHtml(row.revision_label||'—')}</span><span>${escapeHtml(formatDate(row.updated_at))}</span></div><div class="ba-library-actions"><button class="open" data-action="open">Öffnen</button><button data-action="duplicate">Kopieren</button><button class="archive" data-action="archive">Archivieren</button></div></article>`).join('');
       host.querySelectorAll('[data-id]').forEach(card=>card.addEventListener('click',async event=>{
         const button=event.target.closest('button[data-action]');if(!button)return;
         const row=rows.find(x=>x.id===card.dataset.id);if(!row)return;
         try{if(button.dataset.action==='open')openRecord(row);if(button.dataset.action==='duplicate')await duplicateRecord(row);if(button.dataset.action==='archive'&&confirm('Diese Betriebsanweisung archivieren?'))await archiveRecord(row.id);}catch(error){console.error(error);if(message)message.textContent=error.message;}
       }));
-      if(message)message.textContent=`${rows.length} Betriebsanweisung(en) · alphabetisch A–Z`;
-    }catch(error){console.error(error);host.innerHTML='<div class="ba-library-empty"><strong>Gespeicherte BA konnten nicht geladen werden.</strong><span>Bitte Supabase-Migration und Berechtigungen prüfen.</span></div>';if(message)message.textContent=error.message;}
+      if(message)message.textContent=`${rows.length} Betriebsanweisung(en) · ${originWerkName} · alphabetisch A–Z`;
+    }catch(error){console.error(error);host.innerHTML='<div class="ba-library-empty"><strong>Gespeicherte BA konnten nicht geladen werden.</strong><span>Bitte Werkzugriff und Verbindung prüfen.</span></div>';if(message)message.textContent=error.message;}
   };
   const init=async()=>{
     hookLocalStorage();
-    await loadOrganization();
+    try{await loadOrganization();}catch(error){console.error(error);setSaveState(error.message,'error');return;}
     document.querySelector('#savedBaSearch')?.addEventListener('input',renderLibrary);
     document.querySelector('#continue')?.addEventListener('click',()=>localStorage.removeItem(CLOUD_ID),{capture:true});
     document.querySelector('#loadDemo')?.addEventListener('click',()=>localStorage.removeItem(CLOUD_ID),{capture:true});
