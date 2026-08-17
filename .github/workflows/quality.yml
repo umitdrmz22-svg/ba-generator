@@ -49,11 +49,16 @@ jobs:
           grep -Fq 'ehs_has_module_werk_access' supabase/059_ehs_module_werk_rls_isolation.sql
           grep -Fq 'SEAT_LIMIT_REACHED' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'ehs_company_audit_log' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'auditEvents' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'email_confirmed_at' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'VERIFIED_EMAIL_REQUIRED' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'ehs-company-admin.html' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq 'email_confirmed_at' supabase/functions/ehs-vendor-admin/index.ts
           grep -Fq 'ehs_vendor_audit_log' supabase/functions/ehs-vendor-admin/index.ts
           grep -Fq 'on delete set null' supabase/066_ehs_account_deletion_preserve_company_records.sql
           grep -Fq 'revoke all on function public.ehs_cleanup_personal_account_data' supabase/067_ehs_personal_account_cleanup_rpc.sql
           grep -Fq "admin.auth.admin.signOut(accessToken, 'global')" supabase/functions/delete-my-account/index.ts
+          grep -Fq 'corporateRecordsPreserved' supabase/functions/delete-my-account/index.ts
           ! grep -R -Fq 'SUPABASE_SERVICE_ROLE_KEY' assets mobile-android/app/src/main || false
       - name: Engine/UI Tests dreimal ausführen
         run: |
