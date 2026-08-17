@@ -1,0 +1,38 @@
+name: Sync company owner claim role
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/sync-company-admin-claim-role.yml']
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Patch owner/admin claim
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('supabase/functions/ehs-company-admin/index.ts')
+          s=p.read_text()
+          old="if(memberError){if(String(memberError.message).includes('SEAT_LIMIT_REACHED'))return json({error:'SEAT_LIMIT_REACHED'},409);return json({error:'MEMBER_CREATE_FAILED'},500);}await admin.from('ehs_werk_invites').update"
+          new="if(memberError){if(String(memberError.message).includes('SEAT_LIMIT_REACHED'))return json({error:'SEAT_LIMIT_REACHED'},409);return json({error:'MEMBER_CREATE_FAILED'},500);}if(['owner','admin'].includes(String(invite.role))){const{error:companyAdminError}=await admin.from('ehs_company_admins').upsert({company_id:invite.company_id,user_id:user.id,role:invite.role,status:'active'},{onConflict:'company_id,user_id'});if(companyAdminError)return json({error:'COMPANY_ADMIN_CREATE_FAILED'},500);}await admin.from('ehs_werk_invites').update"
+          if new not in s:
+              if old not in s: raise SystemExit('claim anchor missing')
+              s=s.replace(old,new,1)
+          s=s.replace("claimed.push({id:invite.id,werkId:invite.werk_id,seatType:invite.seat_type,role:invite.role});","claimed.push({id:invite.id,werkId:invite.werk_id,seatType:invite.seat_type,role:invite.role,companyAdmin:['owner','admin'].includes(String(invite.role))});",1)
+          p.write_text(s)
+          PY
+          grep -Fq 'COMPANY_ADMIN_CREATE_FAILED' supabase/functions/ehs-company-admin/index.ts
+          grep -Fq "companyAdmin:['owner','admin'].includes" supabase/functions/ehs-company-admin/index.ts
+      - name: Commit
+        run: |
+          git config user.name 'DefiDev Automation'
+          git config user.email 'actions@users.noreply.github.com'
+          git add supabase/functions/ehs-company-admin/index.ts
+          git diff --cached --quiet && exit 0
+          git commit -m 'Grant company admin role when owner invite is claimed'
+          git push
