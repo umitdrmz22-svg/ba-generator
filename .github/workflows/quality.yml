@@ -55,6 +55,9 @@ jobs:
           grep -Fq 'ehs-set-password.html' supabase/functions/ehs-company-admin/index.ts
           grep -Fq 'email_confirmed_at' supabase/functions/ehs-vendor-admin/index.ts
           grep -Fq 'ehs_vendor_audit_log' supabase/functions/ehs-vendor-admin/index.ts
+          grep -Fq 'ehs-set-password.html' supabase/functions/ehs-vendor-admin/index.ts
+          grep -Fq 'nextMonthlyPeriodEnd' supabase/functions/ehs-vendor-admin/index.ts
+          ! grep -Fq 'end.setMonth(end.getMonth()+1)' supabase/functions/ehs-vendor-admin/index.ts
           grep -Fq 'on delete set null' supabase/066_ehs_account_deletion_preserve_company_records.sql
           grep -Fq 'revoke all on function public.ehs_cleanup_personal_account_data' supabase/067_ehs_personal_account_cleanup_rpc.sql
           grep -Fq "admin.auth.admin.signOut(accessToken, 'global')" supabase/functions/delete-my-account/index.ts
