@@ -10,6 +10,17 @@ document.addEventListener('DOMContentLoaded', () => $('#continue') ? initStart()
 
 function initStart() {
   $('#date').value ||= new Date().toISOString().slice(0, 10);
+  if(PRESENTATION_MODE){
+    $('#firm').value='Musterwerk Lebensmittel GmbH';
+    $('#baNumber').value='BA-GS-014';
+    $('#dept').value='Reinigung';
+    $('#workplace').value='Schaumreinigung Produktion';
+    $('#assetName').value='Alkalischer Schaumreiniger';
+    $('#purpose').value='Manuelle Schaumreinigung von Anlagenoberflächen nach Produktionsende';
+    $('#author').value='EHS / Musterperson';
+    $('#responsible').value='Betriebsleitung / Musterperson';
+    $('#revision').value='2';
+  }
   $$('input[name=type]').forEach(radio => radio.addEventListener('change', () => $$('.type-option').forEach(card => card.classList.toggle('selected', $('input', card).checked))));
   $('#loadDemo').addEventListener('click', () => { localStorage.setItem(STORE, JSON.stringify(E.demoState())); location.href = editorHref(); });
   $('#continue').addEventListener('click', async () => {
