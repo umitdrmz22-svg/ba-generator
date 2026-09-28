@@ -3,13 +3,15 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const STORE = 'ba-studio-draft-v3';
 const E = globalThis.BAEngine;
+const PRESENTATION_MODE = new URLSearchParams(location.search).get('demo') === '1';
+const editorHref = () => PRESENTATION_MODE ? 'editor.html?demo=1' : 'editor.html';
 
 document.addEventListener('DOMContentLoaded', () => $('#continue') ? initStart() : $('#baRoot') && initEditor());
 
 function initStart() {
   $('#date').value ||= new Date().toISOString().slice(0, 10);
   $$('input[name=type]').forEach(radio => radio.addEventListener('change', () => $$('.type-option').forEach(card => card.classList.toggle('selected', $('input', card).checked))));
-  $('#loadDemo').addEventListener('click', () => { localStorage.setItem(STORE, JSON.stringify(E.demoState())); location.href = 'editor.html'; });
+  $('#loadDemo').addEventListener('click', () => { localStorage.setItem(STORE, JSON.stringify(E.demoState())); location.href = editorHref(); });
   $('#continue').addEventListener('click', async () => {
     const asset = $('#assetName').value.trim(), purpose = $('#purpose').value.trim();
     if (!asset) return $('#assetName').reportValidity();
@@ -21,7 +23,7 @@ function initStart() {
       logo:logoFile ? await fileDataUrl(logoFile) : '', emergency:'112', firstAider:'', disposalContact:'', pictograms:[], signs:[], signalWord:'', sdbCodes:[],
       selected:E.emptySelected(type), custom:E.emptySelected(type), sourceText:''
     };
-    save(state); location.href = 'editor.html';
+    save(state); location.href = editorHref();
   });
 }
 
