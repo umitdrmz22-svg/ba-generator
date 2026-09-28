@@ -39,6 +39,6 @@
     }
   };
 
-  const init=()=>{removeExamples();applyIncomingKatasterData();};
+  const init=()=>{const demo=new URLSearchParams(location.search).get('demo')==='1';if(!demo)removeExamples();applyIncomingKatasterData();if(demo){const firm=document.querySelector('#firm');if(firm&&!firm.value)firm.value='Musterwerk Lebensmittel GmbH';const status=document.querySelector('.status');if(status)status.innerHTML='<i></i> BGN Demo · lokale Präsentationsdaten';}};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
