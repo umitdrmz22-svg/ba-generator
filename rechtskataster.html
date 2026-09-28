@@ -1,17 +1,142 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rechtskataster · EHS Management Studio</title><style>body{margin:0;background:#f4f7f8;color:#17343d;font:14px/1.45 system-ui}header{padding:20px 26px;background:#103944;color:#fff;display:flex;justify-content:space-between}.wrap{max-width:1180px;margin:auto;padding:24px}.notice{padding:13px;background:#fff8df;border:1px solid #efd27b;border-radius:10px}.metrics,.filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.metric{background:#fff;border:1px solid #d8e2e5;border-radius:12px;padding:14px;min-width:160px}.metric b{display:block;font-size:24px}select,input{padding:9px;border:1px solid #bdcbd0;border-radius:8px;background:#fff}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d8e2e5}th,td{text-align:left;padding:11px;border-bottom:1px solid #e6ecee;vertical-align:top}th{font-size:12px;color:#60757c}.status{padding:4px 7px;border-radius:999px;background:#e8f4ec;color:#176b39;font-weight:700}.warn{background:#fff0cc;color:#7a5700}a{color:#0b6474}@media(max-width:760px){.table{overflow:auto}.table table{min-width:900px}}</style>  <link rel="stylesheet" href="./ehs-nav.css?v=1">
-</head><body><header><div><b style="font-size:20px">Rechtskataster</b><div>Musterwerk Lebensmittel GmbH</div></div><span>BGN Demo · lokal</span></header><main class="wrap"><div class="notice"><b>Präsentationsmodus.</b> Beispielhafte Rechtsgebiete und Prüffristen. Das Kataster ersetzt keine fachkundige Rechtsprüfung; verlinkt wird auf amtliche bzw. institutionelle Quellen.</div><section class="metrics"><div class="metric"><span>Rechtsquellen</span><b id="total"></b></div><div class="metric"><span>Prüfung fällig</span><b id="due"></b></div><div class="metric"><span>Handlungsbedarf</span><b id="action"></b></div></section><div class="filters"><input id="search" placeholder="Gesetz, Thema, Verantwortliche …"><select id="area"><option value="">Alle Rechtsgebiete</option><option>Arbeitsschutz</option><option>Gefahrstoffe</option><option>Umwelt</option><option>Brandschutz</option></select><select id="status"><option value="">Alle Bewertungen</option><option>erfüllt</option><option>prüfen</option><option>Maßnahme offen</option></select></div><div class="table"><table><thead><tr><th>Rechtsquelle</th><th>Bereich / Relevanz</th><th>Pflicht / betriebliche Umsetzung</th><th>Verantwortlich</th><th>Letzte Prüfung</th><th>Nächste Prüfung</th><th>Bewertung</th></tr></thead><tbody id="rows"></tbody></table></div></main><script>
-const laws=[
-{name:'ArbSchG',area:'Arbeitsschutz',topic:'Gefährdungsbeurteilung, Organisation, Dokumentation',duty:'GBU aktuell halten; Maßnahmen und Wirksamkeit dokumentieren',owner:'EHS',last:'2026-08-15',next:'2027-02-15',status:'erfüllt',url:'https://www.gesetze-im-internet.de/arbschg/'},
-{name:'BetrSichV',area:'Arbeitsschutz',topic:'Arbeitsmittel und überwachungsbedürftige Anlagen',duty:'GBU, Prüfungen, sichere Verwendung und Unterweisung',owner:'EHS / Technik',last:'2026-07-20',next:'2027-01-20',status:'prüfen',url:'https://www.gesetze-im-internet.de/betrsichv_2015/'},
-{name:'GefStoffV',area:'Gefahrstoffe',topic:'Gefahrstoffmanagement',duty:'Verzeichnis, GBU, Substitution, BA und Unterweisung',owner:'EHS',last:'2026-09-01',next:'2027-03-01',status:'Maßnahme offen',url:'https://www.gesetze-im-internet.de/gefstoffv_2010/'},
-{name:'ArbStättV',area:'Arbeitsschutz',topic:'Arbeitsstätten, Fluchtwege, Beleuchtung, Klima',duty:'Arbeitsstätte beurteilen; ASR bei Umsetzung berücksichtigen',owner:'EHS / Technik',last:'2026-06-10',next:'2026-12-10',status:'erfüllt',url:'https://www.gesetze-im-internet.de/arbst_ttv_2004/'},
-{name:'DGUV Vorschrift 2',area:'Arbeitsschutz',topic:'Betriebsärztliche und sicherheitstechnische Betreuung',duty:'Betreuungsumfang und Jahresbericht einschließlich Fortbildungen prüfen',owner:'EHS / Betriebsarzt',last:'2026-01-15',next:'2027-01-15',status:'erfüllt',url:'https://www.bgn.de/praevention-arbeitshilfen/unsere-leistungen/arbeitsmedizinische-und-sicherheitstechnische-betreuung/dguv-vorschrift-2-ab-2026'},
-{name:'BImSchG',area:'Umwelt',topic:'Immissionsschutz / genehmigungsbedürftige Anlagen',duty:'Genehmigungsauflagen und relevante Änderungen bewerten',owner:'Umwelt / Technik',last:'2026-08-01',next:'2027-02-01',status:'prüfen',url:'https://www.gesetze-im-internet.de/bimschg/'},
-{name:'KrWG',area:'Umwelt',topic:'Abfallwirtschaft',duty:'Abfallhierarchie, ordnungsgemäße Entsorgung und Nachweise sicherstellen',owner:'Abfallbeauftragter',last:'2026-07-01',next:'2027-01-01',status:'erfüllt',url:'https://www.gesetze-im-internet.de/krwg/'},
-{name:'AwSV',area:'Umwelt',topic:'Wassergefährdende Stoffe',duty:'Anlagen, Rückhaltung, Prüfpflichten und Betriebsorganisation prüfen',owner:'Umwelt / Technik',last:'2026-05-15',next:'2026-11-15',status:'Maßnahme offen',url:'https://www.gesetze-im-internet.de/awsv/'},
-{name:'ASR A2.2',area:'Brandschutz',topic:'Maßnahmen gegen Brände',duty:'Ausstattung, Kennzeichnung, Brandschutzhelfer und Organisation prüfen',owner:'Brandschutz',last:'2026-08-25',next:'2027-02-25',status:'erfüllt',url:'https://www.baua.de/DE/Angebote/Regelwerk/ASR/ASR-A2-2'}
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rechtskataster · EHS Management Studio</title>
+<link rel="stylesheet" href="./ehs-nav.css?v=1">
+<style>
+:root{--bg:#eef3f4;--ink:#17343d;--muted:#667a80;--line:#d8e3e5;--brand:#0f5967;--brand2:#176f7f;--green:#16805d;--amber:#b97b00;--red:#b93838;--card:#fff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f7fafb 0,#eef3f4 100%);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:18px 24px;background:linear-gradient(120deg,#0d3540,#165f6d);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 7px 22px #17343d18}
+header b{font-size:20px}header small{display:block;color:#c7dfe3;margin-top:2px}.wrap{max-width:1240px;margin:auto;padding:28px 24px 48px}
+.headline{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:18px}.headline h1{font-size:30px;letter-spacing:-.5px;margin:0 0 6px}.headline p{margin:0;color:var(--muted);max-width:760px}
+.btn{border:1px solid transparent;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--brand);color:#fff;box-shadow:0 6px 18px #0f596726}.btn.ghost{border-color:var(--line)}.btn.danger{background:#fff0f0;color:var(--red);border-color:#f2c7c7}.btn:hover{transform:translateY(-1px)}
+.notice{padding:14px 16px;background:#fff8df;border:1px solid #efd27b;border-radius:12px;color:#5e4b07}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 8px 26px #17343d0b}.metric span{color:var(--muted);font-size:12px}.metric b{display:block;font-size:27px;margin-top:4px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.filters input{flex:1;min-width:260px}select,input,textarea{padding:10px 11px;border:1px solid #bdcbd0;border-radius:9px;background:#fff;color:var(--ink);font:inherit}textarea{resize:vertical}.table{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 28px #17343d0c}table{width:100%;border-collapse:collapse;min-width:1100px}th,td{text-align:left;padding:12px 13px;border-bottom:1px solid #e8edef;vertical-align:top}th{font-size:11px;color:#60757c;background:#f8fafb;text-transform:uppercase;letter-spacing:.04em}td b{display:block}.source-link{color:#0b6474;text-decoration:none}.source-link:hover{text-decoration:underline}.status{display:inline-flex;padding:4px 8px;border-radius:999px;background:#e8f4ec;color:#176b39;font-weight:800;font-size:11px}.status.warn{background:#fff0cc;color:#7a5700}.status.bad{background:#ffe5e5;color:#9d2424}.row-actions{display:flex;gap:6px}.icon-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 9px;cursor:pointer}
+dialog{border:0;padding:0;background:transparent;width:min(900px,94vw)}dialog::backdrop{background:#0a2029aa;backdrop-filter:blur(2px)}.dialog-card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 26px 80px #0b27304a;max-height:92vh;overflow:auto}.dialog-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:12px}.dialog-head h2{margin:2px 0}.close{border:0;background:transparent;font-size:24px;cursor:pointer;color:#6f8187}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid label{display:grid;gap:5px;font-size:12px;font-weight:750}.wide{grid-column:1/-1}.dialog-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:20px}.dialog-actions-right{display:flex;gap:8px}.hint{font-size:11px;color:var(--muted);margin:8px 0 0}
+@media(max-width:760px){.wrap{padding:20px 14px}.headline{flex-direction:column}.headline .btn{width:100%}.metrics{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div><b>Rechtskataster</b><small id="headerSub">EHS Management Studio</small></div>
+  <span id="modeLabel">Lokale Daten</span>
+</header>
+<main class="wrap">
+  <section class="headline">
+    <div>
+      <h1>Rechtskataster</h1>
+      <p>Rechtsquellen, betriebliche Relevanz, Verantwortlichkeiten und Prüftermine zentral erfassen und nachvollziehbar pflegen.</p>
+    </div>
+    <button id="newLaw" class="btn primary" type="button">+ Rechtsquelle anlegen</button>
+  </section>
+
+  <div class="notice"><b>Hinweis:</b> Das Kataster unterstützt die betriebliche Rechtsverfolgung, ersetzt aber keine fachkundige Rechtsprüfung. Für belastbare Bewertungen sollten amtliche oder institutionelle Primärquellen verwendet werden.</div>
+
+  <section class="metrics">
+    <div class="metric"><span>Rechtsquellen</span><b id="total">0</b></div>
+    <div class="metric"><span>Prüfung fällig</span><b id="due">0</b></div>
+    <div class="metric"><span>Handlungsbedarf</span><b id="action">0</b></div>
+  </section>
+
+  <div class="filters">
+    <input id="search" type="search" placeholder="Gesetz, Thema, Verantwortliche …">
+    <select id="area">
+      <option value="">Alle Rechtsgebiete</option>
+      <option>Arbeitsschutz</option><option>Gefahrstoffe</option><option>Umwelt</option><option>Brandschutz</option><option>Arbeitsmedizin</option><option>Sonstiges</option>
+    </select>
+    <select id="status">
+      <option value="">Alle Bewertungen</option>
+      <option>erfüllt</option><option>prüfen</option><option>Maßnahme offen</option><option>nicht relevant</option>
+    </select>
+  </div>
+
+  <div class="table"><table>
+    <thead><tr><th>Rechtsquelle</th><th>Bereich / Relevanz</th><th>Pflicht / betriebliche Umsetzung</th><th>Verantwortlich</th><th>Letzte Prüfung</th><th>Nächste Prüfung</th><th>Bewertung</th><th></th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</main>
+
+<dialog id="lawDialog">
+  <form id="lawForm" class="dialog-card">
+    <div class="dialog-head">
+      <div><small>RECHTSQUELLE</small><h2 id="formTitle">Rechtsquelle anlegen</h2></div>
+      <button class="close" type="button" data-close aria-label="Schließen">×</button>
+    </div>
+    <input id="recordId" type="hidden">
+    <div class="form-grid">
+      <label>Bezeichnung*<input id="name" required placeholder="z. B. ArbSchG"></label>
+      <label>Rechtsgebiet*<select id="formArea" required><option>Arbeitsschutz</option><option>Gefahrstoffe</option><option>Umwelt</option><option>Brandschutz</option><option>Arbeitsmedizin</option><option>Sonstiges</option></select></label>
+      <label class="wide">Thema / betriebliche Relevanz*<input id="topic" required placeholder="z. B. Gefährdungsbeurteilung und Dokumentation"></label>
+      <label class="wide">Pflicht / betriebliche Umsetzung*<textarea id="duty" rows="3" required placeholder="Welche konkrete Pflicht ergibt sich für den Betrieb?"></textarea></label>
+      <label>Verantwortlich*<input id="owner" required placeholder="z. B. EHS / Technik"></label>
+      <label>Bewertung<select id="formStatus"><option>erfüllt</option><option>prüfen</option><option>Maßnahme offen</option><option>nicht relevant</option></select></label>
+      <label>Letzte Prüfung<input id="last" type="date"></label>
+      <label>Nächste Prüfung<input id="next" type="date"></label>
+      <label class="wide">Offizielle Quelle / Link<input id="url" type="url" placeholder="https://…"></label>
+    </div>
+    <p class="hint">Änderungen werden lokal im Browser gespeichert. Für produktiven Mehrbenutzerbetrieb kann später eine zentrale Datenbank angebunden werden.</p>
+    <div class="dialog-actions">
+      <button id="deleteLaw" class="btn danger" type="button">Eintrag löschen</button>
+      <div class="dialog-actions-right">
+        <button class="btn ghost" type="button" data-close>Abbrechen</button>
+        <button class="btn primary" type="submit">Speichern</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const STORAGE_KEY='ehs-rechtskataster-v2';
+const demo=new URLSearchParams(location.search).get('demo')==='1';
+const seed=[
+{id:'law-1',name:'ArbSchG',area:'Arbeitsschutz',topic:'Gefährdungsbeurteilung, Organisation, Dokumentation',duty:'GBU aktuell halten; Maßnahmen und Wirksamkeit dokumentieren',owner:'EHS',last:'2026-08-15',next:'2027-02-15',status:'erfüllt',url:'https://www.gesetze-im-internet.de/arbschg/'},
+{id:'law-2',name:'BetrSichV',area:'Arbeitsschutz',topic:'Arbeitsmittel und überwachungsbedürftige Anlagen',duty:'GBU, Prüfungen, sichere Verwendung und Unterweisung',owner:'EHS / Technik',last:'2026-07-20',next:'2027-01-20',status:'prüfen',url:'https://www.gesetze-im-internet.de/betrsichv_2015/'},
+{id:'law-3',name:'GefStoffV',area:'Gefahrstoffe',topic:'Gefahrstoffmanagement',duty:'Verzeichnis, GBU, Substitution, BA und Unterweisung',owner:'EHS',last:'2026-09-01',next:'2027-03-01',status:'Maßnahme offen',url:'https://www.gesetze-im-internet.de/gefstoffv_2010/'},
+{id:'law-4',name:'ArbStättV',area:'Arbeitsschutz',topic:'Arbeitsstätten, Fluchtwege, Beleuchtung, Klima',duty:'Arbeitsstätte beurteilen; ASR bei Umsetzung berücksichtigen',owner:'EHS / Technik',last:'2026-06-10',next:'2026-12-10',status:'erfüllt',url:'https://www.gesetze-im-internet.de/arbst_ttv_2004/'},
+{id:'law-5',name:'DGUV Vorschrift 2',area:'Arbeitsschutz',topic:'Betriebsärztliche und sicherheitstechnische Betreuung',duty:'Betreuungsumfang und Jahresbericht einschließlich Fortbildungen prüfen',owner:'EHS / Betriebsarzt',last:'2026-01-15',next:'2027-01-15',status:'erfüllt',url:'https://www.bgn.de/praevention-arbeitshilfen/unsere-leistungen/arbeitsmedizinische-und-sicherheitstechnische-betreuung/dguv-vorschrift-2-ab-2026'},
+{id:'law-6',name:'BImSchG',area:'Umwelt',topic:'Immissionsschutz / genehmigungsbedürftige Anlagen',duty:'Genehmigungsauflagen und relevante Änderungen bewerten',owner:'Umwelt / Technik',last:'2026-08-01',next:'2027-02-01',status:'prüfen',url:'https://www.gesetze-im-internet.de/bimschg/'},
+{id:'law-7',name:'KrWG',area:'Umwelt',topic:'Abfallwirtschaft',duty:'Abfallhierarchie, ordnungsgemäße Entsorgung und Nachweise sicherstellen',owner:'Abfallbeauftragter',last:'2026-07-01',next:'2027-01-01',status:'erfüllt',url:'https://www.gesetze-im-internet.de/krwg/'},
+{id:'law-8',name:'AwSV',area:'Umwelt',topic:'Wassergefährdende Stoffe',duty:'Anlagen, Rückhaltung, Prüfpflichten und Betriebsorganisation prüfen',owner:'Umwelt / Technik',last:'2026-05-15',next:'2026-11-15',status:'Maßnahme offen',url:'https://www.gesetze-im-internet.de/awsv/'},
+{id:'law-9',name:'ASR A2.2',area:'Brandschutz',topic:'Maßnahmen gegen Brände',duty:'Ausstattung, Kennzeichnung, Brandschutzhelfer und Organisation prüfen',owner:'Brandschutz',last:'2026-08-25',next:'2027-02-25',status:'erfüllt',url:'https://www.baua.de/DE/Angebote/Regelwerk/ASR/ASR-A2-2'}
 ];
-const esc=v=>String(v).replace(/[&<>"]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]));
-function render(){const q=document.querySelector('#search').value.toLowerCase(),a=document.querySelector('#area').value,s=document.querySelector('#status').value;const x=laws.filter(r=>(!q||Object.values(r).join(' ').toLowerCase().includes(q))&&(!a||r.area===a)&&(!s||r.status===s));document.querySelector('#rows').innerHTML=x.map(r=>'<tr><td><a target="_blank" rel="noopener" href="'+r.url+'"><b>'+esc(r.name)+'</b></a></td><td><b>'+esc(r.area)+'</b><br>'+esc(r.topic)+'</td><td>'+esc(r.duty)+'</td><td>'+esc(r.owner)+'</td><td>'+r.last+'</td><td>'+r.next+'</td><td><span class="status '+(r.status==='erfüllt'?'':'warn')+'">'+esc(r.status)+'</span></td></tr>').join('');document.querySelector('#total').textContent=laws.length;document.querySelector('#due').textContent=laws.filter(r=>r.next<='2026-10-31').length;document.querySelector('#action').textContent=laws.filter(r=>r.status==='Maßnahme offen').length}document.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',render));render();
-</script>  <script src="./ehs-nav.js?v=1"></script>
-</body></html>
+const $=s=>document.querySelector(s);
+let laws=load();
+function load(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY));if(Array.isArray(x)&&x.length)return x}catch{}const copy=structuredClone(seed);localStorage.setItem(STORAGE_KEY,JSON.stringify(copy));return copy}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(laws))}
+const esc=v=>String(v??'').replace(/[&<>'"]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[x]));
+function statusClass(s){return s==='erfüllt'?'':s==='Maßnahme offen'?'bad':'warn'}
+function render(){
+ const q=$('#search').value.toLowerCase(),a=$('#area').value,s=$('#status').value;
+ const x=laws.filter(r=>(!q||Object.values(r).join(' ').toLowerCase().includes(q))&&(!a||r.area===a)&&(!s||r.status===s));
+ $('#rows').innerHTML=x.map(r=>`<tr data-id="${esc(r.id)}">
+ <td>${r.url?`<a class="source-link" target="_blank" rel="noopener" href="${esc(r.url)}"><b>${esc(r.name)}</b></a>`:`<b>${esc(r.name)}</b>`}</td>
+ <td><b>${esc(r.area)}</b>${r.topic?'<br>'+esc(r.topic):''}</td>
+ <td>${esc(r.duty)}</td><td>${esc(r.owner)}</td><td>${esc(r.last||'—')}</td><td>${esc(r.next||'—')}</td>
+ <td><span class="status ${statusClass(r.status)}">${esc(r.status)}</span></td>
+ <td><div class="row-actions"><button type="button" class="icon-btn" data-edit title="Bearbeiten">Bearbeiten</button></div></td></tr>`).join('');
+ $('#total').textContent=laws.length;
+ const today=new Date().toISOString().slice(0,10);
+ $('#due').textContent=laws.filter(r=>r.next&&r.next<=today).length;
+ $('#action').textContent=laws.filter(r=>r.status==='Maßnahme offen').length;
+}
+function openForm(r=null){
+ $('#lawForm').reset();$('#recordId').value=r?.id||'';$('#formTitle').textContent=r?'Rechtsquelle bearbeiten':'Rechtsquelle anlegen';
+ const map={name:'name',formArea:'area',topic:'topic',duty:'duty',owner:'owner',formStatus:'status',last:'last',next:'next',url:'url'};
+ for(const [id,key] of Object.entries(map))$('#'+id).value=r?.[key]??'';
+ $('#deleteLaw').style.visibility=r?'visible':'hidden';$('#lawDialog').showModal();
+}
+$('#newLaw').addEventListener('click',()=>openForm());
+$('#rows').addEventListener('click',e=>{const b=e.target.closest('[data-edit]');if(!b)return;const id=e.target.closest('tr')?.dataset.id;openForm(laws.find(x=>x.id===id))});
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$('#lawDialog').close()));
+$('#lawForm').addEventListener('submit',e=>{e.preventDefault();const id=$('#recordId').value;const payload={name:$('#name').value.trim(),area:$('#formArea').value,topic:$('#topic').value.trim(),duty:$('#duty').value.trim(),owner:$('#owner').value.trim(),status:$('#formStatus').value,last:$('#last').value,next:$('#next').value,url:$('#url').value.trim()};if(id){const i=laws.findIndex(x=>x.id===id);laws[i]={...laws[i],...payload}}else laws.unshift({id:crypto.randomUUID(),...payload});save();render();$('#lawDialog').close()});
+$('#deleteLaw').addEventListener('click',()=>{const id=$('#recordId').value;if(!id)return;if(confirm('Diesen Eintrag wirklich löschen?')){laws=laws.filter(x=>x.id!==id);save();render();$('#lawDialog').close()}});
+document.querySelectorAll('#search,#area,#status').forEach(e=>e.addEventListener('input',render));
+$('#modeLabel').textContent=demo?'BGN Demo · lokal':'Lokale Daten';
+$('#headerSub').textContent=demo?'Musterwerk Lebensmittel GmbH':'EHS Management Studio';
+render();
+</script>
+<script src="./ehs-nav.js?v=1"></script>
+</body>
+</html>
