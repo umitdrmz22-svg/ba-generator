@@ -1,9 +1,10 @@
 'use strict';
 (function(){
   const path=location.pathname;
+  const presentationMode=new URLSearchParams(location.search).get('demo')==='1';
   const isAuthPage=path.endsWith('/auth.html');
   const isProtectedPage=!isAuthPage&&(path.endsWith('/ba-generator/')||path.endsWith('/index.html')||path.endsWith('/editor.html'));
-  if(isProtectedPage)document.documentElement.classList.add('auth-checking');
+  if(isProtectedPage&&!presentationMode)document.documentElement.classList.add('auth-checking');
 
   const state={client:null,session:null,configured:false,ready:false};
   const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -60,6 +61,7 @@
     });
   };
   const enforceAccess=()=>{
+    if(presentationMode){revealProtectedPage();return true;}
     if(!isProtectedPage)return true;
     if(!state.configured||!state.session){redirectToAuth();return false;}
     revealProtectedPage();
@@ -128,6 +130,13 @@
   };
   const init=async()=>{
     try{
+      if(presentationMode){
+        state.configured=false;state.session=null;state.ready=true;
+        revealProtectedPage();
+        document.querySelectorAll('[data-auth-slot]').forEach(slot=>slot.innerHTML='<span class="auth-user">BGN Demo · lokal</span>');
+        globalThis.dispatchEvent(new CustomEvent('ba-auth-ready',{detail:{configured:false,session:null,demo:true}}));
+        return;
+      }
       const config=await loadConfig();
       state.configured=config.configured;
       if(state.configured){
