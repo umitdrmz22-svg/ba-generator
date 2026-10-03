@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LAGI – Legal · Arbeitsschutz · Gefahrstoffe · Integriertes Management. Sieben verbundene EHS-Module mit fiktiven Beispieldaten zum Ausprobieren.">
+  <meta name="robots" content="noindex,nofollow">
+  <title>LAGI · EHS-Demo</title>
+  <link rel="icon" href="assets/lagi-logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/data.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt</a>
+  <aside class="sidebar" id="sidebar" aria-label="Hauptnavigation">
+    <button class="mobile-close" type="button" data-action="close-menu" aria-label="Navigation schließen">×</button>
+    <a class="brand" href="#/" aria-label="LAGI Übersicht"><img src="assets/lagi-logo.png" alt="" width="48" height="48"><span>LAGI<small>EHS gemeinsam steuern</small></span></a>
+    <div class="workspace"><span class="workspace-icon">M</span><div><b>Musterwerk</b><small>Lebensmittel GmbH · Demo</small></div></div>
+    <nav id="nav"></nav>
+    <div class="sidebar-foot"><span class="demo-label">Interaktive Demo</span><p>Fiktive Daten. Änderungen bleiben in diesem Browser.</p><button class="text-button" data-action="reset">Demo zurücksetzen</button></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><button class="menu-button" id="menu" aria-controls="sidebar" aria-expanded="false" aria-label="Navigation öffnen">☰</button><div id="breadcrumb"></div><div class="top-meta"><span class="demo-label">Musterwerk · Demo</span><span class="avatar" aria-label="Demo-Arbeitsbereich">MW</span></div></header>
+    <main id="main" tabindex="-1"></main>
+    <footer><span>LAGI – Legal · Arbeitsschutz · Gefahrstoffe · Integriertes Management</span><button class="text-button" data-action="privacy">Zur Demo & Datennutzung</button></footer>
+  </div>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript>Bitte aktiviere JavaScript, um die interaktive LAGI-Demo zu verwenden.</noscript>
+</body>
+</html>
